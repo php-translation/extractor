@@ -9,15 +9,8 @@ use Twig_NodeInterface;
 
 class TranslationFilter extends BaseVisitor  implements \Twig_NodeVisitorInterface
 {
-    /**
-     * @var array
-     */
-    private $stack = [];
-
     public function enterNode(Twig_NodeInterface $node, Twig_Environment $env)
     {
-        $this->stack[] = $node;
-
         if (!$node instanceof \Twig_Node_Expression_Filter) {
             return $node;
         }
@@ -54,8 +47,6 @@ class TranslationFilter extends BaseVisitor  implements \Twig_NodeVisitorInterfa
 
     public function leaveNode(Twig_NodeInterface $node, Twig_Environment $env)
     {
-        array_pop($this->stack);
-
         return $node;
     }
 

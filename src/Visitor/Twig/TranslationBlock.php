@@ -3,8 +3,6 @@
 namespace Translation\Extractor\Visitor\Twig;
 
 use Symfony\Bridge\Twig\Node\TransNode;
-use Symfony\Component\Finder\SplFileInfo;
-use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\BaseVisitor;
 use Twig_Environment;
@@ -17,8 +15,8 @@ class TranslationBlock extends BaseVisitor implements \Twig_NodeVisitorInterface
         if ($node instanceof TransNode) {
             $id = $node->getNode('body')->getAttribute('data');
             $domain = 'messages';
-            if (null !== $domainNode = $node->getNode('domain')) {
-                $domain = $domainNode->getAttribute('value');
+            if ($node->hasNode('domain')) {
+                $domain = $node->getNode('domain')->getAttribute('value');
             }
 
             $source = new SourceLocation($id, $this->getAbsoluteFilePath(), $node->getLine(), ['domain' => $domain]);

@@ -5,9 +5,9 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
 use Translation\Extractor\Model\SourceLocation;
-use Translation\Extractor\Visitor\BaseVisitor;
+use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
-class FlashMessages extends BaseVisitor implements NodeVisitor
+class FlashMessage extends BasePHPVisitor  implements NodeVisitor
 {
     public function beforeTraverse(array $nodes)
     {
@@ -31,23 +31,9 @@ class FlashMessages extends BaseVisitor implements NodeVisitor
             if (('addFlash' === $name && $callerName === 'this' && $caller instanceof Node\Expr\Variable) ||
                 ('add' === $name && $callerName === 'getFlashBag' && $caller instanceof Node\Expr\MethodCall)
             ) {
-                /*
-                 * Start reading the argument
-                 */
-
-                // second argument must be a string
-                if (!$node->args[1]->value instanceof Node\Scalar\String_) {
-                    return;
+                if (null !== $label = $this->getStringArgument($node, 1)) {
+                    $this->collection->addLocation(new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine')));
                 }
-
-                $label = $node->args[1]->value->value;
-                if (empty($label)) {
-                    return;
-                }
-
-                $this->collection->addLocation(new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine')));
-
-                return;
             }
         }
     }

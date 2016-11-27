@@ -4,7 +4,6 @@ namespace Translation\Extractor\Visitor;
 
 use Symfony\Component\Finder\SplFileInfo;
 use Translation\Extractor\Model\SourceCollection;
-use Translation\Extractor\Visitor\Visitor;
 
 abstract class BaseVisitor implements Visitor
 {

@@ -2,14 +2,14 @@
 
 namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
-class FlashMessages
+class ContainerAwareTransChoice
 {
     /**
      * @return array
      */
     public function newAction()
     {
-        $this->addFlash('success', 'flash.created');
+        $translated = $this->get('translator')->transChoice('foobar');
 
         return array();
     }
