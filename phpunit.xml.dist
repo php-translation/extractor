@@ -15,8 +15,8 @@
 
     <formatter type="clover" usefile="false"/>
     <testsuites>
-        <testsuite name="Functional tests">
-            <directory>./tests/Functional</directory>
+        <testsuite name="Tests">
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 

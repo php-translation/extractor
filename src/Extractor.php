@@ -3,6 +3,7 @@
 namespace Translation\Extractor;
 
 use Symfony\Component\Finder\Finder;
+use Translation\Extractor\FileExtractor\FileExtractor;
 use Translation\Extractor\Model\SourceCollection;
 
 class Extractor
@@ -12,6 +13,11 @@ class Extractor
      */
     private $fileExtractors;
 
+    /**
+     * @param string $dir
+     *
+     * @return SourceCollection
+     */
     public function extract($dir)
     {
         $collection = new SourceCollection();
@@ -28,6 +34,8 @@ class Extractor
                 $extractor->getSourceLocations($file, $collection);
             }
         }
+
+        return $collection;
     }
 
     private function getTypeFromExtension($ext)
