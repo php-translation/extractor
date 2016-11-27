@@ -8,6 +8,7 @@ use PhpParser\NodeVisitor;
 use PhpParser\ParserFactory;
 use Symfony\Component\Finder\SplFileInfo;
 use Translation\Extractor\Model\SourceCollection;
+use Translation\Extractor\Visitor\Visitor;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -17,7 +18,7 @@ class PHPFileExtractor implements FileExtractor
     /**
      * @var Visitor[]|NodeVisitor[]
      */
-    private $visitors;
+    private $visitors = [];
 
     public function getSourceLocations(SplFileInfo $file, SourceCollection $collection)
     {

@@ -4,6 +4,7 @@ namespace Translation\Extractor\FileExtractor;
 
 use Symfony\Component\Finder\SplFileInfo;
 use Translation\Extractor\Model\SourceCollection;
+use Translation\Extractor\Visitor\Visitor;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -13,7 +14,7 @@ class TwigFileExtractor implements FileExtractor
     /**
      * @var Visitor[]|\Twig_NodeVisitorInterface[]
      */
-    private $visitors;
+    private $visitors = [];
 
     /**
      * @var \Twig_Environment

@@ -3,15 +3,38 @@
 namespace Translation\Extractor\Tests\Functional\Visitor\Php;
 
 use Translation\Extractor\FileExtractor\PHPFileExtractor;
-use Translation\Extractor\Tests\Functional\Visitor\BaseVisitorTest;
+use Symfony\Component\Finder\Finder;
+use Translation\Extractor\Model\SourceCollection;
 
-abstract class BasePHPVisitorTest extends BaseVisitorTest
+abstract class BasePHPVisitorTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @return PHPFileExtractor
-     */
-    protected function getExtractor()
+    protected function getSourceLocations($visitor, $namespaceForTestFile)
     {
-        return new PHPFileExtractor();
+        $extractor = new PHPFileExtractor();
+        $extractor->addVisitor($visitor);
+
+        $currentNamespace = explode('\\', __NAMESPACE__);
+        $fileNamespace = explode('\\', $namespaceForTestFile);
+        $filename = array_pop($fileNamespace).'*';
+
+        $path = __DIR__.'/../../..';
+        foreach ($fileNamespace as $i => $part) {
+            if ($currentNamespace[$i] !== $part) {
+                // Assert: The namespaces is different now
+                for ($j = $i; $j < count($fileNamespace); ++$j) {
+                    $path .= '/'.$fileNamespace[$j];
+                }
+                break;
+            }
+        }
+
+        $finder = new Finder();
+        $finder->files()->name($filename)->in($path);
+        $collection = new SourceCollection();
+        foreach ($finder as $file) {
+            $extractor->getSourceLocations($file, $collection);
+        }
+
+        return $collection;
     }
 }

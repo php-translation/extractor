@@ -4,23 +4,11 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Symfony\Component\Finder\SplFileInfo;
-use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Model\SourceLocation;
-use Translation\Extractor\Visitor\Visitor;
+use Translation\Extractor\Visitor\BaseVisitor;
 
-class FlashMessages implements Visitor , NodeVisitor
+class FlashMessages extends BaseVisitor implements NodeVisitor
 {
-    /**
-     * @var SourceCollection
-     */
-    private $collection;
-
-    /**
-     * @var SplFileInfo
-     */
-    private $file;
-
     public function beforeTraverse(array $nodes)
     {
     }
@@ -57,7 +45,7 @@ class FlashMessages implements Visitor , NodeVisitor
                     return;
                 }
 
-                $this->collection->addLocation(new SourceLocation($label, $this->file->getRealPath(), $node->getAttribute('startLine')));
+                $this->collection->addLocation(new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine')));
 
                 return;
             }
@@ -70,11 +58,5 @@ class FlashMessages implements Visitor , NodeVisitor
 
     public function afterTraverse(array $nodes)
     {
-    }
-
-    public function init(SourceCollection $collection, SplFileInfo $file)
-    {
-        $this->collection = $collection;
-        $this->file = $file;
     }
 }

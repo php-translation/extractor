@@ -10,8 +10,7 @@ class FlashMessagesTest extends BasePHPVisitorTest
 {
     public function testExtract()
     {
-        $visitor = new FlashMessages();
-        $collection = $this->getSourceLocations($visitor, Resources\Php\Symfony\FlashMessages::class);
+        $collection = $this->getSourceLocations(new FlashMessages(), Resources\Php\Symfony\FlashMessages::class);
 
         $this->assertCount(1, $collection);
         $source = $collection->first();
