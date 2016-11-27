@@ -14,28 +14,26 @@ class Extractor
     private $fileExtractors;
 
     /**
+     * @param Finder $finder
+     *
+     * @return SourceCollection
+     */
+    public function extract(Finder $finder)
+    {
+        return $this->doExtract($finder);
+    }
+
+    /**
      * @param string $dir
      *
      * @return SourceCollection
      */
-    public function extract($dir)
+    public function extractFromDirectory($dir)
     {
-        $collection = new SourceCollection();
         $finder = new Finder();
         $finder->files()->in($dir);
 
-        foreach ($finder as $file) {
-            $type = $this->getTypeFromExtension($file->getExtension());
-            foreach ($this->fileExtractors as $extractor) {
-                if ($extractor->getType() !== $type) {
-                    continue;
-                }
-
-                $extractor->getSourceLocations($file, $collection);
-            }
-        }
-
-        return $collection;
+        return $this->doExtract($finder);
     }
 
     private function getTypeFromExtension($ext)
@@ -57,5 +55,27 @@ class Extractor
     public function addFileExtractor(FileExtractor $fileExtractor)
     {
         $this->fileExtractors[] = $fileExtractor;
+    }
+
+    /**
+     * @param Finder $finder
+     *
+     * @return SourceCollection
+     */
+    private function doExtract(Finder $finder)
+    {
+        $collection = new SourceCollection();
+        foreach ($finder as $file) {
+            $type = $this->getTypeFromExtension($file->getExtension());
+            foreach ($this->fileExtractors as $extractor) {
+                if ($extractor->getType() !== $type) {
+                    continue;
+                }
+
+                $extractor->getSourceLocations($file, $collection);
+            }
+        }
+
+        return $collection;
     }
 }
