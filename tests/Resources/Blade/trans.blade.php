@@ -3,9 +3,7 @@
     <title>App Name - @yield('title')</title>
 </head>
 <body>
-@section('sidebar')
-This is the master sidebar.
-@show
+{{ trans('foobar') }}
 
 <div class="container">
     @yield('content')
