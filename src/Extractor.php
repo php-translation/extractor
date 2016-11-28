@@ -3,6 +3,7 @@
 namespace Translation\Extractor;
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Translation\Extractor\FileExtractor\FileExtractor;
 use Translation\Extractor\Model\SourceCollection;
 
@@ -36,14 +37,28 @@ class Extractor
         return $this->doExtract($finder);
     }
 
-    private function getTypeFromExtension($ext)
+    /**
+     * @param SplFileInfo $file
+     *
+     * @return string
+     */
+    private function getType(SplFileInfo $file)
     {
+        $filename = $file->getFilename();
+        if (preg_match('|.+\.blade\.php$|', $filename)) {
+            $ext = 'blade.php';
+        } else {
+            $ext = $file->getExtension();
+        }
+
         switch ($ext) {
             case 'php':
             case 'php5':
                 return 'php';
             case 'twig':
                 return 'twig';
+            case 'blade.php':
+                return 'blade';
             default:
                 return $ext;
         }
@@ -66,7 +81,7 @@ class Extractor
     {
         $collection = new SourceCollection();
         foreach ($finder as $file) {
-            $type = $this->getTypeFromExtension($file->getExtension());
+            $type = $this->getType($file);
             foreach ($this->fileExtractors as $extractor) {
                 if ($extractor->getType() !== $type) {
                     continue;
