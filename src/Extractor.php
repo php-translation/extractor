@@ -12,7 +12,7 @@ class Extractor
     /**
      * @var FileExtractor[]
      */
-    private $fileExtractors;
+    private $fileExtractors = [];
 
     /**
      * @param Finder $finder
