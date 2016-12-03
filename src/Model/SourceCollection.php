@@ -5,7 +5,7 @@ namespace Translation\Extractor\Model;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class SourceCollection implements \Countable, \IteratorAggregate, \ArrayAccess
+final class SourceCollection implements \Countable, \IteratorAggregate
 {
     /**
      * @var SourceLocation[]
