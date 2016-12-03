@@ -9,8 +9,20 @@ use PhpParser\NodeVisitor;
 use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
-class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
+class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
 {
+    /**
+     * @var int defaults to major version 3
+     */
+    protected $symfony_major_version = 3;
+
+    /**
+     * @param integer $major_version
+     */
+    public function setSymfonyMajorVersion($major_version) {
+        $this->symfony_major_version = $major_version;
+    }
+
     public function enterNode(Node $node)
     {
         // only Traverse *Type
@@ -20,18 +32,25 @@ class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
             }
         }
 
-        // we could have chosen to traverse specifically the buildForm function or ->add()
-        // we will probably miss some easy to catch instances when the actual array of options
-        // is provided statically or through another function.
-        // I don't see any disadvantages now to simply parsing arrays and JMSTranslationBundle has
-        // been doing it like this for quite some time without major problems.
+        // symfony 3 displays key by default, where symfony 2 displays value
+        $use_key = $this->symfony_major_version == 3;
+
+        // remember choices in this node
+        $choices_nodes = [];
+
+        // loop through array
         if ($node instanceof Node\Expr\Array_) {
             foreach ($node->items as $item) {
                 if (!$item->key instanceof Node\Scalar\String_) {
                     continue;
                 }
 
-                if ($item->key->value !== 'choice') {
+                if ($item->key->value === 'choices_as_values') {
+                    $use_key = true;
+                    continue;
+                }
+
+                if ($item->key->value !== 'choices') {
                     continue;
                 }
 
@@ -39,8 +58,27 @@ class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
                     continue;
                 }
 
-                $sl = new SourceLocation($item->value->value, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'));
-                $this->collection->addLocation($sl);
+                $choices_nodes[] = $item->value;
+            }
+
+            if (count($choices_nodes) > 0) {
+                // probably will be only 1, but who knows
+                foreach ($choices_nodes as $choices) {
+                    // TODO: do something with grouped (multi-dimensional) arrays here
+                    if (!$choices instanceof Node\Expr\Array_) {
+                        continue;
+                    }
+
+                    foreach ($choices as $citem) {
+                        $label_node = $use_key ? $citem[0]->key : $citem[0]->value;
+                        if (!$label_node instanceof Node\Scalar\String_) {
+                            continue;
+                        }
+
+                        $sl = new SourceLocation($label_node->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'));
+                        $this->collection->addLocation($sl);
+                    }
+                }
             }
         }
     }
