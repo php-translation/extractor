@@ -11,6 +11,18 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
 {
+    /**
+     * @var int defaults to major version 3
+     */
+    protected $symfony_major_version = 3;
+
+    /**
+     * @param integer $major_version
+     */
+    public function setSymfonyMajorVersion($major_version) {
+        $this->symfony_major_version = $major_version;
+    }
+
     public function enterNode(Node $node)
     {
         // only Traverse *Type
@@ -20,11 +32,8 @@ class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
             }
         }
 
-        // TODO get symfony version from somewhere..
-        $symfony_major_version = 2;
-
         // symfony 3 displays key by default, where symfony 2 displays value
-        $use_key = $symfony_major_version == 3;
+        $use_key = $this->symfony_major_version == 3;
 
         // remember choices in this node
         $choices_nodes = [];
