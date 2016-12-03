@@ -30,6 +30,11 @@ abstract class BasePHPVisitorTest extends \PHPUnit_Framework_TestCase
 
         $finder = new Finder();
         $finder->files()->name($filename)->in($path);
+
+        if ($finder->count() === 0) {
+            throw new \Exception("Cannot find file for: $namespaceForTestFile. Tried path: $path - Maybe filename doesn't match the class?");
+        }
+
         $collection = new SourceCollection();
         foreach ($finder as $file) {
             $extractor->getSourceLocations($file, $collection);
