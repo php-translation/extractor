@@ -14,7 +14,7 @@ class ExplicitLabelType
             ->add('find2', null, array(
                 'label' => 'find2'
             ))
-            ->add('field_longer_name', null, [
+            ->add('field_longer_name3', null, [
                 'label' => 'FOUND3 '
             ])
             ->add('skip1', null, [
@@ -23,7 +23,6 @@ class ExplicitLabelType
             ])
             ->add('skip2', null, [
                 'label' => PHP_OS, // constant shouldn't work
-                'somethingelse' => 'skipthis',
             ])
             ->add('skip3', null, [
                 'label' // value label, shouldn't be picked up
@@ -32,9 +31,22 @@ class ExplicitLabelType
                 'label' => 'something '.$var
             ])
         ;
+
+        // implicit label should not be found
         $builder->add('skip5', null);
 
+        // add label in variable should be found
         $arr = ['label'=>'find4.label'];
-        $builder->add('find3', null, $arr);
+        $builder->add('find4', null, $arr);
+
+        // empty label should be skipped
+        $builder->add('skip6', null, ['label'=>'']);
+
+        // collection test
+        $builder->add('find5', 'collection', array(
+            'options' => array(
+                'label' => 'label.find5'
+            )
+        ));
     }
 }
