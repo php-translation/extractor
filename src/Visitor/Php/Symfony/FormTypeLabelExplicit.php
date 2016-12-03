@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHP Translation package.
+ *
+ * (c) PHP Translation team <tobias.nyholm@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
@@ -50,8 +59,15 @@ class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
         }
     }
 
-    public function leaveNode(Node $node) {}
+    public function leaveNode(Node $node)
+    {
+    }
 
-    public function beforeTraverse(array $nodes) {}
-    public function afterTraverse(array $nodes) {}
+    public function beforeTraverse(array $nodes)
+    {
+    }
+
+    public function afterTraverse(array $nodes)
+    {
+    }
 }
