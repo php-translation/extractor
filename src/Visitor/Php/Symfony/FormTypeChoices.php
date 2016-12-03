@@ -23,14 +23,14 @@ class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
     /**
      * @var int defaults to major version 3
      */
-    protected $symfony_major_version = 3;
+    protected $symfonyMajorVersion = 3;
 
     /**
-     * @param int $major_version
+     * @param int $sfMajorVersion
      */
-    public function setSymfonyMajorVersion($major_version)
+    public function setSymfonyMajorVersion($sfMajorVersion)
     {
-        $this->symfony_major_version = $major_version;
+        $this->symfonyMajorVersion = $sfMajorVersion;
     }
 
     public function enterNode(Node $node)
@@ -43,10 +43,10 @@ class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
         }
 
         // symfony 3 displays key by default, where symfony 2 displays value
-        $use_key = $this->symfony_major_version == 3;
+        $useKey = $this->symfonyMajorVersion == 3;
 
         // remember choices in this node
-        $choices_nodes = [];
+        $choicesNodes = [];
 
         // loop through array
         if ($node instanceof Node\Expr\Array_) {
@@ -56,7 +56,7 @@ class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
                 }
 
                 if ($item->key->value === 'choices_as_values') {
-                    $use_key = true;
+                    $useKey = true;
                     continue;
                 }
 
@@ -68,24 +68,24 @@ class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
                     continue;
                 }
 
-                $choices_nodes[] = $item->value;
+                $choicesNodes[] = $item->value;
             }
 
-            if (count($choices_nodes) > 0) {
+            if (count($choicesNodes) > 0) {
                 // probably will be only 1, but who knows
-                foreach ($choices_nodes as $choices) {
+                foreach ($choicesNodes as $choices) {
                     // TODO: do something with grouped (multi-dimensional) arrays here
                     if (!$choices instanceof Node\Expr\Array_) {
                         continue;
                     }
 
                     foreach ($choices as $citem) {
-                        $label_node = $use_key ? $citem[0]->key : $citem[0]->value;
-                        if (!$label_node instanceof Node\Scalar\String_) {
+                        $labelNode = $useKey ? $citem[0]->key : $citem[0]->value;
+                        if (!$labelNode instanceof Node\Scalar\String_) {
                             continue;
                         }
 
-                        $sl = new SourceLocation($label_node->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'));
+                        $sl = new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'));
                         $this->collection->addLocation($sl);
                     }
                 }

@@ -34,12 +34,12 @@ class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
             && ($node->name === 'add' || $node->name === 'create')
             && $node->args[0]->value instanceof Node\Scalar\String_) {
             // now make sure we don't have 'label' in the array of options
-            $custom_label = false;
+            $customLabel = false;
             if (count($node->args) >= 3) {
                 if ($node->args[2]->value instanceof Node\Expr\Array_) {
                     foreach ($node->args[2]->value->items as $item) {
                         if ($item->key->value === 'label') {
-                            $custom_label = true;
+                            $customLabel = true;
                         }
                     }
                 }
@@ -49,7 +49,7 @@ class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
             }
 
             // only if no custom label was found, proceed
-            if ($custom_label === false) {
+            if ($customLabel === false) {
                 $label = $node->args[0]->value->value;
                 if (!empty($label)) {
                     $sl = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'));
