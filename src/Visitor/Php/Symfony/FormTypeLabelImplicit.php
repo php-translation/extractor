@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHP Translation package.
+ *
+ * (c) PHP Translation team <tobias.nyholm@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
@@ -22,9 +31,8 @@ class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
 
         // use add() function and look at first argument and if that's a string
         if ($node instanceof Node\Expr\MethodCall
-            && ($node->name === "add" || $node->name === "create")
+            && ($node->name === 'add' || $node->name === 'create')
             && $node->args[0]->value instanceof Node\Scalar\String_) {
-
             // now make sure we don't have 'label' in the array of options
             $custom_label = false;
             if (count($node->args) >= 3) {
@@ -51,8 +59,15 @@ class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
         }
     }
 
-    public function leaveNode(Node $node) {}
+    public function leaveNode(Node $node)
+    {
+    }
 
-    public function beforeTraverse(array $nodes) {}
-    public function afterTraverse(array $nodes) {}
+    public function beforeTraverse(array $nodes)
+    {
+    }
+
+    public function afterTraverse(array $nodes)
+    {
+    }
 }

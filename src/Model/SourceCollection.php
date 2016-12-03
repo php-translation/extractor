@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHP Translation package.
+ *
+ * (c) PHP Translation team <tobias.nyholm@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Translation\Extractor\Model;
 
 /**
@@ -44,12 +53,13 @@ final class SourceCollection implements \Countable, \IteratorAggregate
 
     /**
      * @param $key
+     *
      * @return null|SourceLocation
      */
     public function get($key)
     {
         if (!isset($this->sourceLocations[$key])) {
-            return null;
+            return;
         }
 
         return $this->sourceLocations[$key];

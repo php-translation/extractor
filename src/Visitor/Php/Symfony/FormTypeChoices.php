@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHP Translation package.
+ *
+ * (c) PHP Translation team <tobias.nyholm@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
@@ -17,9 +26,10 @@ class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
     protected $symfony_major_version = 3;
 
     /**
-     * @param integer $major_version
+     * @param int $major_version
      */
-    public function setSymfonyMajorVersion($major_version) {
+    public function setSymfonyMajorVersion($major_version)
+    {
         $this->symfony_major_version = $major_version;
     }
 
@@ -83,8 +93,15 @@ class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
         }
     }
 
-    public function leaveNode(Node $node) {}
+    public function leaveNode(Node $node)
+    {
+    }
 
-    public function beforeTraverse(array $nodes) {}
-    public function afterTraverse(array $nodes) {}
+    public function beforeTraverse(array $nodes)
+    {
+    }
+
+    public function afterTraverse(array $nodes)
+    {
+    }
 }

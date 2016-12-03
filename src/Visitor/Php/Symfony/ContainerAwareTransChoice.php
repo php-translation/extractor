@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHP Translation package.
+ *
+ * (c) PHP Translation team <tobias.nyholm@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
@@ -7,7 +16,7 @@ use PhpParser\NodeVisitor;
 use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
-class ContainerAwareTransChoice extends BasePHPVisitor  implements NodeVisitor
+class ContainerAwareTransChoice extends BasePHPVisitor implements NodeVisitor
 {
     public function beforeTraverse(array $nodes)
     {
