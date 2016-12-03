@@ -13,5 +13,7 @@ class ImplicitLabelType
         $builder->add('skip1'.$var);
         $builder->add('skip2', null, ['label'=>'valid']);
         $builder->add(function () { return 'skip3'; });
+        // Symfony will throw an error I guess, but at least extractions skip it
+        $builder->add('');
     }
 }

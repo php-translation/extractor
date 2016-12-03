@@ -39,7 +39,12 @@ class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
                     continue;
                 }
 
-                $sl = new SourceLocation($item->value->value, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'));
+                $label = $item->value->value;
+                if (empty($label)) {
+                    continue;
+                }
+
+                $sl = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'));
                 $this->collection->addLocation($sl);
             }
         }
