@@ -6,9 +6,6 @@ class ExplicitLabelType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $arr = ['label'=>'test'];
-
-        $builder->add('find0', null, $arr);
         $var = "something";
         $builder->add('find1', null, [
             'label' => 'label.find1'
@@ -36,5 +33,8 @@ class ExplicitLabelType
             ])
         ;
         $builder->add('skip5', null);
+
+        $arr = ['label'=>'find4.label'];
+        $builder->add('find3', null, $arr);
     }
 }

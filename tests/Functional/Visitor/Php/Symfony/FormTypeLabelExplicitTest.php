@@ -12,10 +12,12 @@ class FormTypeLabelExplicitTest extends BasePHPVisitorTest
     {
         $collection = $this->getSourceLocations(new FormTypeLabelExplicit(), Resources\Php\Symfony\ExplicitLabelType::class);
 
-        $this->assertCount(3, $collection);
+        $this->assertCount(4, $collection);
         $this->assertEquals('label.find1', $collection->get(0)->getMessage());
         $this->assertEquals('find2', $collection->get(1)->getMessage());
-        $this->assertEquals('FOUND3', $collection->get(2)->getMessage());
+        $this->assertEquals('FOUND3 ', $collection->get(2)->getMessage());
+        $this->assertEquals('find4.label', $collection->get(3)->getMessage());
+        $this->assertEquals(10, $collection->get(0)->getLine());
     }
 
     public function testWillNotExtractTypeless()
