@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "php": "^5.4 || ^7.0",
+        "php": "^5.5 || ^7.0",
         "nikic/php-parser": "^3.0@beta",
         "symfony/finder": "^2.7 || ^3.0",
         "twig/twig": "^1.21"
