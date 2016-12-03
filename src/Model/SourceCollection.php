@@ -41,4 +41,17 @@ final class SourceCollection implements \Countable, \IteratorAggregate
 
         return reset($this->sourceLocations);
     }
+
+    /**
+     * @param $key
+     * @return null|SourceLocation
+     */
+    public function get($key)
+    {
+        if (!isset($this->sourceLocations[$key])) {
+            return null;
+        }
+
+        return $this->sourceLocations[$key];
+    }
 }
