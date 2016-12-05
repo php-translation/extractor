@@ -19,10 +19,18 @@ class TranslationBlockTest extends BaseTwigVisitorTest
     {
         $collection = $this->getSourceLocations(new TranslationBlock(), 'Twig/TranslationBlock/trans.html.twig');
 
-        $this->assertCount(1, $collection);
-        $source = $collection->first();
+        $this->assertCount(3, $collection);
+        $source = $collection->get(0);
         $this->assertEquals('foobar', $source->getMessage());
         $this->assertEquals('domain', $source->getContext()['domain']);
+
+        $source = $collection->get(1);
+        $this->assertEquals('no-domain', $source->getMessage());
+        $this->assertEquals('messages', $source->getContext()['domain']);
+
+        $source = $collection->get(2);
+        $this->assertEquals('trans-count', $source->getMessage());
+        $this->assertEquals('messages', $source->getContext()['domain']);
     }
 
     public function testTranschoice()
