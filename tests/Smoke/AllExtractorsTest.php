@@ -20,7 +20,7 @@ use Translation\Extractor\Visitor\Twig\TranslationFilter;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class AllExtractors
+class AllExtractorsTest extends \PHPUnit_Framework_TestCase
 {
     public function testNoException()
     {
