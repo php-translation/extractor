@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHP Translation package.
+ *
+ * (c) PHP Translation team <tobias.nyholm@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Translation\Extractor\Tests\Smoke;
 
 use Symfony\Component\Finder\Finder;
@@ -35,7 +44,6 @@ class AllExtractorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
      * @return PHPFileExtractor
      */
     private function getPHPFileExtractor()
@@ -52,7 +60,6 @@ class AllExtractorsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
      * @return TwigFileExtractor
      */
     private function getTwigFileExtractor()
