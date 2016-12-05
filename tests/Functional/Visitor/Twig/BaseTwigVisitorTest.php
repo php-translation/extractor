@@ -14,9 +14,6 @@ namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 use Translation\Extractor\FileExtractor\TwigFileExtractor;
 use Symfony\Component\Finder\Finder;
 use Translation\Extractor\Model\SourceCollection;
-use Symfony\Component\Translation\MessageSelector;
-use Symfony\Component\Translation\IdentityTranslator;
-use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
 abstract class BaseTwigVisitorTest extends \PHPUnit_Framework_TestCase
 {
