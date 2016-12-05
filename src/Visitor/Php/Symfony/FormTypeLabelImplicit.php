@@ -38,7 +38,7 @@ class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
             if (count($node->args) >= 3) {
                 if ($node->args[2]->value instanceof Node\Expr\Array_) {
                     foreach ($node->args[2]->value->items as $item) {
-                        if ($item->key->value === 'label') {
+                        if (isset($item->key) && $item->key->value === 'label') {
                             $customLabel = true;
                         }
                     }

@@ -43,10 +43,6 @@ abstract class BaseTwigVisitorTest extends \PHPUnit_Framework_TestCase
      */
     private function getExtractor()
     {
-        $env = new \Twig_Environment();
-        $env->addExtension(new TranslationExtension($translator = new IdentityTranslator(new MessageSelector())));
-        $env->setLoader(new \Twig_Loader_String());
-
-        return new TwigFileExtractor($env);
+        return new TwigFileExtractor(TwigEnvironmentFactory::create());
     }
 }

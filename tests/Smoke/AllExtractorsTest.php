@@ -15,6 +15,7 @@ use Symfony\Component\Finder\Finder;
 use Translation\Extractor\Extractor;
 use Translation\Extractor\FileExtractor\PHPFileExtractor;
 use Translation\Extractor\FileExtractor\TwigFileExtractor;
+use Translation\Extractor\Tests\Functional\Visitor\Twig\TwigEnvironmentFactory;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTrans;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTransChoice;
 use Translation\Extractor\Visitor\Php\Symfony\FlashMessage;
@@ -64,7 +65,7 @@ class AllExtractorsTest extends \PHPUnit_Framework_TestCase
      */
     private function getTwigFileExtractor()
     {
-        $file = new TwigFileExtractor();
+        $file = new TwigFileExtractor(TwigEnvironmentFactory::create());
         $file->addVisitor(new TranslationBlock());
         $file->addVisitor(new TranslationFilter());
 
