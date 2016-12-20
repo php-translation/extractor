@@ -38,8 +38,8 @@ class BladeFileExtractor implements FileExtractor
      */
     public function findTranslations(SplFileInfo $file)
     {
-        $keys = array();
-        $functions = array('trans', 'trans_choice', 'Lang::get', 'Lang::choice', 'Lang::trans', 'Lang::transChoice', '@lang', '@choice');
+        $keys = [];
+        $functions = ['trans', 'trans_choice', 'Lang::get', 'Lang::choice', 'Lang::trans', 'Lang::transChoice', '@lang', '@choice'];
         $pattern = // See http://regexr.com/392hu
             "[^\w|>]".// Must not have an alphanum or _ or > before real method
             '('.implode('|', $functions).')'.// Must start with one of the functions
