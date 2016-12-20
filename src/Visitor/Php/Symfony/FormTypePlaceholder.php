@@ -20,7 +20,6 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 class FormTypePlaceholder extends BasePHPVisitor implements NodeVisitor
 {
-
     public function enterNode(Node $node)
     {
         // only Traverse *Type

@@ -13,7 +13,6 @@ namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
 use Translation\Extractor\Tests\Functional\Visitor\Php\BasePHPVisitorTest;
 use Translation\Extractor\Tests\Resources;
-use Translation\Extractor\Visitor\Php\Symfony\FormTypeChoices;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
 
 class FormTypePlaceholderTest extends BasePHPVisitorTest
@@ -27,5 +26,4 @@ class FormTypePlaceholderTest extends BasePHPVisitorTest
         $this->assertEquals('form.placeholder.text.but.no.label', $collection->get(1)->getMessage());
         $this->assertEquals('form.choice_placeholder', $collection->get(2)->getMessage());
     }
-
 }
