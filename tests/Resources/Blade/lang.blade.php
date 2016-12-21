@@ -3,7 +3,7 @@
     <title>App Name - @yield('title')</title>
 </head>
 <body>
-    @lang('foobar')
+    @lang('foo.bar')
 
 <div class="container">
     @yield('content')
