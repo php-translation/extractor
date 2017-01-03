@@ -4,6 +4,7 @@
 [![Build Status](https://img.shields.io/travis/php-translation/extractor.svg?style=flat-square)](https://travis-ci.org/php-translation/extractor)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/php-translation/extractor.svg?style=flat-square)](https://scrutinizer-ci.com/g/php-translation/extractor)
 [![Quality Score](https://img.shields.io/scrutinizer/g/php-translation/extractor.svg?style=flat-square)](https://scrutinizer-ci.com/g/php-translation/extractor)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/a5ae0cbe-f213-4ba6-94da-e9cffed86256/mini.png)](https://insight.sensiolabs.com/projects/a5ae0cbe-f213-4ba6-94da-e9cffed86256)
 [![Total Downloads](https://img.shields.io/packagist/dt/php-translation/extractor.svg?style=flat-square)](https://packagist.org/packages/php-translation/extractor)
 
 **Extract translation messages from source code**
