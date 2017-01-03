@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHP Translation package.
+ *
+ * (c) PHP Translation team <tobias.nyholm@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Translation\Extractor\Visitor\Php;
 
 use PhpParser\Node;
@@ -8,7 +17,7 @@ use Translation\Extractor\Model\SourceLocation;
 
 /**
  * Extract translations from classes implementing
- * Translation\Extractor\Model\SourceLocation\TranslationSourceLocationContainer
+ * Translation\Extractor\Model\SourceLocation\TranslationSourceLocationContainer.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
@@ -22,7 +31,7 @@ class SourceLocationContainerExtractor extends BasePHPVisitor implements NodeVis
     /**
      * @var array
      */
-    private $useStatements = array();
+    private $useStatements = [];
 
     public function beforeTraverse(array $nodes)
     {
@@ -35,7 +44,7 @@ class SourceLocationContainerExtractor extends BasePHPVisitor implements NodeVis
                 // Save namespace of this class for later.
                 $this->namespace = implode('\\', $node->name->parts);
             }
-            $this->useStatements = array();
+            $this->useStatements = [];
 
             return;
         }
@@ -67,7 +76,7 @@ class SourceLocationContainerExtractor extends BasePHPVisitor implements NodeVis
             return;
         }
 
-        $sourceLocations = call_user_func(array($this->namespace.'\\'.$node->name, 'getTranslationSourceLocations'));
+        $sourceLocations = call_user_func([$this->namespace.'\\'.$node->name, 'getTranslationSourceLocations']);
         if (!is_array($sourceLocations)) {
             throw new \RuntimeException(sprintf('%s::getTranslationSourceLocations() was expected to return an array of SourceLocations, but got %s.', $this->namespace.'\\'.$node->name, gettype($sourceLocations)));
         }
