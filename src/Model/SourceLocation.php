@@ -53,6 +53,21 @@ final class SourceLocation
     }
 
     /**
+     * Create a source location from your current location.
+     *
+     * @param string $message
+     * @param array  $context
+     *
+     * @return SourceLocation
+     */
+    public static function createHere($message, array $context = [])
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 1);
+
+        return new self($message, $trace[0]['file'], $trace[0]['line'], $context);
+    }
+
+    /**
      * @return string
      */
     public function getMessage()
