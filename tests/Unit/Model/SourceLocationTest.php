@@ -17,12 +17,12 @@ class SourceLocationTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateHere()
     {
-        $location = SourceLocation::createHere('foobar', ['foo'=>'bar']);
+        $location = SourceLocation::createHere('foobar', ['foo' => 'bar']);
 
-        $this->assertEquals('/Users/tobias/Workspace/PHPStorm/Translation/extractor/tests/Unit/Model/SourceLocationTest.php', $location->getPath());
+        $this->assertContains('tests/Unit/Model/SourceLocationTest.php', $location->getPath());
         $this->assertEquals(20, $location->getLine());
 
         $this->assertEquals('foobar', $location->getMessage());
-        $this->assertEquals(['foo'=>'bar'], $location->getContext());
+        $this->assertEquals(['foo' => 'bar'], $location->getContext());
     }
 }

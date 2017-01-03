@@ -56,7 +56,7 @@ final class SourceLocation
      * Create a source location from your current location.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
      *
      * @return SourceLocation
      */
