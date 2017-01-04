@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release. 
 
+## UNRELEASED
+
+## Added
+
+- Extractor for classes implementing `TranslationSourceLocationContainer`
+
 ## 0.1.1
 
 ### Added
