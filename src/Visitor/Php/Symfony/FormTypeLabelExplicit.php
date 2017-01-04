@@ -37,28 +37,30 @@ final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
         // is provided statically or through another function.
         // I don't see any disadvantages now to simply parsing arrays and JMSTranslationBundle has
         // been doing it like this for quite some time without major problems.
-        if ($node instanceof Node\Expr\Array_) {
-            foreach ($node->items as $item) {
-                if (!$item->key instanceof Node\Scalar\String_) {
-                    continue;
-                }
+        if (!$node instanceof Node\Expr\Array_) {
+            return;
+        }
 
-                if ($item->key->value !== 'label') {
-                    continue;
-                }
-
-                if (!$item->value instanceof Node\Scalar\String_) {
-                    continue;
-                }
-
-                $label = $item->value->value;
-                if (empty($label)) {
-                    continue;
-                }
-
-                $sl = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'));
-                $this->collection->addLocation($sl);
+        foreach ($node->items as $item) {
+            if (!$item->key instanceof Node\Scalar\String_) {
+                continue;
             }
+
+            if ($item->key->value !== 'label') {
+                continue;
+            }
+
+            if (!$item->value instanceof Node\Scalar\String_) {
+                continue;
+            }
+
+            $label = $item->value->value;
+            if (empty($label)) {
+                continue;
+            }
+
+            $sl = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'));
+            $this->collection->addLocation($sl);
         }
     }
 
