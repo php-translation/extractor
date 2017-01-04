@@ -20,6 +20,14 @@ use Translation\Extractor\Model\SourceCollection;
  */
 abstract class BasePHPVisitorTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @param $visitor
+     * @param $namespaceForTestFile
+     *
+     * @return SourceCollection
+     *
+     * @throws \Exception
+     */
     protected function getSourceLocations($visitor, $namespaceForTestFile)
     {
         $extractor = new PHPFileExtractor();
