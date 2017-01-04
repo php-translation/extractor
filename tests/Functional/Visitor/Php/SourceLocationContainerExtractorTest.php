@@ -15,8 +15,6 @@ use Translation\Extractor\Visitor\Php\SourceLocationContainerVisitor;
 use Translation\Extractor\Tests\Resources;
 
 /**
- *
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 final class SourceLocationContainerExtractorTest extends BasePHPVisitorTest

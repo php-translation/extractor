@@ -14,8 +14,6 @@ namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 use Translation\Extractor\Visitor\Twig\TranslationBlock;
 
 /**
- *
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 final class TranslationBlockTest extends BaseTwigVisitorTest

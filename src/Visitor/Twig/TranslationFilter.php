@@ -17,8 +17,6 @@ use Twig_Environment;
 use Twig_NodeInterface;
 
 /**
- *
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 final class TranslationFilter extends BaseVisitor implements \Twig_NodeVisitorInterface

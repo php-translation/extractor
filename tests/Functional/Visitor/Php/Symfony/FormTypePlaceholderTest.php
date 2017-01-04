@@ -16,8 +16,6 @@ use Translation\Extractor\Tests\Resources;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
 
 /**
- *
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 final class FormTypePlaceholderTest extends BasePHPVisitorTest

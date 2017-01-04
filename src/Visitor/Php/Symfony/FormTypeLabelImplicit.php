@@ -19,8 +19,6 @@ use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
- *
- *
  * @author Rein Baarsma <rein@solidwebcode.com>
  */
 final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor

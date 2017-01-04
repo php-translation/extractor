@@ -16,8 +16,6 @@ use Translation\Extractor\FileExtractor\BladeFileExtractor;
 use Translation\Extractor\Model\SourceCollection;
 
 /**
- *
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 final class BladeTest extends \PHPUnit_Framework_TestCase

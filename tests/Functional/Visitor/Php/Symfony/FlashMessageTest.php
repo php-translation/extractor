@@ -16,8 +16,6 @@ use Translation\Extractor\Tests\Resources;
 use Translation\Extractor\Visitor\Php\Symfony\FlashMessage;
 
 /**
- *
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 final class FlashMessageTest extends BasePHPVisitorTest

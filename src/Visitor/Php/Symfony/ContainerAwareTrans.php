@@ -17,8 +17,6 @@ use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
- *
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 final class ContainerAwareTrans extends BasePHPVisitor implements NodeVisitor
