@@ -22,7 +22,7 @@ use Translation\Extractor\Visitor\Visitor;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class PHPFileExtractor implements FileExtractor
+final class PHPFileExtractor implements FileExtractor
 {
     /**
      * @var Visitor[]|NodeVisitor[]

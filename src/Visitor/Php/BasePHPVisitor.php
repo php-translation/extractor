@@ -14,6 +14,11 @@ namespace Translation\Extractor\Visitor\Php;
 use PhpParser\Node;
 use Translation\Extractor\Visitor\BaseVisitor;
 
+/**
+ * Base class for PHP visitors.
+ *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
 abstract class BasePHPVisitor extends BaseVisitor
 {
     /**

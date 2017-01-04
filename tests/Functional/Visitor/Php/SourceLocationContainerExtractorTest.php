@@ -14,7 +14,12 @@ namespace Translation\Extractor\Tests\Functional\Visitor\Php;
 use Translation\Extractor\Visitor\Php\SourceLocationContainerVisitor;
 use Translation\Extractor\Tests\Resources;
 
-class SourceLocationContainerExtractorTest extends BasePHPVisitorTest
+/**
+ *
+ *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
+final class SourceLocationContainerExtractorTest extends BasePHPVisitorTest
 {
     public function testExtract()
     {

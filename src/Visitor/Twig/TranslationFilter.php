@@ -16,7 +16,12 @@ use Translation\Extractor\Visitor\BaseVisitor;
 use Twig_Environment;
 use Twig_NodeInterface;
 
-class TranslationFilter extends BaseVisitor implements \Twig_NodeVisitorInterface
+/**
+ *
+ *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
+final class TranslationFilter extends BaseVisitor implements \Twig_NodeVisitorInterface
 {
     public function enterNode(Twig_NodeInterface $node, Twig_Environment $env)
     {

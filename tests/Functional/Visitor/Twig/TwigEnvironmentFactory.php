@@ -15,7 +15,12 @@ use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\IdentityTranslator;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
-class TwigEnvironmentFactory
+/**
+ * Create a TwigEnvironment that will be used in tests.
+ *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
+final class TwigEnvironmentFactory
 {
     public static function create()
     {

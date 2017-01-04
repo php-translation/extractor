@@ -16,7 +16,13 @@ use Symfony\Component\Finder\SplFileInfo;
 use Translation\Extractor\FileExtractor\FileExtractor;
 use Translation\Extractor\Model\SourceCollection;
 
-class Extractor
+/**
+ * Main class for all extractors. This is the service that will be loaded with file
+ * extractors.
+ *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
+final class Extractor
 {
     /**
      * @var FileExtractor[]

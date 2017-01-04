@@ -18,7 +18,12 @@ use PhpParser\NodeVisitor;
 use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
-class FormTypePlaceholder extends BasePHPVisitor implements NodeVisitor
+/**
+ *
+ *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
+final class FormTypePlaceholder extends BasePHPVisitor implements NodeVisitor
 {
     public function enterNode(Node $node)
     {

@@ -15,6 +15,11 @@ use Translation\Extractor\FileExtractor\PHPFileExtractor;
 use Symfony\Component\Finder\Finder;
 use Translation\Extractor\Model\SourceCollection;
 
+/**
+ *
+ *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
 abstract class BasePHPVisitorTest extends \PHPUnit_Framework_TestCase
 {
     protected function getSourceLocations($visitor, $namespaceForTestFile)

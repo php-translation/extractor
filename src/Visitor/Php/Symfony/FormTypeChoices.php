@@ -18,7 +18,12 @@ use PhpParser\NodeVisitor;
 use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
-class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
+/**
+ *
+ *
+ * @author Rein Baarsma <rein@solidwebcode.com>
+ */
+final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
 {
     /**
      * @var int defaults to major version 3
