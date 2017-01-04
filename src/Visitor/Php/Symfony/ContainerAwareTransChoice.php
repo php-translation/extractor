@@ -27,20 +27,22 @@ final class ContainerAwareTransChoice extends BasePHPVisitor implements NodeVisi
 
     public function enterNode(Node $node)
     {
-        if ($node instanceof Node\Expr\MethodCall) {
-            if (!is_string($node->name)) {
-                return;
-            }
-            $name = $node->name;
+        if (!$node instanceof Node\Expr\MethodCall) {
+            return;
+        }
 
-            //If $this->get('translator')->trans('foobar')
-            if ('transChoice' === $name) {
-                $label = $this->getStringArgument($node, 0);
-                $domain = $this->getStringArgument($node, 3);
+        if (!is_string($node->name)) {
+            return;
+        }
+        $name = $node->name;
 
-                $source = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'), ['domain' => $domain]);
-                $this->collection->addLocation($source);
-            }
+        //If $this->get('translator')->trans('foobar')
+        if ('transChoice' === $name) {
+            $label = $this->getStringArgument($node, 0);
+            $domain = $this->getStringArgument($node, 3);
+
+            $source = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'), ['domain' => $domain]);
+            $this->collection->addLocation($source);
         }
     }
 
