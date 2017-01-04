@@ -18,7 +18,10 @@ use PhpParser\NodeVisitor;
 use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
-class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
+/**
+ * @author Rein Baarsma <rein@solidwebcode.com>
+ */
+final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
 {
     public function enterNode(Node $node)
     {

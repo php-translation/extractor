@@ -15,6 +15,9 @@ use Translation\Extractor\Tests\Functional\Visitor\Php\BasePHPVisitorTest;
 use Translation\Extractor\Tests\Resources;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeChoices;
 
+/**
+ * @author Rein Baarsma <rein@solidwebcode.com>
+ */
 class FormTypeChoicesTest extends BasePHPVisitorTest
 {
     public function testSimpleSymfony3x()

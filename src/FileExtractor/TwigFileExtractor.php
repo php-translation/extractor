@@ -18,7 +18,7 @@ use Translation\Extractor\Visitor\Visitor;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class TwigFileExtractor implements FileExtractor
+final class TwigFileExtractor implements FileExtractor
 {
     /**
      * @var Visitor[]|\Twig_NodeVisitorInterface[]

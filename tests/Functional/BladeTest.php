@@ -15,7 +15,10 @@ use Symfony\Component\Finder\Finder;
 use Translation\Extractor\FileExtractor\BladeFileExtractor;
 use Translation\Extractor\Model\SourceCollection;
 
-class BladeTest extends \PHPUnit_Framework_TestCase
+/**
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
+final class BladeTest extends \PHPUnit_Framework_TestCase
 {
     private function getSourceLocations($relativePath)
     {

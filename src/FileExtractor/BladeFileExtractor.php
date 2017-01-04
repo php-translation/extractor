@@ -18,7 +18,7 @@ use Translation\Extractor\Model\SourceLocation;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class BladeFileExtractor implements FileExtractor
+final class BladeFileExtractor implements FileExtractor
 {
     public function getSourceLocations(SplFileInfo $file, SourceCollection $collection)
     {

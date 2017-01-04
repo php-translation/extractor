@@ -15,6 +15,9 @@ use Translation\Extractor\Tests\Functional\Visitor\Php\BasePHPVisitorTest;
 use Translation\Extractor\Tests\Resources;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
 
+/**
+ * @author Rein Baarsma <rein@solidwebcode.com>
+ */
 class FormTypeLabelImplicitTest extends BasePHPVisitorTest
 {
     public function testExtract()

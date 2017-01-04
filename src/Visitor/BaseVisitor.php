@@ -14,6 +14,11 @@ namespace Translation\Extractor\Visitor;
 use Symfony\Component\Finder\SplFileInfo;
 use Translation\Extractor\Model\SourceCollection;
 
+/**
+ * Base class for any visitor.
+ *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ */
 abstract class BaseVisitor implements Visitor
 {
     /**
