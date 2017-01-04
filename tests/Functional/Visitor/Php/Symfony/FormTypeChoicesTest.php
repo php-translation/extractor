@@ -42,4 +42,15 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
         $this->assertEquals('label4', $collection->get(3)->getMessage());
         $this->assertEquals(12, $collection->get(0)->getLine());
     }
+
+    public function testChainedChoice()
+    {
+        $visitor = new FormTypeChoices();
+        $visitor->setSymfonyMajorVersion(3);
+        $collection = $this->getSourceLocations($visitor, Resources\Php\Symfony\ChainedChoiceType::class);
+
+        $this->assertCount(2, $collection, print_r($collection, true));
+        $this->assertEquals('label1', $collection->get(0)->getMessage());
+        $this->assertEquals('label2', $collection->get(1)->getMessage());
+    }
 }

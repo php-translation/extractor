@@ -46,54 +46,57 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
         }
 
         // symfony 3 displays key by default, where symfony 2 displays value
-        $useKey = $this->symfonyMajorVersion == 3;
+        $useKey = $this->symfonyMajorVersion === 3;
 
         // remember choices in this node
         $choicesNodes = [];
 
         // loop through array
-        if ($node instanceof Node\Expr\Array_) {
-            foreach ($node->items as $item) {
-                if (!$item->key instanceof Node\Scalar\String_) {
-                    continue;
-                }
+        if (!$node instanceof Node\Expr\Array_) {
+            return;
+        }
 
-                if ($item->key->value === 'choices_as_values') {
-                    $useKey = true;
-                    continue;
-                }
-
-                if ($item->key->value !== 'choices') {
-                    continue;
-                }
-
-                if (!$item->value instanceof Node\Expr\Array_) {
-                    continue;
-                }
-
-                $choicesNodes[] = $item->value;
+        foreach ($node->items as $item) {
+            if (!$item->key instanceof Node\Scalar\String_) {
+                continue;
             }
 
-            if (count($choicesNodes) > 0) {
-                // probably will be only 1, but who knows
-                foreach ($choicesNodes as $choices) {
-                    // TODO: do something with grouped (multi-dimensional) arrays here
-                    if (!$choices instanceof Node\Expr\Array_) {
+            if ($item->key->value === 'choices_as_values') {
+                $useKey = true;
+                continue;
+            }
+
+            if ($item->key->value !== 'choices') {
+                continue;
+            }
+
+            if (!$item->value instanceof Node\Expr\Array_) {
+                continue;
+            }
+
+            $choicesNodes[] = $item->value;
+        }
+
+        if (count($choicesNodes) > 0) {
+            // probably will be only 1, but who knows
+            foreach ($choicesNodes as $choices) {
+                // TODO: do something with grouped (multi-dimensional) arrays here
+                if (!$choices instanceof Node\Expr\Array_) {
+                    continue;
+                }
+
+                foreach ($choices->items as $citem) {
+                    $labelNode = $useKey ? $citem->key : $citem->value;
+                    if (!$labelNode instanceof Node\Scalar\String_) {
                         continue;
                     }
 
-                    foreach ($choices as $citem) {
-                        $labelNode = $useKey ? $citem[0]->key : $citem[0]->value;
-                        if (!$labelNode instanceof Node\Scalar\String_) {
-                            continue;
-                        }
-
-                        $sl = new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'));
-                        $this->collection->addLocation($sl);
-                    }
+                    $sl = new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'));
+                    $this->collection->addLocation($sl);
                 }
             }
         }
+
     }
 
     public function leaveNode(Node $node)
