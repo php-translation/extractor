@@ -21,7 +21,7 @@ use Translation\Extractor\Model\SourceLocation;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class SourceLocationContainerExtractor extends BasePHPVisitor implements NodeVisitor
+class SourceLocationContainerVisitor extends BasePHPVisitor implements NodeVisitor
 {
     /**
      * @var string
