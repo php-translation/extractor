@@ -96,7 +96,6 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
                 }
             }
         }
-
     }
 
     public function leaveNode(Node $node)

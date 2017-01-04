@@ -25,6 +25,7 @@ abstract class BasePHPVisitorTest extends \PHPUnit_Framework_TestCase
      * @param $namespaceForTestFile
      *
      * @return SourceCollection
+     *
      * @throws \Exception
      */
     protected function getSourceLocations($visitor, $namespaceForTestFile)
