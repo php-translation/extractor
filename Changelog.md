@@ -2,6 +2,12 @@
 
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release. 
 
+## UNRELEASED
+
+### Added
+
+- Support for Twig2.0
+
 ## 1.0.0
 
 ## Added
