@@ -15,12 +15,12 @@ use Symfony\Bridge\Twig\Node\TransNode;
 use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\BaseVisitor;
 use Twig_Environment;
-use Twig_NodeInterface;
+use Twig_Node;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class TranslationBlock extends BaseVisitor implements \Twig_NodeVisitorInterface
+final class Twig2TranslationBlock extends BaseVisitor implements \Twig_NodeVisitorInterface
 {
     /**
      * @var WorkerTranslationBlock
@@ -32,7 +32,7 @@ final class TranslationBlock extends BaseVisitor implements \Twig_NodeVisitorInt
         $this->worker = new WorkerTranslationBlock();
     }
 
-    public function enterNode(Twig_NodeInterface $node, Twig_Environment $env)
+    public function enterNode(Twig_Node $node, Twig_Environment $env)
     {
         $that = $this;
         return $this->worker->work($node, $this->collection, function() use ($that){
@@ -40,7 +40,7 @@ final class TranslationBlock extends BaseVisitor implements \Twig_NodeVisitorInt
         });
     }
 
-    public function leaveNode(Twig_NodeInterface $node, Twig_Environment $env)
+    public function leaveNode(Twig_Node $node, Twig_Environment $env)
     {
         return $node;
     }

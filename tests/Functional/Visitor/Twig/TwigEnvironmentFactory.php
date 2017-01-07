@@ -24,9 +24,8 @@ final class TwigEnvironmentFactory
 {
     public static function create()
     {
-        $env = new \Twig_Environment();
+        $env = new \Twig_Environment(new \Twig_Loader_Array([]));
         $env->addExtension(new TranslationExtension($translator = new IdentityTranslator(new MessageSelector())));
-        $env->setLoader(new \Twig_Loader_String());
 
         return $env;
     }

@@ -21,40 +21,22 @@ use Twig_NodeInterface;
  */
 final class TranslationFilter extends BaseVisitor implements \Twig_NodeVisitorInterface
 {
+    /**
+     * @var WorkerTranslationFilter
+     */
+    private $worker;
+
+    public function __construct()
+    {
+        $this->worker = new WorkerTranslationFilter();
+    }
+
     public function enterNode(Twig_NodeInterface $node, Twig_Environment $env)
     {
-        if (!$node instanceof \Twig_Node_Expression_Filter) {
-            return $node;
-        }
-
-        $name = $node->getNode('filter')->getAttribute('value');
-        if ('trans' !== $name && 'transchoice' !== $name) {
-            return $node;
-        }
-
-        $idNode = $node->getNode('node');
-        if (!$idNode instanceof \Twig_Node_Expression_Constant) {
-            // We can only extract constants
-            return $node;
-        }
-
-        $id = $idNode->getAttribute('value');
-        $index = 'trans' === $name ? 1 : 2;
-        $domain = 'messages';
-        $arguments = $node->getNode('arguments');
-        if ($arguments->hasNode($index)) {
-            $argument = $arguments->getNode($index);
-            if (!$argument instanceof \Twig_Node_Expression_Constant) {
-                return $node;
-            }
-
-            $domain = $argument->getAttribute('value');
-        }
-
-        $source = new SourceLocation($id, $this->getAbsoluteFilePath(), $node->getLine(), ['domain' => $domain]);
-        $this->collection->addLocation($source);
-
-        return $node;
+        $that = $this;
+        return $this->worker->work($node, $this->collection, function() use ($that){
+            return $this->getAbsoluteFilePath();
+        });
     }
 
     public function leaveNode(Twig_NodeInterface $node, Twig_Environment $env)
