@@ -33,9 +33,9 @@ final class TwigFileExtractor implements FileExtractor
     /**
      * @param \Twig_Environment $twig
      */
-    public function __construct(\Twig_Environment $twig = null)
+    public function __construct(\Twig_Environment $twig)
     {
-        $this->twig = $twig ?: new \Twig_Environment();
+        $this->twig = $twig;
     }
 
     public function getSourceLocations(SplFileInfo $file, SourceCollection $collection)
@@ -46,7 +46,13 @@ final class TwigFileExtractor implements FileExtractor
 
         $path = $file->getRelativePath();
 
-        $tokens = $this->twig->parse($this->twig->tokenize($file->getContents(), $path));
+        if (class_exists('Twig_Source')) {
+            // Twig 2.0
+            $stream = $this->twig->tokenize(new \Twig_Source($file->getContents(), $file->getRelativePathname(), $path));
+        } else {
+            $stream = $this->twig->tokenize($file->getContents(), $path);
+        }
+        $tokens = $this->twig->parse($stream);
         $traverser = new \Twig_NodeTraverser($this->twig, $this->visitors);
         $traverser->traverse($tokens);
     }

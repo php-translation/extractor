@@ -12,6 +12,7 @@
 namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 
 use Translation\Extractor\Visitor\Twig\TranslationFilter;
+use Translation\Extractor\Visitor\Twig\Twig2TranslationFilter;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -20,7 +21,12 @@ final class TranslationFilterTest extends BaseTwigVisitorTest
 {
     public function testExtract()
     {
-        $collection = $this->getSourceLocations(new TranslationFilter(), 'Twig/TranslationFilter/trans.html.twig');
+        if (\Twig_Environment::MAJOR_VERSION === 1) {
+            $visitor = new TranslationFilter();
+        } else {
+            $visitor = new Twig2TranslationFilter();
+        }
+        $collection = $this->getSourceLocations($visitor, 'Twig/TranslationFilter/trans.html.twig');
 
         $this->assertCount(1, $collection);
         $source = $collection->first();

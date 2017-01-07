@@ -24,6 +24,8 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
 use Translation\Extractor\Visitor\Twig\TranslationBlock;
 use Translation\Extractor\Visitor\Twig\TranslationFilter;
+use Translation\Extractor\Visitor\Twig\Twig2TranslationBlock;
+use Translation\Extractor\Visitor\Twig\Twig2TranslationFilter;
 
 /**
  * Smoke test to make sure no extractor throws exceptions.
@@ -66,8 +68,14 @@ class AllExtractorsTest extends \PHPUnit_Framework_TestCase
     private function getTwigFileExtractor()
     {
         $file = new TwigFileExtractor(TwigEnvironmentFactory::create());
-        $file->addVisitor(new TranslationBlock());
-        $file->addVisitor(new TranslationFilter());
+
+        if (\Twig_Environment::MAJOR_VERSION === 1) {
+            $file->addVisitor(new TranslationBlock());
+            $file->addVisitor(new TranslationFilter());
+        } else {
+            $file->addVisitor(new Twig2TranslationBlock());
+            $file->addVisitor(new Twig2TranslationFilter());
+        }
 
         return $file;
     }
