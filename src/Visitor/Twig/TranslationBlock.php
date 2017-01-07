@@ -11,8 +11,6 @@
 
 namespace Translation\Extractor\Visitor\Twig;
 
-use Symfony\Bridge\Twig\Node\TransNode;
-use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\BaseVisitor;
 use Twig_Environment;
 use Twig_NodeInterface;
@@ -35,7 +33,8 @@ final class TranslationBlock extends BaseVisitor implements \Twig_NodeVisitorInt
     public function enterNode(Twig_NodeInterface $node, Twig_Environment $env)
     {
         $that = $this;
-        return $this->worker->work($node, $this->collection, function() use ($that){
+
+        return $this->worker->work($node, $this->collection, function () use ($that) {
             return $this->getAbsoluteFilePath();
         });
     }

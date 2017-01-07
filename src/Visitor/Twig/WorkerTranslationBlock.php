@@ -14,9 +14,6 @@ namespace Translation\Extractor\Visitor\Twig;
 use Symfony\Bridge\Twig\Node\TransNode;
 use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Model\SourceLocation;
-use Translation\Extractor\Visitor\BaseVisitor;
-use Twig_Environment;
-use Twig_Node;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -25,8 +22,8 @@ final class WorkerTranslationBlock
 {
     /**
      * @param \Twig_Node|\Twig_NodeInterface $node
-     * @param SourceCollection $collection
-     * @param callable $getAbsoluteFilePath
+     * @param SourceCollection               $collection
+     * @param callable                       $getAbsoluteFilePath
      *
      * @return \Twig_Node|\Twig_NodeInterface
      */
