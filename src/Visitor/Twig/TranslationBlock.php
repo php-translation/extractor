@@ -32,9 +32,7 @@ final class TranslationBlock extends BaseVisitor implements \Twig_NodeVisitorInt
 
     public function enterNode(Twig_NodeInterface $node, Twig_Environment $env)
     {
-        $that = $this;
-
-        return $this->worker->work($node, $this->collection, function () use ($that) {
+        return $this->worker->work($node, $this->collection, function () {
             return $this->getAbsoluteFilePath();
         });
     }

@@ -32,9 +32,7 @@ final class Twig2TranslationFilter extends BaseVisitor implements \Twig_NodeVisi
 
     public function enterNode(Twig_Node $node, Twig_Environment $env)
     {
-        $that = $this;
-
-        return $this->worker->work($node, $this->collection, function () use ($that) {
+        return $this->worker->work($node, $this->collection, function () {
             return $this->getAbsoluteFilePath();
         });
     }
