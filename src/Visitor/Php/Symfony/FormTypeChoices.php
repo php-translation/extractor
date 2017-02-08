@@ -98,7 +98,6 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
                 $this->collection->addLocation($sl);
             }
         }
-
     }
 
     public function leaveNode(Node $node)

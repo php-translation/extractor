@@ -33,7 +33,6 @@ class FormTypeLabelExplicitTest extends BasePHPVisitorTest
         $this->assertEquals('label.find5', $collection->get(4)->getMessage());
 
         $this->assertCount(4, $collection->getErrors());
-
     }
 
     public function testWillNotExtractTypeless()

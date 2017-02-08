@@ -12,7 +12,6 @@
 namespace Translation\Extractor\Visitor;
 
 use Doctrine\Common\Annotations\DocParser;
-use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use Symfony\Component\Finder\SplFileInfo;
 use Translation\Extractor\Annotation\Ignore;
@@ -53,7 +52,7 @@ abstract class BaseVisitor implements Visitor
     }
 
     /**
-     * @param Node $node
+     * @param Node   $node
      * @param string $errorMessage
      */
     protected function addError(Node $node, string $errorMessage)
