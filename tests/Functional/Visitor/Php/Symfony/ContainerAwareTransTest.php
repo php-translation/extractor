@@ -24,11 +24,13 @@ final class ContainerAwareTransTest extends BasePHPVisitorTest
     {
         $collection = $this->getSourceLocations(new ContainerAwareTrans(), Resources\Php\Symfony\ContainerAwareTrans::class);
 
-        $this->assertCount(4, $collection);
+        $this->assertCount(6, $collection);
 
         $this->assertEquals('trans0', $collection->get(0)->getMessage());
         $this->assertEquals('trans1', $collection->get(1)->getMessage());
         $this->assertEquals('trans_line', $collection->get(2)->getMessage());
         $this->assertEquals('variable', $collection->get(3)->getMessage());
+        $this->assertEquals('my.pdf', $collection->get(4)->getMessage());
+        $this->assertEquals('bar', $collection->get(5)->getMessage());
     }
 }
