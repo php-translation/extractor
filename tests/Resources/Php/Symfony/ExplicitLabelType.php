@@ -2,6 +2,8 @@
 
 namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
+use Translation\Extractor\Annotation\Ignore;
+
 class ExplicitLabelType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -28,6 +30,10 @@ class ExplicitLabelType
                 'label' // value label, shouldn't be picked up
             ])
             ->add('skip4', null, [
+                'label' => 'something '.$var
+            ])
+            /** @Ignore */
+            ->add('ignore', null, [
                 'label' => 'something '.$var
             ])
         ;

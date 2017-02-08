@@ -21,6 +21,11 @@ final class SourceCollection implements \Countable, \IteratorAggregate
      */
     private $sourceLocations = [];
 
+    /**
+     * @var Error[]
+     */
+    private $errors = [];
+
     public function getIterator()
     {
         return new \ArrayIterator($this->sourceLocations);
@@ -37,6 +42,14 @@ final class SourceCollection implements \Countable, \IteratorAggregate
     public function addLocation(SourceLocation $location)
     {
         $this->sourceLocations[] = $location;
+    }
+
+    /**
+     * @param Error $error
+     */
+    public function addError(Error $error)
+    {
+        $this->errors[] = $error;
     }
 
     /**
@@ -63,5 +76,10 @@ final class SourceCollection implements \Countable, \IteratorAggregate
         }
 
         return $this->sourceLocations[$key];
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 }

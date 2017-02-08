@@ -29,4 +29,12 @@ final class FormTypePlaceholderTest extends BasePHPVisitorTest
         $this->assertEquals('form.placeholder.text.but.no.label', $collection->get(1)->getMessage());
         $this->assertEquals('form.choice_placeholder', $collection->get(2)->getMessage());
     }
+
+    public function testExtractError()
+    {
+        $collection = $this->getSourceLocations(new FormTypePlaceholder(), Resources\Php\Symfony\PlaceholderFormErrorType::class);
+
+        $errors = $collection->getErrors();
+        $this->assertCount(3, $errors);
+    }
 }

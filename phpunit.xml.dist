@@ -10,7 +10,7 @@
          stopOnFailure="false"
          syntaxCheck="false"
          codecoverage="true"
-         bootstrap="./vendor/autoload.php"
+         bootstrap="./tests/bootstrap.php"
         >
 
     <formatter type="clover" usefile="false"/>
