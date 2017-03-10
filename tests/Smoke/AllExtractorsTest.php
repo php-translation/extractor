@@ -11,10 +11,13 @@
 
 namespace Translation\Extractor\Tests\Smoke;
 
+use Symfony\Bridge\Twig\Translation\TwigExtractor;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Translation\MessageCatalogue;
 use Translation\Extractor\Extractor;
 use Translation\Extractor\FileExtractor\PHPFileExtractor;
 use Translation\Extractor\FileExtractor\TwigFileExtractor;
+use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Tests\Functional\Visitor\Twig\TwigEnvironmentFactory;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTrans;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTransChoice;
@@ -41,9 +44,34 @@ class AllExtractorsTest extends \PHPUnit_Framework_TestCase
         $extractor->addFileExtractor($this->getTwigFileExtractor());
 
         $finder = new Finder();
-        $finder->in(dirname(__DIR__));
+        $finder->in(dirname(__DIR__).'/Resources/Github');
 
-        $extractor->extract($finder);
+        $sc = $extractor->extract($finder);
+        $this->translationExists($sc, 'trans.issue_34');
+    }
+
+    /**
+     * Assert that a translation key exists in source collection.
+     *
+     * @param SourceCollection $sc
+     * @param $translationKey
+     * @param string $message
+     */
+    private function translationExists(SourceCollection $sc, $translationKey, $message = null)
+    {
+        if (empty($message)) {
+            $message = sprintf('Tried to find "%s" but failed', $translationKey);
+        }
+
+        $found = false;
+        foreach ($sc as $source) {
+            if ($translationKey === $source->getMessage()) {
+                $found = true;
+                break;
+            }
+        }
+
+        $this->assertTrue($found, $message);
     }
 
     /**
@@ -74,7 +102,7 @@ class AllExtractorsTest extends \PHPUnit_Framework_TestCase
             $file->addVisitor(new TranslationFilter());
         } else {
             $file->addVisitor(new Twig2TranslationBlock());
-            $file->addVisitor(new Twig2TranslationFilter());
+            //$file->addVisitor(new Twig2TranslationFilter());
         }
 
         return $file;

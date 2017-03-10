@@ -11,18 +11,15 @@
 
 namespace Translation\Extractor\FileExtractor;
 
-use Symfony\Bridge\Twig\NodeVisitor\TranslationDefaultDomainNodeVisitor;
-use Symfony\Bridge\Twig\TokenParser\TransChoiceTokenParser;
-use Symfony\Bridge\Twig\TokenParser\TransDefaultDomainTokenParser;
-use Symfony\Bridge\Twig\TokenParser\TransTokenParser;
 use Symfony\Component\Finder\SplFileInfo;
 use Translation\Extractor\Model\SourceCollection;
+use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Visitor;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class TwigFileExtractor extends \Twig_Extension implements FileExtractor
+final class SymfonyTwigFileExtractor implements FileExtractor
 {
     /**
      * @var Visitor[]|\Twig_NodeVisitorInterface[]
@@ -40,17 +37,14 @@ final class TwigFileExtractor extends \Twig_Extension implements FileExtractor
     public function __construct(\Twig_Environment $twig)
     {
         $this->twig = $twig;
-        $twig->addExtension($this);
     }
 
     public function getSourceLocations(SplFileInfo $file, SourceCollection $collection)
     {
-        foreach ($this->visitors as $v) {
-            $v->init($collection, $file);
-        }
+        $visitor = $this->twig->getExtension('Symfony\Bridge\Twig\Extension\TranslationExtension')->getTranslationNodeVisitor();
+        $visitor->enable();
 
         $path = $file->getRelativePath();
-
         if (class_exists('Twig_Source')) {
             // Twig 2.0
             $stream = $this->twig->tokenize(new \Twig_Source($file->getContents(), $file->getRelativePathname(), $path));
@@ -58,6 +52,12 @@ final class TwigFileExtractor extends \Twig_Extension implements FileExtractor
             $stream = $this->twig->tokenize($file->getContents(), $path);
         }
         $this->twig->parse($stream);
+
+        foreach ($visitor->getMessages() as $message) {
+            $collection->addLocation(SourceLocation::createHere(trim($message[0])));
+        }
+
+        $visitor->disable();
     }
 
     public function getType()
@@ -71,34 +71,5 @@ final class TwigFileExtractor extends \Twig_Extension implements FileExtractor
     public function addVisitor(\Twig_NodeVisitorInterface $visitor)
     {
         $this->visitors[] = $visitor;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getNodeVisitors()
-    {
-        return $this->visitors;
-    }
-
-    /**
-     * Returns the token parser instance to add to the existing list.
-     *
-     * @return array An array of Twig_TokenParser instances
-     */
-    public function getTokenParsers()
-    {
-        return array(
-            // {% trans %}Symfony is great!{% endtrans %}
-            new TransTokenParser(),
-
-            // {% transchoice count %}
-            //     {0} There is no apples|{1} There is one apple|]1,Inf] There is {{ count }} apples
-            // {% endtranschoice %}
-            new TransChoiceTokenParser(),
-
-            // {% trans_default_domain "foobar" %}
-            new TransDefaultDomainTokenParser(),
-        );
     }
 }
