@@ -27,8 +27,10 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
 use Translation\Extractor\Visitor\Twig\TranslationBlock;
 use Translation\Extractor\Visitor\Twig\TranslationFilter;
+use Translation\Extractor\Visitor\Twig\Twig1Visitor;
 use Translation\Extractor\Visitor\Twig\Twig2TranslationBlock;
 use Translation\Extractor\Visitor\Twig\Twig2TranslationFilter;
+use Translation\Extractor\Visitor\Twig\Twig2Visitor;
 
 /**
  * Smoke test to make sure no extractor throws exceptions.
@@ -44,7 +46,7 @@ class AllExtractorsTest extends \PHPUnit_Framework_TestCase
         $extractor->addFileExtractor($this->getTwigFileExtractor());
 
         $finder = new Finder();
-        $finder->in(dirname(__DIR__).'/Resources/Github');
+        $finder->in(dirname(__DIR__));
 
         $sc = $extractor->extract($finder);
         $this->translationExists($sc, 'trans.issue_34');
@@ -98,11 +100,9 @@ class AllExtractorsTest extends \PHPUnit_Framework_TestCase
         $file = new TwigFileExtractor(TwigEnvironmentFactory::create());
 
         if (\Twig_Environment::MAJOR_VERSION === 1) {
-            $file->addVisitor(new TranslationBlock());
-            $file->addVisitor(new TranslationFilter());
+            $file->addVisitor(new Twig1Visitor());
         } else {
-            $file->addVisitor(new Twig2TranslationBlock());
-            //$file->addVisitor(new Twig2TranslationFilter());
+            $file->addVisitor(new Twig2Visitor());
         }
 
         return $file;

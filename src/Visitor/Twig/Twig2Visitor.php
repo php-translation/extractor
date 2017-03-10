@@ -17,9 +17,8 @@ use Twig_Node;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
- * @deprecated Use Twig2Visitor
  */
-final class Twig2TranslationFilter extends BaseVisitor implements \Twig_NodeVisitorInterface
+final class Twig2Visitor extends BaseVisitor implements \Twig_NodeVisitorInterface
 {
     /**
      * @var WorkerTranslationFilter
@@ -28,7 +27,7 @@ final class Twig2TranslationFilter extends BaseVisitor implements \Twig_NodeVisi
 
     public function __construct()
     {
-        $this->worker = new WorkerTranslationBlock();
+        $this->worker = new Worker();
     }
 
     public function enterNode(Twig_Node $node, Twig_Environment $env)

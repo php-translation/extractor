@@ -17,6 +17,7 @@ use Translation\Extractor\Model\SourceLocation;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ * @deprecated Use Worker
  */
 final class WorkerTranslationBlock
 {
@@ -31,7 +32,7 @@ final class WorkerTranslationBlock
      */
     public function work($node, SourceCollection $collection, callable $getAbsoluteFilePath)
     {
-        if (false && $node instanceof TransNode) {
+        if ($node instanceof TransNode) {
             $id = $node->getNode('body')->getAttribute('data');
             $domain = 'messages';
             if ($node->hasNode('domain')) {
@@ -44,73 +45,6 @@ final class WorkerTranslationBlock
             $collection->addLocation($source);
         }
 
-        if (
-            $node instanceof \Twig_Node_Expression_Filter &&
-            'trans' === $node->getNode('filter')->getAttribute('value') &&
-            $node->getNode('node') instanceof \Twig_Node_Expression_Constant
-        ) {
-            // extract constant nodes with a trans filter
-            $collection->addLocation(new SourceLocation(
-                $node->getNode('node')->getAttribute('value'),
-                $getAbsoluteFilePath(),
-                $node->getTemplateLine(),
-                ['domain' => $this->getReadDomainFromArguments($node->getNode('arguments'), 1)]
-            ));
-        } elseif (
-            $node instanceof \Twig_Node_Expression_Filter &&
-            'transchoice' === $node->getNode('filter')->getAttribute('value') &&
-            $node->getNode('node') instanceof \Twig_Node_Expression_Constant
-        ) {
-            // extract constant nodes with a trans filter
-            $collection->addLocation(new SourceLocation(
-                $node->getNode('node')->getAttribute('value'),
-                $getAbsoluteFilePath(),
-                $node->getTemplateLine(),
-                ['domain' => $this->getReadDomainFromArguments($node->getNode('arguments'), 2),]
-            ));
-        } elseif ($node instanceof TransNode) {
-            // extract trans nodes
-            $collection->addLocation(new SourceLocation(
-                $node->getNode('body')->getAttribute('data'),
-                $getAbsoluteFilePath(),
-                $node->getTemplateLine(),
-                ['domain' => $node->hasNode('domain') ? $this->getReadDomainFromNode($node->getNode('domain')) : self::UNDEFINED_DOMAIN]
-            ));
-        }
-
         return $node;
-    }
-
-    /**
-     * @param \Twig_Node $arguments
-     * @param int        $index
-     *
-     * @return string|null
-     */
-    private function getReadDomainFromArguments(\Twig_Node $arguments, $index)
-    {
-        if ($arguments->hasNode('domain')) {
-            $argument = $arguments->getNode('domain');
-        } elseif ($arguments->hasNode($index)) {
-            $argument = $arguments->getNode($index);
-        } else {
-            return self::UNDEFINED_DOMAIN;
-        }
-
-        return $this->getReadDomainFromNode($argument);
-    }
-
-    /**
-     * @param \Twig_Node $node
-     *
-     * @return string|null
-     */
-    private function getReadDomainFromNode(\Twig_Node $node)
-    {
-        if ($node instanceof \Twig_Node_Expression_Constant) {
-            return $node->getAttribute('value');
-        }
-
-        return self::UNDEFINED_DOMAIN;
     }
 }
