@@ -4,9 +4,16 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 1.1.0
+
 ### Added
 
-- Support for Twig2.0
+- Support for Twig 2.0.
+- Support for reporting errors and silence errors with `@Ignore`.
+
+### Deprecated
+
+- `Twig\TranslationBlock` and `Twig\TranslationFilter`. Use `Twig\Twig1Visitor` instead. 
 
 ## 1.0.0
 

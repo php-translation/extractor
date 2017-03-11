@@ -11,30 +11,17 @@
 
 namespace Translation\Extractor\Visitor\Twig;
 
-use Translation\Extractor\Visitor\BaseVisitor;
 use Twig_Environment;
 use Twig_NodeInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class Twig1Visitor extends BaseVisitor implements \Twig_NodeVisitorInterface
+final class Twig1Visitor extends TwigVisitor implements \Twig_NodeVisitorInterface
 {
-    /**
-     * @var WorkerTranslationFilter
-     */
-    private $worker;
-
-    public function __construct()
-    {
-        $this->worker = new Worker();
-    }
-
     public function enterNode(Twig_NodeInterface $node, Twig_Environment $env)
     {
-        return $this->worker->work($node, $this->collection, function () {
-            return $this->getAbsoluteFilePath();
-        });
+        return $this->doEnterNode($node);
     }
 
     public function leaveNode(Twig_NodeInterface $node, Twig_Environment $env)

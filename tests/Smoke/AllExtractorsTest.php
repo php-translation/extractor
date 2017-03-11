@@ -23,8 +23,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FlashMessage;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeChoices;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
-use Translation\Extractor\Visitor\Twig\Twig1Visitor;
-use Translation\Extractor\Visitor\Twig\Twig2Visitor;
+use Translation\Extractor\Visitor\Twig\TwigVisitor;
 
 /**
  * Smoke test to make sure no extractor throws exceptions.
@@ -92,12 +91,7 @@ class AllExtractorsTest extends \PHPUnit_Framework_TestCase
     private function getTwigFileExtractor()
     {
         $file = new TwigFileExtractor(TwigEnvironmentFactory::create());
-
-        if (\Twig_Environment::MAJOR_VERSION === 1) {
-            $file->addVisitor(new Twig1Visitor());
-        } else {
-            $file->addVisitor(new Twig2Visitor());
-        }
+        $file->addVisitor(TwigVisitor::create());
 
         return $file;
     }
