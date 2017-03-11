@@ -18,7 +18,7 @@ use Translation\Extractor\Visitor\Visitor;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class TwigFileExtractor implements FileExtractor
+final class TwigFileExtractor extends \Twig_Extension implements FileExtractor
 {
     /**
      * @var Visitor[]|\Twig_NodeVisitorInterface[]
@@ -36,6 +36,7 @@ final class TwigFileExtractor implements FileExtractor
     public function __construct(\Twig_Environment $twig)
     {
         $this->twig = $twig;
+        $twig->addExtension($this);
     }
 
     public function getSourceLocations(SplFileInfo $file, SourceCollection $collection)
@@ -52,9 +53,7 @@ final class TwigFileExtractor implements FileExtractor
         } else {
             $stream = $this->twig->tokenize($file->getContents(), $path);
         }
-        $tokens = $this->twig->parse($stream);
-        $traverser = new \Twig_NodeTraverser($this->twig, $this->visitors);
-        $traverser->traverse($tokens);
+        $this->twig->parse($stream);
     }
 
     public function getType()
@@ -68,5 +67,13 @@ final class TwigFileExtractor implements FileExtractor
     public function addVisitor(\Twig_NodeVisitorInterface $visitor)
     {
         $this->visitors[] = $visitor;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getNodeVisitors()
+    {
+        return $this->visitors;
     }
 }

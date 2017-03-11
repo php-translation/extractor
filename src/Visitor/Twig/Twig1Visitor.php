@@ -17,10 +17,8 @@ use Twig_NodeInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
- *
- * @deprecated Use Twig1Visitor. Will be removed in 2.0.
  */
-final class TranslationFilter extends BaseVisitor implements \Twig_NodeVisitorInterface
+final class Twig1Visitor extends BaseVisitor implements \Twig_NodeVisitorInterface
 {
     /**
      * @var WorkerTranslationFilter
@@ -29,7 +27,7 @@ final class TranslationFilter extends BaseVisitor implements \Twig_NodeVisitorIn
 
     public function __construct()
     {
-        $this->worker = new WorkerTranslationFilter();
+        $this->worker = new Worker();
     }
 
     public function enterNode(Twig_NodeInterface $node, Twig_Environment $env)

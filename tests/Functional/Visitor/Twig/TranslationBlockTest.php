@@ -12,7 +12,8 @@
 namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 
 use Translation\Extractor\Visitor\Twig\TranslationBlock;
-use Translation\Extractor\Visitor\Twig\Twig2TranslationBlock;
+use Translation\Extractor\Visitor\Twig\Twig1Visitor;
+use Translation\Extractor\Visitor\Twig\Twig2Visitor;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -22,9 +23,9 @@ final class TranslationBlockTest extends BaseTwigVisitorTest
     private function getVisitor()
     {
         if (\Twig_Environment::MAJOR_VERSION === 1) {
-            return new TranslationBlock();
+            return new Twig1Visitor();
         } else {
-            return new Twig2TranslationBlock();
+            return new Twig2Visitor();
         }
     }
 
