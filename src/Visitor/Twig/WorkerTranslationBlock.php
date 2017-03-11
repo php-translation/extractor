@@ -21,8 +21,6 @@ use Translation\Extractor\Model\SourceLocation;
  */
 final class WorkerTranslationBlock
 {
-    const UNDEFINED_DOMAIN = 'messages';
-
     /**
      * @param \Twig_Node|\Twig_NodeInterface $node
      * @param SourceCollection               $collection

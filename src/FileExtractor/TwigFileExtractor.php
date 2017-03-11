@@ -80,25 +80,4 @@ final class TwigFileExtractor extends \Twig_Extension implements FileExtractor
     {
         return $this->visitors;
     }
-
-    /**
-     * Returns the token parser instance to add to the existing list.
-     *
-     * @return array An array of Twig_TokenParser instances
-     */
-    public function getTokenParsers()
-    {
-        return array(
-            // {% trans %}Symfony is great!{% endtrans %}
-            new TransTokenParser(),
-
-            // {% transchoice count %}
-            //     {0} There is no apples|{1} There is one apple|]1,Inf] There is {{ count }} apples
-            // {% endtranschoice %}
-            new TransChoiceTokenParser(),
-
-            // {% trans_default_domain "foobar" %}
-            new TransDefaultDomainTokenParser(),
-        );
-    }
 }

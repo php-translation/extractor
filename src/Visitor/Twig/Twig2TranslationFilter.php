@@ -28,7 +28,7 @@ final class Twig2TranslationFilter extends BaseVisitor implements \Twig_NodeVisi
 
     public function __construct()
     {
-        $this->worker = new WorkerTranslationBlock();
+        $this->worker = new WorkerTranslationFilter();
     }
 
     public function enterNode(Twig_Node $node, Twig_Environment $env)

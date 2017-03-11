@@ -16,6 +16,8 @@ use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Model\SourceLocation;
 
 /**
+ * The Worker tha actually extract the translations.
+ *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  * @author Fabien Potencier <fabien@symfony.com>
  */
