@@ -76,4 +76,9 @@ final class TwigFileExtractor extends \Twig_Extension implements FileExtractor
     {
         return $this->visitors;
     }
+
+    public function getName()
+    {
+        return 'php.translation';
+    }
 }
