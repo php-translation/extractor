@@ -21,7 +21,7 @@ use Twig_NodeInterface;
 final class Twig1Visitor extends BaseVisitor implements \Twig_NodeVisitorInterface
 {
     /**
-     * @var WorkerTranslationFilter
+     * @var Worker
      */
     private $worker;
 

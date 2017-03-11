@@ -18,25 +18,24 @@ use Twig_NodeInterface;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  *
- * @deprecated Use Twig1Visitor. Will be removed in 2.0.
+ * @deprecated Use Twig1Visitor. Will be removed in 2.0
  */
 final class TranslationBlock extends BaseVisitor implements \Twig_NodeVisitorInterface
 {
-    /**
-     * @var WorkerTranslationBlock
-     */
-    private $worker;
-
-    public function __construct()
-    {
-        $this->worker = new WorkerTranslationBlock();
-    }
-
     public function enterNode(Twig_NodeInterface $node, Twig_Environment $env)
     {
-        return $this->worker->work($node, $this->collection, function () {
-            return $this->getAbsoluteFilePath();
-        });
+        if ($node instanceof TransNode) {
+            $id = $node->getNode('body')->getAttribute('data');
+            $domain = 'messages';
+            if ($node->hasNode('domain')) {
+                $domain = $node->getNode('domain')->getAttribute('value');
+            }
+
+            $source = new SourceLocation($id, $this->getAbsoluteFilePath(), $node->getLine(), ['domain' => $domain]);
+            $this->collection->addLocation($source);
+        }
+
+        return $node;
     }
 
     public function leaveNode(Twig_NodeInterface $node, Twig_Environment $env)
