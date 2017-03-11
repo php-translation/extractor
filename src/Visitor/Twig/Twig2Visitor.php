@@ -19,16 +19,6 @@ use Twig_Node;
  */
 final class Twig2Visitor extends TwigVisitor implements \Twig_NodeVisitorInterface
 {
-    /**
-     * @var Worker
-     */
-    private $worker;
-
-    public function __construct()
-    {
-        $this->worker = new Worker();
-    }
-
     public function enterNode(Twig_Node $node, Twig_Environment $env)
     {
         return $this->doEnterNode($node);
