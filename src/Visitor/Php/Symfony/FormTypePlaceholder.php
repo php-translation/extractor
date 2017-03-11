@@ -41,8 +41,14 @@ final class FormTypePlaceholder extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
-            if ($item->key->value === 'placeholder' && $item->value instanceof Node\Scalar\String_) {
-                $this->collection->addLocation(new SourceLocation($item->value->value, $this->getAbsoluteFilePath(), $item->value->getAttribute('startLine')));
+            if ($item->key->value === 'placeholder') {
+                if ($item->value instanceof Node\Scalar\String_) {
+                    $path = $this->getAbsoluteFilePath();
+                    $line = $item->value->getAttribute('startLine');
+                    $this->collection->addLocation(new SourceLocation($item->value->value, $path, $line));
+                } else {
+                    $this->addError($item, 'Form placeholder is not a scalar string');
+                }
             }
         }
     }

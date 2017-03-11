@@ -70,30 +70,32 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
-            if (!$item->value instanceof Node\Expr\Array_) {
-                continue;
-            }
-
             $choicesNodes[] = $item->value;
         }
 
-        if (count($choicesNodes) > 0) {
-            // probably will be only 1, but who knows
-            foreach ($choicesNodes as $choices) {
-                // TODO: do something with grouped (multi-dimensional) arrays here
-                if (!$choices instanceof Node\Expr\Array_) {
+        if (count($choicesNodes) === 0) {
+            return;
+        }
+
+        // probably will be only 1, but who knows
+        foreach ($choicesNodes as $choices) {
+            // TODO: do something with grouped (multi-dimensional) arrays here
+            if (!$choices instanceof Node\Expr\Array_) {
+                $this->addError($choices, 'Form choice is not an array');
+
+                continue;
+            }
+
+            foreach ($choices->items as $citem) {
+                $labelNode = $useKey ? $citem->key : $citem->value;
+                if (!$labelNode instanceof Node\Scalar\String_) {
+                    $this->addError($citem, 'Choice label is not a scalar string');
+
                     continue;
                 }
 
-                foreach ($choices->items as $citem) {
-                    $labelNode = $useKey ? $citem->key : $citem->value;
-                    if (!$labelNode instanceof Node\Scalar\String_) {
-                        continue;
-                    }
-
-                    $sl = new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'));
-                    $this->collection->addLocation($sl);
-                }
+                $sl = new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'));
+                $this->collection->addLocation($sl);
             }
         }
     }
