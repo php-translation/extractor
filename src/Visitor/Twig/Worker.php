@@ -60,11 +60,16 @@ final class Worker
             ));
         } elseif ($node instanceof TransNode) {
             // extract trans nodes
+            $domain = self::UNDEFINED_DOMAIN;
+            if ($node->hasNode('domain') && null !== $node->getNode('domain')) {
+                $domain = $this->getReadDomainFromNode($node->getNode('domain'));
+            }
+
             $collection->addLocation(new SourceLocation(
                 $node->getNode('body')->getAttribute('data'),
                 $getAbsoluteFilePath(),
                 $node->getTemplateLine(),
-                ['domain' => null !== $node->getNode('domain') ? $this->getReadDomainFromNode($node->getNode('domain')) : self::UNDEFINED_DOMAIN]
+                ['domain' => $domain]
             ));
         }
 
