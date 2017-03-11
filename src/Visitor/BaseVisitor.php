@@ -80,7 +80,7 @@ abstract class BaseVisitor implements Visitor
     /**
      * @return DocParser
      */
-    private function getDocParser(): DocParser
+    private function getDocParser()
     {
         if (null === $this->docParser) {
             $this->docParser = new DocParser();
