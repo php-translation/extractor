@@ -14,24 +14,16 @@ namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 use Translation\Extractor\Visitor\Twig\TranslationBlock;
 use Translation\Extractor\Visitor\Twig\Twig1Visitor;
 use Translation\Extractor\Visitor\Twig\Twig2Visitor;
+use Translation\Extractor\Visitor\Twig\TwigVisitor;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 final class TranslationBlockTest extends BaseTwigVisitorTest
 {
-    private function getVisitor()
-    {
-        if (\Twig_Environment::MAJOR_VERSION === 1) {
-            return new Twig1Visitor();
-        } else {
-            return new Twig2Visitor();
-        }
-    }
-
     public function testTrans()
     {
-        $collection = $this->getSourceLocations($this->getVisitor(), 'Twig/TranslationBlock/trans.html.twig');
+        $collection = $this->getSourceLocations(TwigVisitor::create(), 'Twig/TranslationBlock/trans.html.twig');
 
         $this->assertCount(3, $collection);
         $source = $collection->get(0);
@@ -49,7 +41,7 @@ final class TranslationBlockTest extends BaseTwigVisitorTest
 
     public function testTranschoice()
     {
-        $collection = $this->getSourceLocations($this->getVisitor(), 'Twig/TranslationBlock/transchoice.html.twig');
+        $collection = $this->getSourceLocations(TwigVisitor::create(), 'Twig/TranslationBlock/transchoice.html.twig');
 
         $this->assertCount(1, $collection);
         $source = $collection->first();

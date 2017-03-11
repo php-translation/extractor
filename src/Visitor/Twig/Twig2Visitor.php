@@ -18,7 +18,7 @@ use Twig_Node;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class Twig2Visitor extends BaseVisitor implements \Twig_NodeVisitorInterface
+final class Twig2Visitor extends TwigVisitor implements \Twig_NodeVisitorInterface
 {
     /**
      * @var Worker
@@ -32,9 +32,7 @@ final class Twig2Visitor extends BaseVisitor implements \Twig_NodeVisitorInterfa
 
     public function enterNode(Twig_Node $node, Twig_Environment $env)
     {
-        return $this->worker->work($node, $this->collection, function () {
-            return $this->getAbsoluteFilePath();
-        });
+        return $this->doEnterNode($node);
     }
 
     public function leaveNode(Twig_Node $node, Twig_Environment $env)
