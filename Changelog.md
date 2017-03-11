@@ -3,12 +3,13 @@
 The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release. 
 
 ## UNRELEASED
+
 ## 1.1.0
 
 ### Added
 
-- Support for Twig2.0
-- Support for errors and `@Ignore`
+- Support for Twig 2.0.
+- Support for reporting errors and silence errors with `@Ignore`.
 
 ### Deprecated
 
