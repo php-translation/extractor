@@ -55,7 +55,7 @@ abstract class BaseVisitor implements Visitor
      * @param Node   $node
      * @param string $errorMessage
      */
-    protected function addError(Node $node, string $errorMessage)
+    protected function addError(Node $node, $errorMessage)
     {
         $docComment = $node->getDocComment();
         $file = $this->getAbsoluteFilePath();
