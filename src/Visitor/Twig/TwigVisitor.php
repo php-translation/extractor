@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHP Translation package.
+ *
+ * (c) PHP Translation team <tobias.nyholm@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Translation\Extractor\Visitor\Twig;
 
 use Translation\Extractor\Visitor\BaseVisitor;
@@ -17,12 +26,11 @@ abstract class TwigVisitor extends BaseVisitor
     private $worker;
 
     /**
-     *
      * @param Worker|null $worker
      */
     public function __construct(Worker $worker = null)
     {
-        if(!$worker) {
+        if (!$worker) {
             $worker = new Worker();
         }
 

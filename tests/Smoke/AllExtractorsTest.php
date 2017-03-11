@@ -23,8 +23,6 @@ use Translation\Extractor\Visitor\Php\Symfony\FlashMessage;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeChoices;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
-use Translation\Extractor\Visitor\Twig\Twig1Visitor;
-use Translation\Extractor\Visitor\Twig\Twig2Visitor;
 use Translation\Extractor\Visitor\Twig\TwigVisitor;
 
 /**
