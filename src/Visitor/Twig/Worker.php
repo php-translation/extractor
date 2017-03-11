@@ -64,7 +64,7 @@ final class Worker
                 $node->getNode('body')->getAttribute('data'),
                 $getAbsoluteFilePath(),
                 $node->getTemplateLine(),
-                ['domain' => $node->hasNode('domain') ? $this->getReadDomainFromNode($node->getNode('domain')) : self::UNDEFINED_DOMAIN]
+                ['domain' => null !== $node->getNode('domain') ? $this->getReadDomainFromNode($node->getNode('domain')) : self::UNDEFINED_DOMAIN]
             ));
         }
 

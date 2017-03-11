@@ -4,6 +4,13 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 1.1.1
+
+### Fixed
+
+- Make sure we test with the lowest version on Travis
+- Fixed minor bugs for Twig 1.x.
+
 ## 1.1.0
 
 ### Added

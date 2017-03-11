@@ -26,7 +26,7 @@ matrix:
       env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" COVERAGE=true TEST_COMMAND="composer test-ci"
 
 install:
-    - travis_retry composer update --prefer-dist --no-interaction
+    - travis_retry composer update --prefer-dist --no-interaction $COMPOSER_FLAGS
 
 script:
     - $TEST_COMMAND

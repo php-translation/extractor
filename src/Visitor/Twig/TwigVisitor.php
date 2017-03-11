@@ -42,7 +42,7 @@ abstract class TwigVisitor extends BaseVisitor
      */
     public static function create()
     {
-        if (\Twig_Environment::MAJOR_VERSION === 1) {
+        if (\Twig_Environment::VERSION[0] === '1') {
             return new Twig1Visitor();
         }
 

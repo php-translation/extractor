@@ -11,6 +11,8 @@
 
 namespace Translation\Extractor\Visitor\Twig;
 
+use Symfony\Bridge\Twig\Node\TransNode;
+use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\BaseVisitor;
 use Twig_Environment;
 use Twig_NodeInterface;
