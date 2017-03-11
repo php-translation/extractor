@@ -11,9 +11,7 @@
 
 namespace Translation\Extractor\Tests\Smoke;
 
-use Symfony\Bridge\Twig\Translation\TwigExtractor;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Translation\MessageCatalogue;
 use Translation\Extractor\Extractor;
 use Translation\Extractor\FileExtractor\PHPFileExtractor;
 use Translation\Extractor\FileExtractor\TwigFileExtractor;
@@ -25,11 +23,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FlashMessage;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeChoices;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
-use Translation\Extractor\Visitor\Twig\TranslationBlock;
-use Translation\Extractor\Visitor\Twig\TranslationFilter;
 use Translation\Extractor\Visitor\Twig\Twig1Visitor;
-use Translation\Extractor\Visitor\Twig\Twig2TranslationBlock;
-use Translation\Extractor\Visitor\Twig\Twig2TranslationFilter;
 use Translation\Extractor\Visitor\Twig\Twig2Visitor;
 
 /**

@@ -13,7 +13,6 @@ namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 
 use Translation\Extractor\Visitor\Twig\TranslationFilter;
 use Translation\Extractor\Visitor\Twig\Twig1Visitor;
-use Translation\Extractor\Visitor\Twig\Twig2TranslationFilter;
 use Translation\Extractor\Visitor\Twig\Twig2Visitor;
 
 /**

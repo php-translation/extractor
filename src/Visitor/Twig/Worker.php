@@ -56,7 +56,7 @@ final class Worker
                 $node->getNode('node')->getAttribute('value'),
                 $getAbsoluteFilePath(),
                 $node->getTemplateLine(),
-                ['domain' => $this->getReadDomainFromArguments($node->getNode('arguments'), 2),]
+                ['domain' => $this->getReadDomainFromArguments($node->getNode('arguments'), 2)]
             ));
         } elseif ($node instanceof TransNode) {
             // extract trans nodes

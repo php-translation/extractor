@@ -11,10 +11,6 @@
 
 namespace Translation\Extractor\FileExtractor;
 
-use Symfony\Bridge\Twig\NodeVisitor\TranslationDefaultDomainNodeVisitor;
-use Symfony\Bridge\Twig\TokenParser\TransChoiceTokenParser;
-use Symfony\Bridge\Twig\TokenParser\TransDefaultDomainTokenParser;
-use Symfony\Bridge\Twig\TokenParser\TransTokenParser;
 use Symfony\Component\Finder\SplFileInfo;
 use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Visitor\Visitor;

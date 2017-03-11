@@ -16,6 +16,7 @@ use Translation\Extractor\Model\SourceLocation;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
+ *
  * @deprecated Use Worker
  */
 final class WorkerTranslationFilter
