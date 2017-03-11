@@ -18,7 +18,7 @@ use Twig_Node;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  *
- * @deprecated Use Twig2Visitor
+ * @deprecated Use Twig2Visitor. Will be removed in 2.0.
  */
 final class Twig2TranslationBlock extends BaseVisitor implements \Twig_NodeVisitorInterface
 {
