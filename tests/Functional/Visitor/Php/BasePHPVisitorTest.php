@@ -31,7 +31,14 @@ abstract class BasePHPVisitorTest extends \PHPUnit_Framework_TestCase
     protected function getSourceLocations($visitor, $namespaceForTestFile)
     {
         $extractor = new PHPFileExtractor();
-        $extractor->addVisitor($visitor);
+
+        if (is_array($visitor)) {
+            foreach($visitor as $nodeVisitor) {
+                $extractor->addVisitor($nodeVisitor);
+            }
+        } else {
+            $extractor->addVisitor($visitor);
+        }
 
         $currentNamespace = explode('\\', __NAMESPACE__);
         $fileNamespace = explode('\\', $namespaceForTestFile);
