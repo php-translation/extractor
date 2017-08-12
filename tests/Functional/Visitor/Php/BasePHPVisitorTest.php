@@ -33,7 +33,7 @@ abstract class BasePHPVisitorTest extends \PHPUnit_Framework_TestCase
         $extractor = new PHPFileExtractor();
 
         if (is_array($visitor)) {
-            foreach($visitor as $nodeVisitor) {
+            foreach ($visitor as $nodeVisitor) {
                 $extractor->addVisitor($nodeVisitor);
             }
         } else {
@@ -51,6 +51,7 @@ abstract class BasePHPVisitorTest extends \PHPUnit_Framework_TestCase
                 for ($j = $i; $j < count($fileNamespace); ++$j) {
                     $path .= '/'.$fileNamespace[$j];
                 }
+
                 break;
             }
         }
