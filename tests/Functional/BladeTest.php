@@ -11,6 +11,7 @@
 
 namespace Translation\Extractor\Tests\Functional;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 use Translation\Extractor\FileExtractor\BladeFileExtractor;
 use Translation\Extractor\Model\SourceCollection;
@@ -18,7 +19,7 @@ use Translation\Extractor\Model\SourceCollection;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class BladeTest extends \PHPUnit_Framework_TestCase
+final class BladeTest extends TestCase
 {
     private function getSourceLocations($relativePath)
     {

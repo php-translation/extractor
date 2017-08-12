@@ -11,6 +11,7 @@
 
 namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 
+use PHPUnit\Framework\TestCase;
 use Translation\Extractor\FileExtractor\TwigFileExtractor;
 use Symfony\Component\Finder\Finder;
 use Translation\Extractor\Model\SourceCollection;
@@ -18,7 +19,7 @@ use Translation\Extractor\Model\SourceCollection;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-abstract class BaseTwigVisitorTest extends \PHPUnit_Framework_TestCase
+abstract class BaseTwigVisitorTest extends TestCase
 {
     protected function getSourceLocations($visitor, $relativePath)
     {
