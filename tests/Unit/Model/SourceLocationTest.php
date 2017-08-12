@@ -11,16 +11,17 @@
 
 namespace Translation\Extractor\Tests\Unit\Model;
 
+use PHPUnit\Framework\TestCase;
 use Translation\Extractor\Model\SourceLocation;
 
-class SourceLocationTest extends \PHPUnit_Framework_TestCase
+class SourceLocationTest extends TestCase
 {
     public function testCreateHere()
     {
         $location = SourceLocation::createHere('foobar', ['foo' => 'bar']);
 
         $this->assertContains('tests/Unit/Model/SourceLocationTest.php', $location->getPath());
-        $this->assertEquals(20, $location->getLine());
+        $this->assertEquals(21, $location->getLine());
 
         $this->assertEquals('foobar', $location->getMessage());
         $this->assertEquals(['foo' => 'bar'], $location->getContext());

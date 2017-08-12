@@ -11,6 +11,7 @@
 
 namespace Translation\Extractor\Tests\Smoke;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
 use Translation\Extractor\Extractor;
 use Translation\Extractor\FileExtractor\PHPFileExtractor;
@@ -30,7 +31,7 @@ use Translation\Extractor\Visitor\Twig\TwigVisitor;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class AllExtractorsTest extends \PHPUnit_Framework_TestCase
+class AllExtractorsTest extends TestCase
 {
     public function testNoException()
     {
