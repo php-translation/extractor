@@ -4,6 +4,16 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 1.1.2
+
+### Fixed
+
+- Do not stop visiting a file when not class is not *Type.
+
+### Added
+
+- More test to prove correctness. 
+
 ## 1.1.1
 
 ### Fixed

@@ -79,7 +79,6 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
 
         // probably will be only 1, but who knows
         foreach ($choicesNodes as $choices) {
-            // TODO: do something with grouped (multi-dimensional) arrays here
             if (!$choices instanceof Node\Expr\Array_) {
                 $this->addError($choices, 'Form choice is not an array');
 
