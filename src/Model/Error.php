@@ -12,7 +12,7 @@
 namespace Translation\Extractor\Model;
 
 /**
- * An error with the source code that occured when extracting.
+ * An error with the source code that occurred when extracting.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
