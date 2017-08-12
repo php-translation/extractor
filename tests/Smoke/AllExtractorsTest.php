@@ -62,6 +62,7 @@ class AllExtractorsTest extends \PHPUnit_Framework_TestCase
         foreach ($sc as $source) {
             if ($translationKey === $source->getMessage()) {
                 $found = true;
+
                 break;
             }
         }

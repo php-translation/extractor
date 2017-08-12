@@ -63,6 +63,7 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
 
             if ($item->key->value === 'choices_as_values') {
                 $useKey = true;
+
                 continue;
             }
 
