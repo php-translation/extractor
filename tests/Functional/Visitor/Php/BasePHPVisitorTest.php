@@ -44,6 +44,7 @@ abstract class BasePHPVisitorTest extends \PHPUnit_Framework_TestCase
                 for ($j = $i; $j < count($fileNamespace); ++$j) {
                     $path .= '/'.$fileNamespace[$j];
                 }
+
                 break;
             }
         }

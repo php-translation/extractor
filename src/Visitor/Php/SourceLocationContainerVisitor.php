@@ -68,6 +68,7 @@ final class SourceLocationContainerVisitor extends BasePHPVisitor implements Nod
 
             if ('Translation\Extractor\TranslationSourceLocationContainer' === $name) {
                 $isContainer = true;
+
                 break;
             }
         }
