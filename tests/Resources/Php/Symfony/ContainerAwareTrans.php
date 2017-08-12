@@ -2,8 +2,17 @@
 
 namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
+use Symfony\Component\Translation\TranslatorInterface;
+
 class ContainerAwareTrans
 {
+    private $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * @return array
      */
@@ -35,5 +44,15 @@ class ContainerAwareTrans
     {
         $translator = $this->get('translator');
         $translator->trans('variable');
+    }
+
+    public function getPdfFilename(string $locale)
+    {
+        return $this->translator->trans('my.pdf', [], 'generic', $locale);
+    }
+
+    public function static()
+    {
+        $translator = static::$container->get('translator'); $foo = $translator->trans('bar');
     }
 }
