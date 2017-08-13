@@ -18,8 +18,6 @@ use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
- *
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 final class FormTypeEmptyValue extends BasePHPVisitor implements NodeVisitor
@@ -33,7 +31,7 @@ final class FormTypeEmptyValue extends BasePHPVisitor implements NodeVisitor
             }
         }
 
-      if (!$node instanceof Node\Expr\Array_) {
+        if (!$node instanceof Node\Expr\Array_) {
             return;
         }
 
@@ -62,7 +60,6 @@ final class FormTypeEmptyValue extends BasePHPVisitor implements NodeVisitor
      */
     private function storeValue(Node $node, $item)
     {
-
         if (!$item->value instanceof Node\Scalar\String_) {
             $this->addError($item, 'Form label is not a scalar string');
 

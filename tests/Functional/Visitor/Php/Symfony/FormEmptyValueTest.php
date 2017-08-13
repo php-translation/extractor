@@ -14,7 +14,6 @@ namespace Translation\extractor\tests\Functional\Visitor\Php\Symfony;
 use Translation\Extractor\Tests\Functional\Visitor\Php\BasePHPVisitorTest;
 use Translation\Extractor\Tests\Resources;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeEmptyValue;
-use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
