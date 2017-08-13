@@ -18,8 +18,6 @@ use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
- *
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 final class FormTypeInvalidMessage extends BasePHPVisitor implements NodeVisitor
@@ -57,7 +55,7 @@ final class FormTypeInvalidMessage extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
-            $sl = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'), ['domain'=>'validators']);
+            $sl = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'), ['domain' => 'validators']);
             $this->collection->addLocation($sl);
         }
     }
