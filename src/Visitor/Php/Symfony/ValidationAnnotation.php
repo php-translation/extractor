@@ -75,7 +75,7 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
             return;
         }
 
-        $metadata = ($this->metadataFactory instanceof ClassMetadataFactoryInterface) ? $this->metadataFactory->getClassMetadata($name) : $this->metadataFactory->getMetadataFor($name);
+        $metadata = $this->metadataFactory->getMetadataFor($name);
         if (!$metadata->hasConstraints() && !count($metadata->getConstrainedProperties())) {
             return;
         }
