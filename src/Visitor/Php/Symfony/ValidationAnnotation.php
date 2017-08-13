@@ -15,7 +15,6 @@ use PhpParser\Node;
 use PhpParser\NodeVisitor;
 use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
-use Symfony\Component\Validator\Mapping\ClassMetadataFactoryInterface;
 use Symfony\Component\Validator\Mapping\Factory\MetadataFactoryInterface;
 use Symfony\Component\Validator\MetadataFactoryInterface as LegacyMetadataFactoryInterface;
 
@@ -25,7 +24,7 @@ use Symfony\Component\Validator\MetadataFactoryInterface as LegacyMetadataFactor
 final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
 {
     /**
-     * @var ClassMetadataFactoryInterface|MetadataFactoryInterface|LegacyMetadataFactoryInterface
+     * @var MetadataFactoryInterface|LegacyMetadataFactoryInterface
      */
     private $metadataFactory;
 
@@ -37,16 +36,15 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
     /**
      * ValidationExtractor constructor.
      *
-     * @param $metadataFactory
+     * @param MetadataFactoryInterface|LegacyMetadataFactoryInterface $metadataFactory
      */
     public function __construct($metadataFactory)
     {
         if (!(
             $metadataFactory instanceof MetadataFactoryInterface
             || $metadataFactory instanceof LegacyMetadataFactoryInterface
-            || $metadataFactory instanceof ClassMetadataFactoryInterface
         )) {
-            throw new \InvalidArgumentException(sprintf('%s expects an instance of MetadataFactoryInterface or ClassMetadataFactoryInterface', get_class($this)));
+            throw new \InvalidArgumentException(sprintf('%s expects an instance of MetadataFactoryInterface', get_class($this)));
         }
         $this->metadataFactory = $metadataFactory;
     }
