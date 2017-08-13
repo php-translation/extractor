@@ -39,7 +39,10 @@ final class ValidationAnnotationTest extends BasePHPVisitorTest
         $this->assertCount(2, $collection);
         $source = $collection->get(0);
         $this->assertEquals('start.null', $source->getMessage());
+        $this->assertEquals('validators', $source->getContext()['domain']);
+
         $source = $collection->get(1);
         $this->assertEquals('end.blank', $source->getMessage());
+        $this->assertEquals('validators', $source->getContext()['domain']);
     }
 }
