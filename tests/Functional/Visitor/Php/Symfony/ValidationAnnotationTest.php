@@ -11,6 +11,7 @@
 
 namespace Translation\Extractor\Tests\Functional\Visitor\Php\Symfony;
 
+use Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory;
 use Translation\Extractor\Tests\Functional\Visitor\Php\BasePHPVisitorTest;
 use Translation\Extractor\Tests\Resources;
 use Translation\Extractor\Visitor\Php\Symfony\ValidationAnnotation;
@@ -24,14 +25,7 @@ final class ValidationAnnotationTest extends BasePHPVisitorTest
 {
     public function testExtractAnnotation()
     {
-        //use correct factory class depending on whether using Symfony 2 or 3
-        if (class_exists('Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory')) {
-            $metadataFactoryClass = 'Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory';
-        } else {
-            $metadataFactoryClass = 'Symfony\Component\Validator\Mapping\ClassMetadataFactory';
-        }
-
-        $factory = new $metadataFactoryClass(new AnnotationLoader(new AnnotationReader()));
+        $factory = new LazyLoadingMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $extractor = new ValidationAnnotation($factory);
         $collection = $this->getSourceLocations($extractor, Resources\Php\Symfony\ValidatorAnnotation::class);
 
