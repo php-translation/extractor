@@ -11,6 +11,7 @@
 
 namespace Translation\Extractor\Visitor\Php\Symfony;
 
+use Doctrine\Common\Annotations\AnnotationException;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -69,8 +70,15 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
             return;
         }
 
-        /** @var ClassMetadata $metadata */
-        $metadata = $this->metadataFactory->getMetadataFor($name);
+        try {
+            /** @var ClassMetadata $metadata */
+            $metadata = $this->metadataFactory->getMetadataFor($name);
+        } catch (AnnotationException $e) {
+            $this->addError($node, 'Could not parse class "%s" for annotations. %s', $this->namespace, $e->getMessage());
+
+            return;
+        }
+
         if (!$metadata->hasConstraints() && !count($metadata->getConstrainedProperties())) {
             return;
         }
