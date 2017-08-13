@@ -29,6 +29,6 @@ class FormEmptyValueTest extends BasePHPVisitorTest
 
         $this->assertEquals('gender.empty_value', $collection->get(0)->getMessage());
         $this->assertEquals('birthday.form.year', $collection->get(1)->getMessage());
-        $this->assertEquals('birthday.form.month ', $collection->get(2)->getMessage());
+        $this->assertEquals('birthday.form.month', $collection->get(2)->getMessage());
     }
 }
