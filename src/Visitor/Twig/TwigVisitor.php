@@ -39,6 +39,8 @@ abstract class TwigVisitor extends BaseVisitor
 
     /**
      * @return Twig1Visitor|Twig2Visitor
+     *
+     * @deprecated since 1.2. Will be removed in 2.0. Use TwigVisitorFactory instead.
      */
     public static function create()
     {
