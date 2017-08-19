@@ -11,8 +11,7 @@
 
 namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 
-use Translation\Extractor\Visitor\Twig\TranslationFilter;
-use Translation\Extractor\Visitor\Twig\TwigVisitor;
+use Translation\Extractor\Visitor\Twig\TwigVisitorFactory;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -21,7 +20,7 @@ final class TranslationFilterTest extends BaseTwigVisitorTest
 {
     public function testExtract()
     {
-        $collection = $this->getSourceLocations(TwigVisitor::create(), 'Twig/TranslationFilter/trans.html.twig');
+        $collection = $this->getSourceLocations(TwigVisitorFactory::create(), 'Twig/TranslationFilter/trans.html.twig');
 
         $this->assertCount(1, $collection);
         $source = $collection->first();
