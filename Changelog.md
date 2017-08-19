@@ -4,6 +4,18 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 1.2.0
+
+### Added
+
+- Support for PHPUnit6
+- Extract translation from form's "empty_value"
+- Extract translation from Validation messages
+
+### Changed
+
+- Added TwigVisitorFactory to create a TwigVisitor. TwigVisitor::create has been deprecated. 
+
 ## 1.1.2
 
 ### Fixed
