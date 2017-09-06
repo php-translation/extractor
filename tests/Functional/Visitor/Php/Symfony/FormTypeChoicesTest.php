@@ -61,4 +61,13 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
         $errors = $collection->getErrors();
         $this->assertCount(1, $errors);
     }
+
+    public function testPassedChoices()
+    {
+        $collection = $this->getSourceLocations(new FormTypeChoices(), Resources\Php\Symfony\SimpleChoicePassArrayType::class);
+
+        $this->assertCount(1, $collection, print_r($collection, true));
+        $this->assertEquals('label1', $collection->get(0)->getMessage());
+        $this->assertEquals(10, $collection->get(0)->getLine());
+    }
 }
