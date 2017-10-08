@@ -39,7 +39,7 @@ $extractor->addFileExtractor($this->getPHPFileExtractor());
 $finder = new Finder();
 $finder->in('/foo/bar');
 
-//Start extractring files
+//Start extracting files
 $sourceCollection = $extractor->extract($finder);
 ```
 
