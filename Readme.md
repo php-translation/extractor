@@ -24,7 +24,7 @@ $ composer require php-translation/extractor
 $extractor = new Extractor();
 
 // Create extractor for PHP files
-$fileExtractor = new PHPFileExtractor()
+$fileExtractor = new PHPFileExtractor();
 
 // Add visitors
 $fileExtractor->addVisitor(new ContainerAwareTrans());
