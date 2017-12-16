@@ -69,6 +69,7 @@ final class Extractor
         switch ($ext) {
             case 'php':
             case 'php5':
+            case 'phtml':
                 return 'php';
             case 'twig':
                 return 'twig';
