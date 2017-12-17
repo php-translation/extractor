@@ -26,7 +26,7 @@ final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
     {
         // only Traverse *Type
         if ($node instanceof Stmt\Class_) {
-            if (substr($node->name, -4) !== 'Type') {
+            if ('Type' !== substr($node->name, -4)) {
                 return;
             }
         }
@@ -45,7 +45,7 @@ final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
-            if ($item->key->value !== 'label') {
+            if ('label' !== $item->key->value) {
                 continue;
             }
 
