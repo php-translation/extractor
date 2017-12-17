@@ -27,6 +27,10 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
      */
     protected $symfonyMajorVersion = 3;
 
+    private $variables = [];
+
+    private $state;
+
     /**
      * @param int $sfMajorVersion
      */
@@ -42,6 +46,18 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
             if (substr($node->name, -4) !== 'Type') {
                 return;
             }
+        }
+
+        if ($this->state === null && $node instanceof Node\Expr\Assign) {
+            $this->state = 'variable';
+        } elseif ($this->state === 'variable' && $node instanceof Node\Expr\Variable) {
+            $this->variables['__variable-name'] = $node->name;
+            $this->state = 'value';
+        } elseif ($this->state === 'value' && $node instanceof Node\Expr\Array_) {
+            $this->variables[$this->variables['__variable-name']] = $node;
+            $this->state = null;
+        } else {
+            $this->state = null;
         }
 
         // symfony 3 displays key by default, where symfony 2 displays value
@@ -79,7 +95,9 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
 
         // probably will be only 1, but who knows
         foreach ($choicesNodes as $choices) {
-            if (!$choices instanceof Node\Expr\Array_) {
+            if ($choices instanceof Node\Expr\Variable && isset($this->variables[$choices->name])) {
+                $choices = $this->variables[$choices->name];
+            } elseif (!$choices instanceof Node\Expr\Array_) {
                 $this->addError($choices, 'Form choice is not an array');
 
                 continue;

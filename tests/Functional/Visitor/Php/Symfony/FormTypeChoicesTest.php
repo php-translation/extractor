@@ -68,6 +68,6 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
 
         $this->assertCount(1, $collection, print_r($collection, true));
         $this->assertEquals('label1', $collection->get(0)->getMessage());
-        $this->assertEquals(10, $collection->get(0)->getLine());
+        $this->assertEquals(9, $collection->get(0)->getLine());
     }
 }
