@@ -13,7 +13,6 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
@@ -49,7 +48,6 @@ final class FlashMessage extends BasePHPVisitor implements NodeVisitor
         ) {
             if (null !== $label = $this->getStringArgument($node, 1)) {
                 $this->addLocation($label, $node->getAttribute('startLine'), $node);
-
             }
         }
     }

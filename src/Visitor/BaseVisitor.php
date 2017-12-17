@@ -80,15 +80,15 @@ abstract class BaseVisitor implements Visitor
     }
 
     /**
-     * @param string $text
-     * @param int $line
+     * @param string    $text
+     * @param int       $line
      * @param Node|null $node
-     * @param array $context
+     * @param array     $context
      */
     protected function addLocation($text, $line, Node $node = null, array $context = [])
     {
         $file = $this->getAbsoluteFilePath();
-        if ($node !== null && null !== $docComment = $node->getDocComment()) {
+        if (null !== $node && null !== $docComment = $node->getDocComment()) {
             $parserContext = 'file '.$file.' near line '.$line;
             foreach ($this->getDocParser()->parse($docComment->getText(), $parserContext) as $annotation) {
                 if ($annotation instanceof Ignore) {

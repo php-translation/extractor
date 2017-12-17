@@ -15,7 +15,6 @@ use Doctrine\Common\Annotations\AnnotationException;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 use Symfony\Component\Validator\Mapping\Factory\MetadataFactoryInterface;
 

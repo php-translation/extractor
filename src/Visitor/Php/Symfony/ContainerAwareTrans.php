@@ -13,7 +13,6 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**

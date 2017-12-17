@@ -14,7 +14,6 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 use PhpParser\Node;
 use PhpParser\Node\Stmt;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
@@ -55,7 +54,7 @@ final class FormTypeInvalidMessage extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
-            $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain'=>'validators']);
+            $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain' => 'validators']);
         }
     }
 

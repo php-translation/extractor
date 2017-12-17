@@ -13,7 +13,6 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
@@ -41,7 +40,7 @@ final class ContainerAwareTransChoice extends BasePHPVisitor implements NodeVisi
             $label = $this->getStringArgument($node, 0);
             $domain = $this->getStringArgument($node, 3);
 
-            $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain'=>$domain]);
+            $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain' => $domain]);
         }
     }
 
