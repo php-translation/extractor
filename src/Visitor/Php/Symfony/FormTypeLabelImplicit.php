@@ -54,8 +54,7 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
             if (false === $customLabel) {
                 $label = $node->args[0]->value->value;
                 if (!empty($label)) {
-                    $sl = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'));
-                    $this->collection->addLocation($sl);
+                    $this->addLocation($label, $node->getAttribute('startLine'), $node);
                 }
             }
         }

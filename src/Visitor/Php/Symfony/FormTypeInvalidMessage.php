@@ -55,8 +55,7 @@ final class FormTypeInvalidMessage extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
-            $sl = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'), ['domain' => 'validators']);
-            $this->collection->addLocation($sl);
+            $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain'=>'validators']);
         }
     }
 

@@ -71,8 +71,7 @@ final class FormTypeEmptyValue extends BasePHPVisitor implements NodeVisitor
             return;
         }
 
-        $sl = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'));
-        $this->collection->addLocation($sl);
+        $this->addLocation($label, $node->getAttribute('startLine'), $node);
     }
 
     public function leaveNode(Node $node)

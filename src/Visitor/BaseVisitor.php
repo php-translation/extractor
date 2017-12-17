@@ -14,9 +14,11 @@ namespace Translation\Extractor\Visitor;
 use Doctrine\Common\Annotations\DocParser;
 use PhpParser\Node;
 use Symfony\Component\Finder\SplFileInfo;
+use Translation\Extractor\Annotation\Desc;
 use Translation\Extractor\Annotation\Ignore;
 use Translation\Extractor\Model\Error;
 use Translation\Extractor\Model\SourceCollection;
+use Translation\Extractor\Model\SourceLocation;
 
 /**
  * Base class for any visitor.
@@ -78,6 +80,30 @@ abstract class BaseVisitor implements Visitor
     }
 
     /**
+     * @param string $text
+     * @param int $line
+     * @param Node|null $node
+     * @param array $context
+     */
+    protected function addLocation($text, $line, Node $node = null, array $context = [])
+    {
+        $file = $this->getAbsoluteFilePath();
+        if ($node !== null && null !== $docComment = $node->getDocComment()) {
+            $parserContext = 'file '.$file.' near line '.$line;
+            foreach ($this->getDocParser()->parse($docComment->getText(), $parserContext) as $annotation) {
+                if ($annotation instanceof Ignore) {
+                    return;
+                } elseif ($annotation instanceof Desc) {
+                    $context['desc'] = $annotation->text;
+                }
+            }
+        }
+
+        $source = new SourceLocation($text, $file, $line, $context);
+        $this->collection->addLocation($source);
+    }
+
+    /**
      * @return DocParser
      */
     private function getDocParser()
@@ -87,6 +113,7 @@ abstract class BaseVisitor implements Visitor
 
             $this->docParser->setImports([
                 'ignore' => Ignore::class,
+                'desc' => Desc::class,
             ]);
             $this->docParser->setIgnoreNotImportedAnnotations(true);
         }

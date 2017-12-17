@@ -48,7 +48,8 @@ final class FlashMessage extends BasePHPVisitor implements NodeVisitor
             ('add' === $name && 'getFlashBag' === $callerName && $caller instanceof Node\Expr\MethodCall)
         ) {
             if (null !== $label = $this->getStringArgument($node, 1)) {
-                $this->collection->addLocation(new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine')));
+                $this->addLocation($label, $node->getAttribute('startLine'), $node);
+
             }
         }
     }

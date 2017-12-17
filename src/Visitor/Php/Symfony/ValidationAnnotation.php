@@ -109,7 +109,7 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
                 if ('message' === strtolower(substr($propName, -1 * strlen('Message')))) {
                     // If it is different from the default value
                     if ($defaultValues[$propName] !== $constraint->{$propName}) {
-                        $this->collection->addLocation(new SourceLocation($constraint->{$propName}, $this->getAbsoluteFilePath(), 0, ['domain' => 'validators']));
+                        $this->addLocation($constraint->{$propName}, 0, null, ['domain' => 'validators']);
                     }
                 }
             }

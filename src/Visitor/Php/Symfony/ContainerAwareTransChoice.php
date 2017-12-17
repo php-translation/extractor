@@ -41,8 +41,7 @@ final class ContainerAwareTransChoice extends BasePHPVisitor implements NodeVisi
             $label = $this->getStringArgument($node, 0);
             $domain = $this->getStringArgument($node, 3);
 
-            $source = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'), ['domain' => $domain]);
-            $this->collection->addLocation($source);
+            $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain'=>$domain]);
         }
     }
 
