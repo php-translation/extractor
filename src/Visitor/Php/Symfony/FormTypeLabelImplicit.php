@@ -26,21 +26,21 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
     {
         // only Traverse *Type
         if ($node instanceof Stmt\Class_) {
-            if (substr($node->name, -4) !== 'Type') {
+            if ('Type' !== substr($node->name, -4)) {
                 return;
             }
         }
 
         // use add() function and look at first argument and if that's a string
         if ($node instanceof Node\Expr\MethodCall
-            && ($node->name === 'add' || $node->name === 'create')
+            && ('add' === $node->name || 'create' === $node->name)
             && $node->args[0]->value instanceof Node\Scalar\String_) {
             // now make sure we don't have 'label' in the array of options
             $customLabel = false;
             if (count($node->args) >= 3) {
                 if ($node->args[2]->value instanceof Node\Expr\Array_) {
                     foreach ($node->args[2]->value->items as $item) {
-                        if (isset($item->key) && $item->key->value === 'label') {
+                        if (isset($item->key) && 'label' === $item->key->value) {
                             $customLabel = true;
                         }
                     }
@@ -51,7 +51,7 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
             }
 
             // only if no custom label was found, proceed
-            if ($customLabel === false) {
+            if (false === $customLabel) {
                 $label = $node->args[0]->value->value;
                 if (!empty($label)) {
                     $sl = new SourceLocation($label, $this->getAbsoluteFilePath(), $node->getAttribute('startLine'));

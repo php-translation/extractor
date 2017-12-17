@@ -39,13 +39,13 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
     {
         // only Traverse *Type
         if ($node instanceof Stmt\Class_) {
-            if (substr($node->name, -4) !== 'Type') {
+            if ('Type' !== substr($node->name, -4)) {
                 return;
             }
         }
 
         // symfony 3 displays key by default, where symfony 2 displays value
-        $useKey = $this->symfonyMajorVersion === 3;
+        $useKey = 3 === $this->symfonyMajorVersion;
 
         // remember choices in this node
         $choicesNodes = [];
@@ -60,20 +60,20 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
-            if ($item->key->value === 'choices_as_values') {
+            if ('choices_as_values' === $item->key->value) {
                 $useKey = true;
 
                 continue;
             }
 
-            if ($item->key->value !== 'choices') {
+            if ('choices' !== $item->key->value) {
                 continue;
             }
 
             $choicesNodes[] = $item->value;
         }
 
-        if (count($choicesNodes) === 0) {
+        if (0 === count($choicesNodes)) {
             return;
         }
 

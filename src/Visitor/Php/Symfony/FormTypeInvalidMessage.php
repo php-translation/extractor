@@ -26,7 +26,7 @@ final class FormTypeInvalidMessage extends BasePHPVisitor implements NodeVisitor
     {
         // only Traverse *Type
         if ($node instanceof Stmt\Class_) {
-            if (substr($node->name, -4) !== 'Type') {
+            if ('Type' !== substr($node->name, -4)) {
                 return;
             }
         }
@@ -40,7 +40,7 @@ final class FormTypeInvalidMessage extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
-            if ($item->key->value !== 'invalid_message') {
+            if ('invalid_message' !== $item->key->value) {
                 continue;
             }
 

@@ -106,7 +106,7 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
                 $propName = $property->getName();
 
                 // If the property ends with 'Message'
-                if (strtolower(substr($propName, -1 * strlen('Message'))) === 'message') {
+                if ('message' === strtolower(substr($propName, -1 * strlen('Message')))) {
                     // If it is different from the default value
                     if ($defaultValues[$propName] !== $constraint->{$propName}) {
                         $this->collection->addLocation(new SourceLocation($constraint->{$propName}, $this->getAbsoluteFilePath(), 0, ['domain' => 'validators']));

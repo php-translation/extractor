@@ -60,7 +60,7 @@ abstract class BasePHPVisitorTest extends TestCase
         $finder = new Finder();
         $finder->files()->name($filename)->in($path);
 
-        if ($finder->count() === 0) {
+        if (0 === $finder->count()) {
             throw new \Exception("Cannot find file for: $namespaceForTestFile. Tried path: $path - Maybe filename doesn't match the class?");
         }
 
