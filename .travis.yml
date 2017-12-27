@@ -32,8 +32,6 @@ matrix:
 
           # Force some major versions of Symfony
         - php: 7.2
-          env: DEPENDENCIES="dunglas/symfony-lock:^2"
-        - php: 7.2
           env: DEPENDENCIES="dunglas/symfony-lock:^3"
         - php: 7.2
           env: DEPENDENCIES="dunglas/symfony-lock:^4"
@@ -64,3 +62,7 @@ script:
 after_success:
     - if [[ $COVERAGE = true ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
     - if [[ $COVERAGE = true ]]; then php ocular.phar code-coverage:upload --format=php-clover build/coverage.xml; fi
+
+after_script:
+    - wget http://tnyholm.se/reporter.phar
+    - php reporter.phar build:upload
