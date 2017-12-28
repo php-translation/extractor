@@ -44,6 +44,7 @@ class AllExtractorsTest extends TestCase
 
         $sc = $extractor->extract($finder);
         $this->translationExists($sc, 'trans.issue_34');
+        $this->translationMissing($sc, 'trans.issue_62');
     }
 
     /**
@@ -69,6 +70,31 @@ class AllExtractorsTest extends TestCase
         }
 
         $this->assertTrue($found, $message);
+    }
+
+    /**
+     * Assert that a translation key is missing in source collection.
+     *
+     * @param SourceCollection $sc
+     * @param $translationKey
+     * @param string $message
+     */
+    private function translationMissing(SourceCollection $sc, $translationKey, $message = null)
+    {
+        if (empty($message)) {
+            $message = sprintf('The translation key "%s" should not exist', $translationKey);
+        }
+
+        $found = false;
+        foreach ($sc as $source) {
+            if ($translationKey === $source->getMessage()) {
+                $found = true;
+
+                break;
+            }
+        }
+
+        $this->assertFalse($found, $message);
     }
 
     /**

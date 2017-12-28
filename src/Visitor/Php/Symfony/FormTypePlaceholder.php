@@ -14,7 +14,6 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 use PhpParser\Node;
 use PhpParser\Node\Stmt;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
@@ -42,9 +41,8 @@ final class FormTypePlaceholder extends BasePHPVisitor implements NodeVisitor
 
             if ('placeholder' === $item->key->value) {
                 if ($item->value instanceof Node\Scalar\String_) {
-                    $path = $this->getAbsoluteFilePath();
                     $line = $item->value->getAttribute('startLine');
-                    $this->collection->addLocation(new SourceLocation($item->value->value, $path, $line));
+                    $this->addLocation($item->value->value, $line, $item);
                 } else {
                     $this->addError($item, 'Form placeholder is not a scalar string');
                 }

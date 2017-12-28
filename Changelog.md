@@ -4,6 +4,15 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 1.3.0
+
+### Added
+
+- Support for passing choice as variable
+- Support for Symfony 4
+- Support for `desc` annotation and twig filter
+- Support for .phtml
+
 ## 1.2.0
 
 ### Added

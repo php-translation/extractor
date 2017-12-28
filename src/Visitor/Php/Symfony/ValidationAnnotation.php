@@ -15,7 +15,6 @@ use Doctrine\Common\Annotations\AnnotationException;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 use Symfony\Component\Validator\Mapping\Factory\MetadataFactoryInterface;
 
@@ -109,7 +108,7 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
                 if ('message' === strtolower(substr($propName, -1 * strlen('Message')))) {
                     // If it is different from the default value
                     if ($defaultValues[$propName] !== $constraint->{$propName}) {
-                        $this->collection->addLocation(new SourceLocation($constraint->{$propName}, $this->getAbsoluteFilePath(), 0, ['domain' => 'validators']));
+                        $this->addLocation($constraint->{$propName}, 0, null, ['domain' => 'validators']);
                     }
                 }
             }
