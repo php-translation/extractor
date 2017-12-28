@@ -83,9 +83,10 @@ final class Worker
     /**
      * @return array
      */
-    private function extractContextFromJoinedFilters() {
+    private function extractContextFromJoinedFilters()
+    {
         $context = [];
-        for ($i=count($this->stack)-2; $i>=0; $i-=1) {
+        for ($i = count($this->stack) - 2; $i >= 0; $i -= 1) {
             if (!$this->stack[$i] instanceof \Twig_Node_Expression_Filter) {
                 break;
             }
