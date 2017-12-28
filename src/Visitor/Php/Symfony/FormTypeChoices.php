@@ -48,12 +48,12 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
             }
         }
 
-        if ($this->state === null && $node instanceof Node\Expr\Assign) {
+        if (null === $this->state && $node instanceof Node\Expr\Assign) {
             $this->state = 'variable';
-        } elseif ($this->state === 'variable' && $node instanceof Node\Expr\Variable) {
+        } elseif ('variable' === $this->state && $node instanceof Node\Expr\Variable) {
             $this->variables['__variable-name'] = $node->name;
             $this->state = 'value';
-        } elseif ($this->state === 'value' && $node instanceof Node\Expr\Array_) {
+        } elseif ('value' === $this->state && $node instanceof Node\Expr\Array_) {
             $this->variables[$this->variables['__variable-name']] = $node;
             $this->state = null;
         } else {
