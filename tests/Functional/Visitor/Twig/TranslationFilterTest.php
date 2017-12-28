@@ -26,4 +26,22 @@ final class TranslationFilterTest extends BaseTwigVisitorTest
         $source = $collection->first();
         $this->assertEquals('foobar', $source->getMessage());
     }
+
+    public function testDescExtract()
+    {
+        $collection = $this->getSourceLocations(TwigVisitorFactory::create(), 'Twig/TranslationFilter/desc.html.twig');
+
+        $this->assertCount(1, $collection);
+        $source = $collection->first();
+        $this->assertEquals('foobar', $source->getMessage());
+        $this->assertEquals('baz', $source->getContext()['desc']);
+    }
+
+    public function testDescExtractError()
+    {
+        $collection = $this->getSourceLocations(TwigVisitorFactory::create(), 'Twig/TranslationFilter/desc-error.html.twig');
+
+        $errors = $collection->getErrors();
+        $this->assertCount(2, $errors);
+    }
 }

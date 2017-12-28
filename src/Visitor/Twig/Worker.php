@@ -12,6 +12,7 @@
 namespace Translation\Extractor\Visitor\Twig;
 
 use Symfony\Bridge\Twig\Node\TransNode;
+use Translation\Extractor\Model\Error;
 use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Model\SourceLocation;
 
@@ -25,6 +26,8 @@ final class Worker
 {
     const UNDEFINED_DOMAIN = 'messages';
 
+    private $stack = [];
+
     /**
      * @param \Twig_Node|\Twig_NodeInterface $node
      * @param SourceCollection               $collection
@@ -34,30 +37,31 @@ final class Worker
      */
     public function work($node, SourceCollection $collection, callable $getAbsoluteFilePath)
     {
-        if (
-            $node instanceof \Twig_Node_Expression_Filter &&
-            'trans' === $node->getNode('filter')->getAttribute('value') &&
-            $node->getNode('node') instanceof \Twig_Node_Expression_Constant
-        ) {
-            // extract constant nodes with a trans filter
-            $collection->addLocation(new SourceLocation(
-                $node->getNode('node')->getAttribute('value'),
-                $getAbsoluteFilePath(),
-                $node->getTemplateLine(),
-                ['domain' => $this->getReadDomainFromArguments($node->getNode('arguments'), 1)]
-            ));
-        } elseif (
-            $node instanceof \Twig_Node_Expression_Filter &&
-            'transchoice' === $node->getNode('filter')->getAttribute('value') &&
-            $node->getNode('node') instanceof \Twig_Node_Expression_Constant
-        ) {
-            // extract constant nodes with a trans filter
-            $collection->addLocation(new SourceLocation(
-                $node->getNode('node')->getAttribute('value'),
-                $getAbsoluteFilePath(),
-                $node->getTemplateLine(),
-                ['domain' => $this->getReadDomainFromArguments($node->getNode('arguments'), 2)]
-            ));
+        $this->stack[] = $node;
+        if ($node instanceof \Twig_Node_Expression_Filter && $node->getNode('node') instanceof \Twig_Node_Expression_Constant) {
+            $domain = null;
+            if ('trans' === $node->getNode('filter')->getAttribute('value')) {
+                $domain = $this->getReadDomainFromArguments($node->getNode('arguments'), 1);
+            } elseif ('transchoice' === $node->getNode('filter')->getAttribute('value')) {
+                $domain = $this->getReadDomainFromArguments($node->getNode('arguments'), 2);
+            }
+
+            if ($domain) {
+                try {
+                    $context = $this->extractContextFromJoinedFilters();
+                } catch (\LogicException $e) {
+                    $collection->addError(new Error($e->getMessage(), $getAbsoluteFilePath(), $node->getTemplateLine()));
+                }
+                $context['domain'] = $domain;
+                $collection->addLocation(
+                    new SourceLocation(
+                        $node->getNode('node')->getAttribute('value'),
+                        $getAbsoluteFilePath(),
+                        $node->getTemplateLine(),
+                        $context
+                    )
+                );
+            }
         } elseif ($node instanceof TransNode) {
             // extract trans nodes
             $domain = self::UNDEFINED_DOMAIN;
@@ -74,6 +78,34 @@ final class Worker
         }
 
         return $node;
+    }
+
+    /**
+     * @return array
+     */
+    private function extractContextFromJoinedFilters() {
+        $context = [];
+        for ($i=count($this->stack)-2; $i>=0; $i-=1) {
+            if (!$this->stack[$i] instanceof \Twig_Node_Expression_Filter) {
+                break;
+            }
+            $name = $this->stack[$i]->getNode('filter')->getAttribute('value');
+            if ('trans' === $name) {
+                break;
+            } elseif ('desc' === $name) {
+                $arguments = $this->stack[$i]->getNode('arguments');
+                if (!$arguments->hasNode(0)) {
+                    throw new \LogicException(sprintf('The "%s" filter requires exactly one argument, the description text.', $name));
+                }
+                $text = $arguments->getNode(0);
+                if (!$text instanceof \Twig_Node_Expression_Constant) {
+                    throw new \LogicException(sprintf('The first argument of the "%s" filter must be a constant expression, such as a string.', $name));
+                }
+                $context['desc'] = $text->getAttribute('value');
+            }
+        }
+
+        return $context;
     }
 
     /**
