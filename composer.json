@@ -11,7 +11,7 @@
     "require": {
         "php": "^5.5 || ^7.0",
         "nikic/php-parser": "^3.0",
-        "symfony/finder": "^3.0 || ^4.0",
+        "symfony/finder": "^2.7 || ^3.0 || ^4.0",
         "twig/twig": "^1.27 || ^2.0",
         "doctrine/annotations": "^1.2"
     },
