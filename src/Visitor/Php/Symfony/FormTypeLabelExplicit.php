@@ -50,7 +50,7 @@ final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
 
             if ($item->value instanceof Node\Expr\ConstFetch) {
                 // This might be boolean "false"
-                if ("false" === $item->value->name->toString()) {
+                if ('false' === $item->value->name->toString()) {
                     continue;
                 }
             }
