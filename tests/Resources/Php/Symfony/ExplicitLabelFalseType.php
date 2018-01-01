@@ -3,7 +3,7 @@
 use Symfony\Component\Form\AbstractType;
 use Translation\Extractor\Annotation\Ignore;
 
-class LableIsFalse extends AbstractType
+class ExplicitLabelFalseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

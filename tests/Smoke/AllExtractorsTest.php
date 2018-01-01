@@ -45,7 +45,6 @@ class AllExtractorsTest extends TestCase
         $sc = $extractor->extract($finder);
         $this->translationExists($sc, 'trans.issue_34');
         $this->translationMissing($sc, 'trans.issue_62');
-        $this->translationMissing($sc, 'trans.issue_68');
     }
 
     /**

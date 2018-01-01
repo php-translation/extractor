@@ -40,4 +40,11 @@ class FormTypeLabelExplicitTest extends BasePHPVisitorTest
         $collection = $this->getSourceLocations(new FormTypeLabelExplicit(), Resources\Php\Symfony\ExplicitLabelTypeless::class);
         $this->assertCount(0, $collection);
     }
+
+    public function testWithLabelFalse()
+    {
+        $collection = $this->getSourceLocations(new FormTypeLabelExplicit(), Resources\Php\Symfony\ExplicitLabelFalseType::class);
+        $this->assertEmpty($collection);
+        $this->assertEmpty($collection->getErrors(), 'Using label=>false should not render an error');
+    }
 }
