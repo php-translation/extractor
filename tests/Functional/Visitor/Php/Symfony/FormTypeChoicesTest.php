@@ -70,4 +70,20 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
         $this->assertEquals('label1', $collection->get(0)->getMessage());
         $this->assertEquals(9, $collection->get(0)->getLine());
     }
+
+    public function testChoiceTranslationDomain()
+    {
+        $collection = $this->getSourceLocations(new FormTypeChoices(), Resources\Php\Symfony\FormDomainChoiceType::class);
+
+        $messageA = $collection->get(0);
+        $this->assertEquals('label1_a', $messageA->getMessage());
+        $this->assertEquals('admin', $messageA->getContext()['domain']);
+
+        $messageB = $collection->get(2);
+        $this->assertEquals('label1_b', $messageB->getMessage());
+        $this->assertNull($messageB->getContext()['domain']);
+
+        // We should not have "test_c"
+        $this->assertEquals(4, $collection->count(), 'We should ignore choices where "choice_translation_domain" is "false"');
+    }
 }
