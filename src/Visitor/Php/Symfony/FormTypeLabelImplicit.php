@@ -30,6 +30,7 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
             }
         }
 
+        $domain = null;
         // use add() function and look at first argument and if that's a string
         if ($node instanceof Node\Expr\MethodCall
             && ('add' === $node->name || 'create' === $node->name)
@@ -42,6 +43,15 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
                         if (isset($item->key) && 'label' === $item->key->value) {
                             $customLabel = true;
                         }
+
+
+                        if ('translation_domain' === $item->key->value) {
+                            if ($item->value instanceof Node\Scalar\String_) {
+                                $domain = $item->value->value;
+                            } elseif ($item->value instanceof Node\Expr\ConstFetch && $item->value->name->toString() === 'false') {
+                                $domain = false;
+                            }
+                        }
                     }
                 }
                 // actually there's another case here.. if the 3rd argument is anything else, it could well be
@@ -50,10 +60,10 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
             }
 
             // only if no custom label was found, proceed
-            if (false === $customLabel) {
+            if (false === $customLabel && $domain !== false) {
                 $label = $node->args[0]->value->value;
                 if (!empty($label)) {
-                    $this->addLocation($label, $node->getAttribute('startLine'), $node);
+                    $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain' => $domain]);
                 }
             }
         }
