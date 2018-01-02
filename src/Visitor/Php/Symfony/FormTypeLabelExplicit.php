@@ -48,6 +48,13 @@ final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
+            if ($item->value instanceof Node\Expr\ConstFetch) {
+                // This might be boolean "false"
+                if ('false' === $item->value->name->toString()) {
+                    continue;
+                }
+            }
+
             if (!$item->value instanceof Node\Scalar\String_) {
                 $this->addError($item, 'Form label is not a scalar string');
 
