@@ -23,13 +23,10 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
 /**
  * @author Rein Baarsma <rein@solidwebcode.com>
  */
-class FormTypeLabelExplicitTest extends BasePHPVisitorTest
+class FormTypeLabelTest extends BasePHPVisitorTest
 {
     private $allFormVisitors;
 
-    /**
-     *
-     */
     public function __construct()
     {
         $this->allFormVisitors = [
@@ -41,7 +38,6 @@ class FormTypeLabelExplicitTest extends BasePHPVisitorTest
             new FormTypePlaceholder(),
         ];
     }
-
 
     public function testTranslationDomain()
     {

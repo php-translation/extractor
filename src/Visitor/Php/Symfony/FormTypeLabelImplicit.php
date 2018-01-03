@@ -44,11 +44,10 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
                             $customLabel = true;
                         }
 
-
                         if ('translation_domain' === $item->key->value) {
                             if ($item->value instanceof Node\Scalar\String_) {
                                 $domain = $item->value->value;
-                            } elseif ($item->value instanceof Node\Expr\ConstFetch && $item->value->name->toString() === 'false') {
+                            } elseif ($item->value instanceof Node\Expr\ConstFetch && 'false' === $item->value->name->toString()) {
                                 $domain = false;
                             }
                         }
@@ -60,7 +59,7 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
             }
 
             // only if no custom label was found, proceed
-            if (false === $customLabel && $domain !== false) {
+            if (false === $customLabel && false !== $domain) {
                 $label = $node->args[0]->value->value;
                 if (!empty($label)) {
                     $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain' => $domain]);

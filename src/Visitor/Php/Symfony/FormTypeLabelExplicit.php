@@ -49,11 +49,10 @@ final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
             if ('translation_domain' === $item->key->value) {
                 if ($item->value instanceof Node\Scalar\String_) {
                     $domain = $item->value->value;
-                } elseif ($item->value instanceof Node\Expr\ConstFetch && $item->value->name->toString() === 'false') {
+                } elseif ($item->value instanceof Node\Expr\ConstFetch && 'false' === $item->value->name->toString()) {
                     $domain = false;
                 }
             }
-
 
             if ('label' !== $item->key->value) {
                 continue;
@@ -80,7 +79,7 @@ final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
             $labelNode = $item;
         }
 
-        if ($labelNode && $domain !== false) {
+        if ($labelNode && false !== $domain) {
             $this->addLocation($label, $node->getAttribute('startLine'), $item, ['domain' => $domain]);
         }
     }
