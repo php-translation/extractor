@@ -13,7 +13,6 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt;
-use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor;
 use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
@@ -66,7 +65,7 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
         }
 
         // symfony 3 or 4 displays key by default, where symfony 2 displays value
-        $useKey = $this->symfonyMajorVersion === 3 || $this->symfonyMajorVersion === 4 ;
+        $useKey = 3 === $this->symfonyMajorVersion || 4 === $this->symfonyMajorVersion;
 
         // remember choices in this node
         $choicesNodes = [];
