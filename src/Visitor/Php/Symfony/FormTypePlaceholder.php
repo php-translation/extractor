@@ -13,6 +13,7 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt;
+use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
@@ -21,13 +22,17 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
  */
 final class FormTypePlaceholder extends BasePHPVisitor implements NodeVisitor
 {
+    private $isFormType = false;
+
     public function enterNode(Node $node)
     {
         // only Traverse *Type
         if ($node instanceof Stmt\Class_) {
-            if ('Type' !== substr($node->name, -4)) {
-                return;
-            }
+            $this->isFormType = 'Type' === substr($node->name, -4);
+        }
+
+        if (!$this->isFormType) {
+            return;
         }
 
         if (!$node instanceof Node\Expr\Array_) {
