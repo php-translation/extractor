@@ -44,7 +44,7 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
                             $customLabel = true;
                         }
 
-                        if ('translation_domain' === $item->key->value) {
+                        if (isset($item->key) && 'translation_domain' === $item->key->value) {
                             if ($item->value instanceof Node\Scalar\String_) {
                                 $domain = $item->value->value;
                             } elseif ($item->value instanceof Node\Expr\ConstFetch && 'false' === $item->value->name->toString()) {
