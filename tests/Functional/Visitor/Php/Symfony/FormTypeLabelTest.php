@@ -37,12 +37,14 @@ class FormTypeLabelTest extends BasePHPVisitorTest
             new FormTypeLabelImplicit(),
             new FormTypePlaceholder(),
         ];
+
+        parent::__construct();
     }
 
     public function testTranslationDomain()
     {
-        $collection = $this->getSourceLocations($this->allFormVisitors, Resources\Php\Symfony\FormDomainType::class);
 
+        $collection = $this->getSourceLocations($this->allFormVisitors, Resources\Php\Symfony\FormDomainType::class);
         $messageA = $collection->get(0);
         $this->assertEquals('label1', $messageA->getMessage());
         $this->assertEquals('admin0', $messageA->getContext()['domain']);
