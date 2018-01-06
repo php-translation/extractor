@@ -12,7 +12,6 @@
 namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
-use PhpParser\Node\Stmt;
 use PhpParser\NodeVisitor;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
