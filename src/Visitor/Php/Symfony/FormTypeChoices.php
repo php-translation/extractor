@@ -65,7 +65,7 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
         }
 
         // symfony 3 or 4 displays key by default, where symfony 2 displays value
-        $useKey = 3 === $this->symfonyMajorVersion || 4 === $this->symfonyMajorVersion;
+        $useKey = 2 !== $this->symfonyMajorVersion;
 
         // remember choices in this node
         $choicesNodes = [];
