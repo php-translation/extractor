@@ -12,7 +12,6 @@
 namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
-use PhpParser\Node\Stmt;
 use PhpParser\NodeVisitor;
 use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
@@ -22,6 +21,8 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
  */
 final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
 {
+    use FormTrait;
+
     /**
      * @var int defaults to major version 3
      */
@@ -41,11 +42,8 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
 
     public function enterNode(Node $node)
     {
-        // only Traverse *Type
-        if ($node instanceof Stmt\Class_) {
-            if ('Type' !== substr($node->name, -4)) {
-                return;
-            }
+        if (!$this->isFormType($node)) {
+            return;
         }
 
         if (null === $this->state && $node instanceof Node\Expr\Assign) {
@@ -60,8 +58,8 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
             $this->state = null;
         }
 
-        // symfony 3 displays key by default, where symfony 2 displays value
-        $useKey = 3 === $this->symfonyMajorVersion;
+        // symfony 3 or 4 displays key by default, where symfony 2 displays value
+        $useKey = 2 !== $this->symfonyMajorVersion;
 
         // remember choices in this node
         $choicesNodes = [];

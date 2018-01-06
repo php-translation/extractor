@@ -45,6 +45,12 @@ class AllExtractorsTest extends TestCase
         $sc = $extractor->extract($finder);
         $this->translationExists($sc, 'trans.issue_34');
         $this->translationMissing($sc, 'trans.issue_62');
+
+        /*
+         * It is okey to increase the error count if you adding more fixtures/code.
+         * We just need to be aware that it changes.
+         */
+        $this->assertCount(9, $sc->getErrors(), 'There was an unexpected number of errors. Please investigate.');
     }
 
     /**

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Translation\extractor\tests\Functional\Visitor\Php\Symfony;
+namespace Translation\Extractor\Tests\Functional\Visitor\Php\Symfony;
 
 use Translation\Extractor\Tests\Functional\Visitor\Php\BasePHPVisitorTest;
 use Translation\Extractor\Tests\Resources;
