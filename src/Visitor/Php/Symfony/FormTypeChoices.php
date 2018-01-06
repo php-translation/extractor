@@ -71,6 +71,7 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
             return;
         }
 
+        $domain = null;
         foreach ($node->items as $item) {
             if (!$item->key instanceof Node\Scalar\String_) {
                 continue;
@@ -82,6 +83,16 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
+            if ('choice_translation_domain' === $item->key->value) {
+                if ($item->value instanceof Node\Scalar\String_) {
+                    $domain = $item->value->value;
+                } elseif ($item->value instanceof Node\Expr\ConstFetch && 'false' === $item->value->name->toString()) {
+                    $domain = false;
+                }
+
+                continue;
+            }
+
             if ('choices' !== $item->key->value) {
                 continue;
             }
@@ -89,7 +100,7 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
             $choicesNodes[] = $item->value;
         }
 
-        if (0 === count($choicesNodes)) {
+        if (0 === count($choicesNodes) || false === $domain) {
             return;
         }
 
@@ -111,7 +122,7 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
                     continue;
                 }
 
-                $sl = new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'));
+                $sl = new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'), ['domain' => $domain]);
                 $this->collection->addLocation($sl);
             }
         }
