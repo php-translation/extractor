@@ -22,8 +22,9 @@ trait FormTrait
      * Check if this node is a form type.
      *
      * @param Node $node
+     * @return bool
      */
-    private function isFormType(Node $node): bool
+    private function isFormType(Node $node)
     {
         // only Traverse *Type
         if ($node instanceof Stmt\Class_) {
