@@ -71,11 +71,11 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
             return;
         }
 
+        $domain = null;
         foreach ($node->items as $item) {
             if (!$item->key instanceof Node\Scalar\String_) {
                 continue;
             }
-            $domain = null;
 
             if ('choices_as_values' === $item->key->value) {
                 $useKey = true;
@@ -89,6 +89,8 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
                 } elseif ($item->value instanceof Node\Expr\ConstFetch && 'false' === $item->value->name->toString()) {
                     $domain = false;
                 }
+
+                continue;
             }
 
             if ('choices' !== $item->key->value) {
