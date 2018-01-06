@@ -21,16 +21,11 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
  */
 final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
 {
-    private $isFormType = false;
+    use FormTrait;
 
     public function enterNode(Node $node)
     {
-        // only Traverse *Type
-        if ($node instanceof Stmt\Class_) {
-            $this->isFormType = 'Type' === substr($node->name, -4);
-        }
-
-        if (!$this->isFormType) {
+        if (!$this->isFormType($node)) {
             return;
         }
 

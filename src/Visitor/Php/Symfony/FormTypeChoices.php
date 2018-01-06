@@ -22,6 +22,8 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
  */
 final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
 {
+    use FormTrait;
+
     /**
      * @var int defaults to major version 3
      */
@@ -30,8 +32,6 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
     private $variables = [];
 
     private $state;
-
-    private $isFormType = false;
 
     /**
      * @param int $sfMajorVersion
@@ -43,12 +43,7 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
 
     public function enterNode(Node $node)
     {
-        // only Traverse *Type
-        if ($node instanceof Stmt\Class_) {
-            $this->isFormType = 'Type' === substr($node->name, -4);
-        }
-
-        if (!$this->isFormType) {
+        if (!$this->isFormType($node)) {
             return;
         }
 
