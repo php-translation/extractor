@@ -4,6 +4,23 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+### 1.4.0
+
+### Added
+
+- Support for `translation_domain` and `choice_translation_domain`
+
+### Fixed
+
+- Respect `"label" => false`
+- Form type extractors will only operate on form type classes.  
+
+## 1.3.1
+
+### Added
+
+- Symfony 2.7 support
+
 ## 1.3.0
 
 ### Added
