@@ -33,13 +33,12 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
         if ($node instanceof Node\Expr\MethodCall
             && ('add' === $node->name || 'create' === $node->name)
             && $node->args[0]->value instanceof Node\Scalar\String_) {
-
             $skipLabel = false;
             // Check if the form type is "hidden"
             if (count($node->args) >= 2) {
                 $type = $node->args[1]->value;
-                if ($type instanceof Node\Scalar\String_ && $type->value === 'Symfony\Component\Form\Extension\Core\Type\HiddenType'
-                    || $type instanceof Node\Expr\ClassConstFetch && $type->class->parts[0] === 'HiddenType') {
+                if ($type instanceof Node\Scalar\String_ && 'Symfony\Component\Form\Extension\Core\Type\HiddenType' === $type->value
+                    || $type instanceof Node\Expr\ClassConstFetch && 'HiddenType' === $type->class->parts[0]) {
                     $skipLabel = true;
                 }
             }
