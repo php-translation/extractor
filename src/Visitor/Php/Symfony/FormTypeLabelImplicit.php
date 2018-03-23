@@ -13,7 +13,6 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
  * @author Rein Baarsma <rein@solidwebcode.com>
@@ -69,5 +68,4 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
             }
         }
     }
-
 }

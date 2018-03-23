@@ -41,6 +41,7 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
             $name = strtolower($node->name);
             if ('setdefaults' === $name || 'replacedefaults' === $name || 'setdefault' === $name) {
                 $this->parseDefaultsCall($node);
+
                 return;
             }
         }
@@ -62,16 +63,17 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
     }
 
     /**
-     * From JMS Translation bundle
+     * From JMS Translation bundle.
+     *
      * @param Node $node
      */
     private function parseDefaultsCall(Node $node)
     {
-        static $returningMethods = array(
+        static $returningMethods = [
             'setdefaults' => true, 'replacedefaults' => true, 'setoptional' => true, 'setrequired' => true,
             'setallowedvalues' => true, 'addallowedvalues' => true, 'setallowedtypes' => true,
-            'addallowedtypes' => true, 'setfilters' => true
-        );
+            'addallowedtypes' => true, 'setfilters' => true,
+        ];
 
         $var = $node->var;
         while ($var instanceof Node\Expr\MethodCall) {
@@ -96,7 +98,8 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
             && $node->args[1]->value instanceof Node\Scalar\String_
             && 'translation_domain' === $node->args[0]->value->value
         ) {
-            $this->defaultDomain =  $node->args[1]->value->value;
+            $this->defaultDomain = $node->args[1]->value->value;
+
             return;
         }
 
