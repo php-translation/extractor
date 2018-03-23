@@ -22,7 +22,7 @@ interface FileExtractor
     public function getSourceLocations(SplFileInfo $file, SourceCollection $collection): void;
 
     /**
-     * The file type the extractor supports.
+     * The file types the extractor supports.
      */
-    public function getType(): string;
+    public function getTypes();
 }
