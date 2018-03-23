@@ -30,10 +30,10 @@ final class ContainerAwareTrans extends BasePHPVisitor implements NodeVisitor
             return;
         }
 
-        if (!is_string($node->name)) {
+        if (!is_string($node->name) && !$node->name instanceof Node\Identifier) {
             return;
         }
-        $name = $node->name;
+        $name = (string) $node->name;
 
         //If $this->get('translator')->trans('foobar')
         if ('trans' === $name) {

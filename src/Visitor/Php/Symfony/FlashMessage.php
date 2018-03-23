@@ -30,11 +30,11 @@ final class FlashMessage extends BasePHPVisitor implements NodeVisitor
             return;
         }
 
-        if (!is_string($node->name)) {
+        if (!is_string($node->name) && !$node->name instanceof Node\Identifier) {
             return;
         }
 
-        $name = $node->name;
+        $name = (string) $node->name;
         $caller = $node->var;
         // $caller might be "Node\Expr\New_"
         $callerName = isset($caller->name) ? $caller->name : '';
