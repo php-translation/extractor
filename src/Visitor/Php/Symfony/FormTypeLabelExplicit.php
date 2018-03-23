@@ -18,7 +18,7 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 /**
  * @author Rein Baarsma <rein@solidwebcode.com>
  */
-final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
+final class FormTypeLabelExplicit extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
@@ -27,6 +27,7 @@ final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
         if (!$this->isFormType($node)) {
             return;
         }
+        parent::enterNode($node);
 
         // we could have chosen to traverse specifically the buildForm function or ->add()
         // we will probably miss some easy to catch instances when the actual array of options
@@ -78,19 +79,9 @@ final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
         }
 
         if ($labelNode && false !== $domain) {
-            $this->addLocation($label, $node->getAttribute('startLine'), $item, ['domain' => $domain]);
+            if (null !== $location = $this->getLocation($label, $node->getAttribute('startLine'), $item, ['domain' => $domain])) {
+                $this->lateCollect($location);
+            }
         }
-    }
-
-    public function leaveNode(Node $node)
-    {
-    }
-
-    public function beforeTraverse(array $nodes)
-    {
-    }
-
-    public function afterTraverse(array $nodes)
-    {
     }
 }

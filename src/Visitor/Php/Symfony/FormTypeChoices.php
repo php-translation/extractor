@@ -19,7 +19,7 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 /**
  * @author Rein Baarsma <rein@solidwebcode.com>
  */
-final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
+final class FormTypeChoices extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
@@ -45,6 +45,8 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
         if (!$this->isFormType($node)) {
             return;
         }
+
+        parent::enterNode($node);
 
         if (null === $this->state && $node instanceof Node\Expr\Assign) {
             $this->state = 'variable';
@@ -120,21 +122,8 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
                     continue;
                 }
 
-                $sl = new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'), ['domain' => $domain]);
-                $this->collection->addLocation($sl);
+                $this->lateCollect(new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'), ['domain' => $domain]));
             }
         }
-    }
-
-    public function leaveNode(Node $node)
-    {
-    }
-
-    public function beforeTraverse(array $nodes)
-    {
-    }
-
-    public function afterTraverse(array $nodes)
-    {
     }
 }

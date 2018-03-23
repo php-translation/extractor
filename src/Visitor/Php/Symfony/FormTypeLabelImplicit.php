@@ -18,7 +18,7 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 /**
  * @author Rein Baarsma <rein@solidwebcode.com>
  */
-final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
+final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
@@ -27,6 +27,8 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
         if (!$this->isFormType($node)) {
             return;
         }
+
+        parent::enterNode($node);
 
         $domain = null;
         // use add() function and look at first argument and if that's a string
@@ -60,21 +62,12 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
             if (false === $customLabel && false !== $domain) {
                 $label = $node->args[0]->value->value;
                 if (!empty($label)) {
-                    $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain' => $domain]);
+                    if (null !== $location = $this->getLocation($label, $node->getAttribute('startLine'), $node, ['domain' => $domain])) {
+                        $this->lateCollect($location);
+                    }
                 }
             }
         }
     }
 
-    public function leaveNode(Node $node)
-    {
-    }
-
-    public function beforeTraverse(array $nodes)
-    {
-    }
-
-    public function afterTraverse(array $nodes)
-    {
-    }
 }
