@@ -18,12 +18,16 @@ use Translation\Extractor\FileExtractor\PHPFileExtractor;
 use Translation\Extractor\FileExtractor\TwigFileExtractor;
 use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Tests\Functional\Visitor\Twig\TwigEnvironmentFactory;
+use Translation\Extractor\Visitor\Php\SourceLocationContainerVisitor;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTrans;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTransChoice;
 use Translation\Extractor\Visitor\Php\Symfony\FlashMessage;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeChoices;
+use Translation\Extractor\Visitor\Php\Symfony\FormTypeEmptyValue;
+use Translation\Extractor\Visitor\Php\Symfony\FormTypeInvalidMessage;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
+use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
 use Translation\Extractor\Visitor\Twig\TwigVisitorFactory;
 
 /**
@@ -50,7 +54,7 @@ class AllExtractorsTest extends TestCase
          * It is okey to increase the error count if you adding more fixtures/code.
          * We just need to be aware that it changes.
          */
-        $this->assertCount(9, $sc->getErrors(), 'There was an unexpected number of errors. Please investigate.');
+        $this->assertCount(12, $sc->getErrors(), 'There was an unexpected number of errors. Please investigate.');
     }
 
     /**
@@ -113,8 +117,12 @@ class AllExtractorsTest extends TestCase
         $file->addVisitor(new ContainerAwareTransChoice());
         $file->addVisitor(new FlashMessage());
         $file->addVisitor(new FormTypeChoices());
+        $file->addVisitor(new FormTypeEmptyValue());
+        $file->addVisitor(new FormTypeInvalidMessage());
         $file->addVisitor(new FormTypeLabelExplicit());
         $file->addVisitor(new FormTypeLabelImplicit());
+        $file->addVisitor(new FormTypePlaceholder());
+        $file->addVisitor(new SourceLocationContainerVisitor());
 
         return $file;
     }
