@@ -45,6 +45,9 @@ class FormTypeLabelTest extends BasePHPVisitorTest
     {
         $collection = $this->getSourceLocations($this->allFormVisitors, Resources\Php\Symfony\FormDomainType::class);
 
+        // We should not have "test_d" or "test_e"
+        $this->assertEquals(3, $collection->count(), 'We should ignore choices where "translation_domain" is "false"');
+
         $messageA = $collection->get(0);
         $this->assertEquals('label1', $messageA->getMessage());
         $this->assertEquals('admin0', $messageA->getContext()['domain']);
@@ -56,8 +59,5 @@ class FormTypeLabelTest extends BasePHPVisitorTest
         $messageC = $collection->get(2);
         $this->assertEquals('test_c', $messageC->getMessage());
         $this->assertNull($messageC->getContext()['domain']);
-
-        // We should not have "test_d" or "test_e"
-        $this->assertEquals(3, $collection->count(), 'We should ignore choices where "translation_domain" is "false"');
     }
 }

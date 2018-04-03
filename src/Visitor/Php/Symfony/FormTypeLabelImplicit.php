@@ -31,7 +31,7 @@ final class FormTypeLabelImplicit extends BasePHPVisitor implements NodeVisitor
         $domain = null;
         // use add() function and look at first argument and if that's a string
         if ($node instanceof Node\Expr\MethodCall
-            && ('add' === $node->name || 'create' === $node->name)
+            && ('add' === (string) $node->name || 'create' === (string) $node->name)
             && $node->args[0]->value instanceof Node\Scalar\String_) {
             // now make sure we don't have 'label' in the array of options
             $customLabel = false;
