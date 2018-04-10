@@ -28,11 +28,14 @@ final class FormTypeLabelExplicit extends AbstractFormType implements NodeVisito
         }
         parent::enterNode($node);
 
-        // we could have chosen to traverse specifically the buildForm function or ->add()
-        // we will probably miss some easy to catch instances when the actual array of options
-        // is provided statically or through another function.
-        // I don't see any disadvantages now to simply parsing arrays and JMSTranslationBundle has
-        // been doing it like this for quite some time without major problems.
+        /*
+         * We could have chosen to traverse specifically the buildForm function or ->add()
+         * we will probably miss some easy to catch instances when the actual array of options
+         * is provided statically or through another function.
+         *
+         * I don't see any disadvantages now to simply parsing arrays and JMSTranslationBundle has
+         * been doing it like this for quite some time without major problems.
+         */
         if (!$node instanceof Node\Expr\Array_) {
             return;
         }

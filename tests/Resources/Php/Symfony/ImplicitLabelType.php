@@ -15,5 +15,10 @@ class ImplicitLabelType
         $builder->add(function () { return 'skip3'; });
         // Symfony will throw an error I guess, but at least extractions skip it
         $builder->add('');
+		
+		//issue87: support for Ignore annotation
+		$generateOptions = function() { return ['label' => false]; };
+        $builder->add('issue87-willBeAdded', null, $generateOptions);
+        $builder->add(/** @Ignore */'issue87-shouldNotBeAdded', null, $generateOptions);
     }
 }
