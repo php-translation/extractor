@@ -29,6 +29,8 @@ matrix:
         - php: 7.1
         - php: 7.2
           env: COVERAGE=true TEST_COMMAND="composer test-ci"
+        - php: 7.2
+          env: DEPENDENCIES="nikic/php-parser:^3"
 
           # Force some major versions of Symfony
         - php: 7.2

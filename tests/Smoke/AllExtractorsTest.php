@@ -17,13 +17,18 @@ use Translation\Extractor\Extractor;
 use Translation\Extractor\FileExtractor\PHPFileExtractor;
 use Translation\Extractor\FileExtractor\TwigFileExtractor;
 use Translation\Extractor\Model\SourceCollection;
+use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Tests\Functional\Visitor\Twig\TwigEnvironmentFactory;
+use Translation\Extractor\Visitor\Php\SourceLocationContainerVisitor;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTrans;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTransChoice;
 use Translation\Extractor\Visitor\Php\Symfony\FlashMessage;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeChoices;
+use Translation\Extractor\Visitor\Php\Symfony\FormTypeEmptyValue;
+use Translation\Extractor\Visitor\Php\Symfony\FormTypeInvalidMessage;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
+use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
 use Translation\Extractor\Visitor\Twig\TwigVisitorFactory;
 
 /**
@@ -45,12 +50,21 @@ class AllExtractorsTest extends TestCase
         $sc = $extractor->extract($finder);
         $this->translationExists($sc, 'trans.issue_34');
         $this->translationMissing($sc, 'trans.issue_62');
+        $this->translationMissing($sc, 'github.issue_78a');
+        $this->translationMissing($sc, 'github.issue_78b');
+
+        $source = $this->translationExists($sc, 'github.issue_82a');
+        $this->assertEquals('custom', $source->getContext()['domain']);
+        $source = $this->translationExists($sc, 'github.issue_82b');
+        $this->assertEquals('foobar', $source->getContext()['domain']);
+        $source = $this->translationExists($sc, 'github.issue_82c');
+        $this->assertEquals('custom', $source->getContext()['domain']);
 
         /*
          * It is okey to increase the error count if you adding more fixtures/code.
          * We just need to be aware that it changes.
          */
-        $this->assertCount(9, $sc->getErrors(), 'There was an unexpected number of errors. Please investigate.');
+        $this->assertCount(12, $sc->getErrors(), 'There was an unexpected number of errors. Please investigate.');
     }
 
     /**
@@ -59,6 +73,8 @@ class AllExtractorsTest extends TestCase
      * @param SourceCollection $sc
      * @param $translationKey
      * @param string $message
+     *
+     * @return SourceLocation
      */
     private function translationExists(SourceCollection $sc, $translationKey, $message = null)
     {
@@ -66,6 +82,7 @@ class AllExtractorsTest extends TestCase
             $message = sprintf('Tried to find "%s" but failed', $translationKey);
         }
 
+        $source = null;
         $found = false;
         foreach ($sc as $source) {
             if ($translationKey === $source->getMessage()) {
@@ -76,6 +93,8 @@ class AllExtractorsTest extends TestCase
         }
 
         $this->assertTrue($found, $message);
+
+        return $source;
     }
 
     /**
@@ -113,8 +132,12 @@ class AllExtractorsTest extends TestCase
         $file->addVisitor(new ContainerAwareTransChoice());
         $file->addVisitor(new FlashMessage());
         $file->addVisitor(new FormTypeChoices());
+        $file->addVisitor(new FormTypeEmptyValue());
+        $file->addVisitor(new FormTypeInvalidMessage());
         $file->addVisitor(new FormTypeLabelExplicit());
         $file->addVisitor(new FormTypeLabelImplicit());
+        $file->addVisitor(new FormTypePlaceholder());
+        $file->addVisitor(new SourceLocationContainerVisitor());
 
         return $file;
     }
