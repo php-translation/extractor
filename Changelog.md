@@ -4,7 +4,25 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
-### 1.4.0
+## 1.5.0
+
+### Added
+
+- Support for `nikic/php-parser:^4`
+- Support for `array_*` callback in `SourceLocation::createHere` 
+- Support for global 'translation_domain' in forms
+- Support for `@Ignore` annotation in $builder->add to prevent implicit label
+
+### Changes
+
+- Make sure we do not extract implicit labels form HiddenType
+
+### Fixed
+
+- Added missing `sprintf` in `ValidationAnnotaion`
+- Do not generate an error on "placeholder=>false"
+
+## 1.4.0
 
 ### Added
 
