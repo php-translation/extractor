@@ -34,13 +34,22 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
         if ($node instanceof Node\Expr\MethodCall
             && ('add' === (string) $node->name || 'create' === (string) $node->name)
             && $node->args[0]->value instanceof Node\Scalar\String_) {
+            $skipLabel = false;
+            // Check if the form type is "hidden"
+            if (count($node->args) >= 2) {
+                $type = $node->args[1]->value;
+                if ($type instanceof Node\Scalar\String_ && 'Symfony\Component\Form\Extension\Core\Type\HiddenType' === $type->value
+                    || $type instanceof Node\Expr\ClassConstFetch && 'HiddenType' === $type->class->parts[0]) {
+                    $skipLabel = true;
+                }
+            }
+
             // now make sure we don't have 'label' in the array of options
-            $customLabel = false;
             if (count($node->args) >= 3) {
                 if ($node->args[2]->value instanceof Node\Expr\Array_) {
                     foreach ($node->args[2]->value->items as $item) {
                         if (isset($item->key) && 'label' === $item->key->value) {
-                            $customLabel = true;
+                            $skipLabel = true;
                         }
 
                         if (isset($item->key) && 'translation_domain' === $item->key->value) {
@@ -58,7 +67,7 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
             }
 
             // only if no custom label was found, proceed
-            if (false === $customLabel && false !== $domain) {
+            if (false === $skipLabel && false !== $domain) {
                 $label = $node->args[0]->value->value;
                 if (!empty($label)) {
                     if (null !== $location = $this->getLocation($label, $node->getAttribute('startLine'), $node, ['domain' => $domain])) {

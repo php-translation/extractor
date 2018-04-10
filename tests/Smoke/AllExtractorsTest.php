@@ -50,6 +50,8 @@ class AllExtractorsTest extends TestCase
         $sc = $extractor->extract($finder);
         $this->translationExists($sc, 'trans.issue_34');
         $this->translationMissing($sc, 'trans.issue_62');
+        $this->translationMissing($sc, 'github.issue_78a');
+        $this->translationMissing($sc, 'github.issue_78b');
 
         $source = $this->translationExists($sc, 'github.issue_82a');
         $this->assertEquals('custom', $source->getContext()['domain']);
