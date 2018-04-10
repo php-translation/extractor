@@ -13,7 +13,6 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -35,7 +34,6 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
             return;
         }
 
-
         $placeholderNode = null;
         $domain = null;
         foreach ($node->items as $item) {
@@ -55,6 +53,7 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
                 foreach ($item->value->items as $attrValue) {
                     if ('placeholder' === $attrValue->key->value) {
                         $placeholderNode = $attrValue;
+
                         break;
                     }
                 }
@@ -73,7 +72,7 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
 
             if ($placeholderNode->value instanceof Node\Scalar\String_) {
                 $line = $placeholderNode->value->getAttribute('startLine');
-                if (null !== $location = $this->getLocation($placeholderNode->value->value, $line, $placeholderNode, ['domain'=>$domain])) {
+                if (null !== $location = $this->getLocation($placeholderNode->value->value, $line, $placeholderNode, ['domain' => $domain])) {
                     $this->lateCollect($location);
                 }
             } elseif ($placeholderNode->value instanceof Node\Expr\ConstFetch && 'false' === $placeholderNode->value->name->toString()) {
