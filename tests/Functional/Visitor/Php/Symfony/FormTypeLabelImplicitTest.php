@@ -28,8 +28,8 @@ class FormTypeLabelImplicitTest extends BasePHPVisitorTest
         $this->assertEquals('find1', $collection->get(0)->getMessage());
         $this->assertEquals('bigger_find2', $collection->get(1)->getMessage());
         $this->assertEquals('camelFind3', $collection->get(2)->getMessage());
-		
-		//issue87: support for Ignore annotation
+
+        //issue87: support for Ignore annotation
         $this->assertEquals('issue87-willBeAdded', $collection->get(3)->getMessage());
     }
 }
