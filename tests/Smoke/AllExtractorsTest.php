@@ -17,6 +17,7 @@ use Translation\Extractor\Extractor;
 use Translation\Extractor\FileExtractor\PHPFileExtractor;
 use Translation\Extractor\FileExtractor\TwigFileExtractor;
 use Translation\Extractor\Model\SourceCollection;
+use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Tests\Functional\Visitor\Twig\TwigEnvironmentFactory;
 use Translation\Extractor\Visitor\Php\SourceLocationContainerVisitor;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTrans;
@@ -50,6 +51,13 @@ class AllExtractorsTest extends TestCase
         $this->translationExists($sc, 'trans.issue_34');
         $this->translationMissing($sc, 'trans.issue_62');
 
+        $source = $this->translationExists($sc, 'github.issue_82a');
+        $this->assertEquals('custom', $source->getContext()['domain']);
+        $source = $this->translationExists($sc, 'github.issue_82b');
+        $this->assertEquals('foobar', $source->getContext()['domain']);
+        $source = $this->translationExists($sc, 'github.issue_82c');
+        $this->assertEquals('custom', $source->getContext()['domain']);
+
         /*
          * It is okey to increase the error count if you adding more fixtures/code.
          * We just need to be aware that it changes.
@@ -63,6 +71,8 @@ class AllExtractorsTest extends TestCase
      * @param SourceCollection $sc
      * @param $translationKey
      * @param string $message
+     *
+     * @return SourceLocation
      */
     private function translationExists(SourceCollection $sc, $translationKey, $message = null)
     {
@@ -70,6 +80,7 @@ class AllExtractorsTest extends TestCase
             $message = sprintf('Tried to find "%s" but failed', $translationKey);
         }
 
+        $source = null;
         $found = false;
         foreach ($sc as $source) {
             if ($translationKey === $source->getMessage()) {
@@ -80,6 +91,8 @@ class AllExtractorsTest extends TestCase
         }
 
         $this->assertTrue($found, $message);
+
+        return $source;
     }
 
     /**
