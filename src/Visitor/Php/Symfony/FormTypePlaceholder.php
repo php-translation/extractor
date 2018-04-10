@@ -41,6 +41,9 @@ final class FormTypePlaceholder extends BasePHPVisitor implements NodeVisitor
                 if ($item->value instanceof Node\Scalar\String_) {
                     $line = $item->value->getAttribute('startLine');
                     $this->addLocation($item->value->value, $line, $item);
+                } elseif ($item->value instanceof Node\Expr\ConstFetch && 'false' === $item->value->name->toString()) {
+                    // 'placeholder' => false,
+                    // Do noting
                 } else {
                     $this->addError($item, 'Form placeholder is not a scalar string');
                 }
