@@ -51,7 +51,7 @@ final class SourceLocationContainerVisitor extends BasePHPVisitor implements Nod
 
         if ($node instanceof Node\Stmt\UseUse) {
             $key = isset($node->alias) ? $node->alias : $node->name->parts[count($node->name->parts) - 1];
-            $this->useStatements[$key] = implode('\\', $node->name->parts);
+            $this->useStatements[(string) $key] = implode('\\', $node->name->parts);
 
             return;
         }

@@ -34,11 +34,11 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Expr\MethodCall) {
-            if (!is_string($node->name)) {
+            if (!is_string($node->name) && !$node->name instanceof Node\Identifier) {
                 return;
             }
 
-            $name = strtolower($node->name);
+            $name = strtolower((string) $node->name);
             if ('setdefaults' === $name || 'replacedefaults' === $name || 'setdefault' === $name) {
                 $this->parseDefaultsCall($node);
 
