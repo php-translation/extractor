@@ -33,7 +33,7 @@ $fileExtractor->addVisitor(new FlashMessage());
 $fileExtractor->addVisitor(new FormTypeChoices());
 
 // Add the file extractor to Extactor
-$extractor->addFileExtractor($this->getPHPFileExtractor());
+$extractor->addFileExtractor($fileExtractor);
 
 // Define where the source code is
 $finder = new Finder();
