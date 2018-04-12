@@ -12,7 +12,7 @@ class NotAnArrayAttrType
           ));
     }
 
-    public function getAttrFunction(OptionsResolver $resolver)
+    public function getAttrFunction()
     {
         return array('maxlength' => 10);
     }
