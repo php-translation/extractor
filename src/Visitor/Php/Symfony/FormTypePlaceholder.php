@@ -49,7 +49,7 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
                 }
             } elseif ('placeholder' === $item->key->value) {
                 $placeholderNode = $item;
-            } elseif ('attr' === $item->key->value) {
+            } elseif ('attr' === $item->key->value && $item->value instanceof Node\Expr\Array_) {
                 foreach ($item->value->items as $attrValue) {
                     if ('placeholder' === $attrValue->key->value) {
                         $placeholderNode = $attrValue;
