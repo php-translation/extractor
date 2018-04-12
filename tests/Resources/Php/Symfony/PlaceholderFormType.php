@@ -18,16 +18,9 @@ class PlaceholderFormType extends AbstractType
                 'label' => false,
                 'attr' => array('placeholder' => 'form.placeholder.text.but.no.label')
             ))
-            ->add('field_with_function_as_attr_value', 'text', array(
-                'attr' => $this->getAttrFunction()
-            ))
             ->add('field_placeholder', 'choice', array(
                 'placeholder' => 'form.choice_placeholder'
             ))
         ;
-    }
-
-    protected function getAttrFunction() {
-      return array('maxlength' => 10);
     }
 }
