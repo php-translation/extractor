@@ -4,6 +4,12 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 1.5.1
+
+### Fixed
+
+- Fixed bug where form option key `attr` is not an array. 
+
 ## 1.5.0
 
 ### Added
