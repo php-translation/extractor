@@ -32,6 +32,7 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
         $domain = null;
         // use add() function and look at first argument and if that's a string
         if ($node instanceof Node\Expr\MethodCall
+            && (!is_object($node->name) || method_exists( $node->name, '__toString' ) ) //fix for issue104
             && ('add' === (string) $node->name || 'create' === (string) $node->name)
             && $node->args[0]->value instanceof Node\Scalar\String_) {
             $skipLabel = false;
