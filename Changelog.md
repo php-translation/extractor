@@ -4,6 +4,12 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 1.5.2
+
+### Fixed
+
+- Fixed Fatal Error in FormTypeImplicit when using method call from variable 
+
 ## 1.5.1
 
 ### Fixed
