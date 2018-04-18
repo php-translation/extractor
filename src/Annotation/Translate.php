@@ -24,7 +24,7 @@ class Translate
      *
      * @param array $values
      */
-    public function __construct(array $values)
+    public function __construct($values)
     {
         if (isset($values['domain'])) {
             $this->domain = $values['domain'];
@@ -34,7 +34,7 @@ class Translate
     /**
      * @return string
      */
-    public function getDomain(): string
+    public function getDomain()
     {
         return $this->domain;
     }
