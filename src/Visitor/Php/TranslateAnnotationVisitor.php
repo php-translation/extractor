@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHP Translation package.
+ *
+ * (c) PHP Translation team <tobias.nyholm@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Translation\Extractor\Visitor\Php;
 
 use Doctrine\Common\Annotations\DocParser;
@@ -8,9 +17,8 @@ use PhpParser\Node;
 use PhpParser\NodeVisitor;
 use Translation\Extractor\Annotation\Translate;
 
-
 /**
- * Class TranslationAnnotationVisitor
+ * Class TranslationAnnotationVisitor.
  *
  * Supports using @Translate annotation for marking string nodes to be added to the dictionary
  */
@@ -50,7 +58,6 @@ class TranslateAnnotationVisitor extends BasePHPVisitor implements NodeVisitor
         }
 
         foreach ($comments as $comment) {
-
             if (!$comment instanceof Comment\Doc) {
                 return null;
             }
@@ -58,9 +65,9 @@ class TranslateAnnotationVisitor extends BasePHPVisitor implements NodeVisitor
             foreach ($this->getTranslateDocParser()->parse($comment->getText()) as $annotation) {
                 //add phrase to dictionary
                 $this->addLocation($node->value, $node->getAttribute('startLine'), $node, ['domain' => $annotation->getDomain()]);
+
                 break;
             }
-
         }
     }
 

@@ -12,14 +12,12 @@
 namespace Translation\Extractor\Tests\Functional\Visitor\Php;
 
 use Translation\Extractor\Tests\Resources\Php\TestTranslateAnnotationFile;
-use Translation\Extractor\Tests\Resources;
 use Translation\Extractor\Visitor\Php\TranslateAnnotationVisitor;
 
 final class TranslateAnnotationVisitorTest extends BasePHPVisitorTest
 {
     public function testExtract()
     {
-
         $collection = $this->getSourceLocations(new TranslateAnnotationVisitor(),
             TestTranslateAnnotationFile::class);
 

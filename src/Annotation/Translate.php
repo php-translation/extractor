@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the PHP Translation package.
+ *
+ * (c) PHP Translation team <tobias.nyholm@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Translation\Extractor\Annotation;
 
 /**
@@ -7,7 +16,7 @@ namespace Translation\Extractor\Annotation;
  */
 class Translate
 {
-    /** @var string  */
+    /** @var string */
     private $domain = 'messages';
 
     /**
@@ -29,5 +38,4 @@ class Translate
     {
         return $this->domain;
     }
-
 }
