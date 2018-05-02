@@ -133,17 +133,18 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
         }
     }
 
-  /**
-   * @param Node $node
-   *
-   * @return bool
-   */
-    protected function isIgnored(Node $node) {
+    /**
+     * @param Node $node
+     *
+     * @return bool
+     */
+    protected function isIgnored(Node $node)
+    {
         //because of getDocParser method is private, we have to create a new custom instance
         $docParser = new DocParser();
-        $docParser->setImports(array(
-            'ignore' => Ignore::class
-        ));
+        $docParser->setImports([
+            'ignore' => Ignore::class,
+        ]);
         $docParser->setIgnoreNotImportedAnnotations(true);
         if (null !== $docComment = $node->getDocComment()) {
             foreach ($docParser->parse($docComment->getText()) as $annotation) {
@@ -152,6 +153,7 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
                 }
             }
         }
+
         return false;
     }
 }
