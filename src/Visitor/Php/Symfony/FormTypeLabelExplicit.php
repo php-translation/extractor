@@ -81,7 +81,7 @@ final class FormTypeLabelExplicit extends AbstractFormType implements NodeVisito
         }
 
         if ($labelNode && false !== $domain) {
-            if (null !== $location = $this->getLocation($label, $node->getAttribute('startLine'), $item, ['domain' => $domain])) {
+            if (null !== $location = $this->getLocation($label, $node->getAttribute('startLine'), $labelNode, ['domain' => $domain])) {
                 $this->lateCollect($location);
             }
         }

@@ -69,6 +69,12 @@ class AllExtractorsTest extends TestCase
         $source = $this->translationExists($sc, 'github.issue_96d.placeholder');
         $this->assertEquals('custom', $source->getContext()['domain']);
 
+        $this->translationExists($sc, 'github.issue_109.a');
+        $this->translationMissing($sc, 'github.issue_109.b');
+
+        $this->translationMissing($sc, 'github.issue_109.c');
+        $this->translationExists($sc, 'github.issue_109.d');
+
         /*
          * It is okey to increase the error count if you adding more fixtures/code.
          * We just need to be aware that it changes.
