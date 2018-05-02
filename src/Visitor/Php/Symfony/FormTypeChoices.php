@@ -100,7 +100,7 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
 
             //do not parse choices if the @Ignore annotation is attached
             if ($this->isIgnored($item->key)) {
-              continue;
+                continue;
             }
 
             $choicesNodes[] = $item->value;
@@ -135,22 +135,23 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
 
   /**
    * @param Node $node
+   *
    * @return bool
    */
     protected function isIgnored(Node $node) {
-      //because of getDocParser method is private, we have to create a new custom instance
-      $docParser = new DocParser();
-      $docParser->setImports([
-        'ignore' => Ignore::class
-      ]);
-      $docParser->setIgnoreNotImportedAnnotations(true);
-      if (null !== $docComment = $node->getDocComment()) {
-        foreach ($docParser->parse($docComment->getText()) as $annotation) {
-          if ($annotation instanceof Ignore) {
-            return true;
-          }
+        //because of getDocParser method is private, we have to create a new custom instance
+        $docParser = new DocParser();
+        $docParser->setImports(array(
+            'ignore' => Ignore::class
+        ));
+        $docParser->setIgnoreNotImportedAnnotations(true);
+        if (null !== $docComment = $node->getDocComment()) {
+            foreach ($docParser->parse($docComment->getText()) as $annotation) {
+                if ($annotation instanceof Ignore) {
+                    return true;
+                }
+            }
         }
-      }
-      return false;
+        return false;
     }
 }
