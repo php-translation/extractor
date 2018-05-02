@@ -46,7 +46,7 @@ $sourceCollection = $extractor->extract($finder);
 ## Found an issue?
 
 Is it something we do not extract? Please add it as a tests. Add a new file with your example code in
-`tests/Resources/Github/Issue_XX.php` then edit the `AllExtracotrsTest` to make sure the translation
+`tests/Resources/Github/Issue_XX.php` then edit the `AllExtractorsTest` to make sure the translation
 key is found. 
 
 ```php
