@@ -13,7 +13,7 @@ class MustNotBeIgnoredType
         /** @Ignore */
         'placeholder' => 'github.issue_109.b',
       ))
-      ->add('field_a', 'text', array(
+      ->add('field_b', 'text', array(
         /** @Ignore */
         'label' => 'github.issue_109.c',
         'placeholder' => 'github.issue_109.d',
