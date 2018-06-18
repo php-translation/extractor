@@ -21,8 +21,6 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
-    private $arrayNodeVisited = [];
-
     public function enterNode(Node $node)
     {
         if (!$this->isFormType($node)) {
@@ -60,27 +58,24 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
             }
         }
 
-        if (null !== $placeholderNode) {
-            /**
-             * Make sure we do not visit the same placeholder node twice.
-             */
-            $hash = spl_object_hash($placeholderNode);
-            if (isset($this->arrayNodeVisited[$hash])) {
-                return;
-            }
-            $this->arrayNodeVisited[$hash] = true;
+        if (null === $placeholderNode) {
+            return;
+        }
 
-            if ($placeholderNode->value instanceof Node\Scalar\String_) {
-                $line = $placeholderNode->value->getAttribute('startLine');
-                if (null !== $location = $this->getLocation($placeholderNode->value->value, $line, $placeholderNode, ['domain' => $domain])) {
-                    $this->lateCollect($location);
-                }
-            } elseif ($placeholderNode->value instanceof Node\Expr\ConstFetch && 'false' === $placeholderNode->value->name->toString()) {
-                // 'placeholder' => false,
-                // Do noting
-            } else {
-                $this->addError($placeholderNode, 'Form placeholder is not a scalar string');
+        if ($this->isKnownNode($placeholderNode)) {
+            return;
+        }
+
+        if ($placeholderNode->value instanceof Node\Scalar\String_) {
+            $line = $placeholderNode->value->getAttribute('startLine');
+            if (null !== $location = $this->getLocation($placeholderNode->value->value, $line, $placeholderNode, ['domain' => $domain])) {
+                $this->lateCollect($location);
             }
+        } elseif ($placeholderNode->value instanceof Node\Expr\ConstFetch && 'false' === $placeholderNode->value->name->toString()) {
+            // 'placeholder' => false,
+            // Do noting
+        } else {
+            $this->addError($placeholderNode, 'Form placeholder is not a scalar string');
         }
     }
 }
