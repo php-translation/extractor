@@ -21,6 +21,8 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
+    private $arrayNodeVisited = [];
+
     public function enterNode(Node $node)
     {
         if (!$this->isFormType($node)) {
@@ -62,9 +64,14 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
             return;
         }
 
-        if ($this->isKnownNode($placeholderNode)) {
+        /**
+         * Make sure we do not visit the same placeholder node twice.
+         */
+        $hash = spl_object_hash($placeholderNode);
+        if (isset($this->arrayNodeVisited[$hash])) {
             return;
         }
+        $this->arrayNodeVisited[$hash] = true;
 
         if ($placeholderNode->value instanceof Node\Scalar\String_) {
             $line = $placeholderNode->value->getAttribute('startLine');
