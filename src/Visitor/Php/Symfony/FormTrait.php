@@ -18,8 +18,6 @@ trait FormTrait
 {
     private $isFormType = false;
 
-    private $arrayNodeVisited = [];
-
     /**
      * Check if this node is a form type.
      *
@@ -35,23 +33,5 @@ trait FormTrait
         }
 
         return $this->isFormType;
-    }
-
-    /**
-     * Check if a node have been visited.
-     *
-     * @param Node $node
-     *
-     * @return bool
-     */
-    private function isKnownNode(Node $node)
-    {
-        $hash = spl_object_hash($node);
-        if (isset($this->arrayNodeVisited[$hash])) {
-            return true;
-        }
-        $this->arrayNodeVisited[$hash] = true;
-
-        return false;
     }
 }

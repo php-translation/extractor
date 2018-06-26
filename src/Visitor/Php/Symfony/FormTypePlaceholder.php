@@ -21,6 +21,8 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
+    private $arrayNodeVisited = [];
+
     public function enterNode(Node $node)
     {
         if (!$this->isFormType($node)) {
@@ -62,9 +64,20 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
             return;
         }
 
-        if ($this->isKnownNode($placeholderNode)) {
+        /**
+         * Make sure we do not visit the same placeholder node twice.
+         *
+         * The placeholder information is not always in the same place:
+         * * it can be in Type options (for example when using `ChoiceType`)
+         * * it can be in `attr` (for example when using `TextType`)
+         *
+         * @see https://github.com/php-translation/extractor/pull/114#issuecomment-400329507
+         */
+        $hash = spl_object_hash($placeholderNode);
+        if (isset($this->arrayNodeVisited[$hash])) {
             return;
         }
+        $this->arrayNodeVisited[$hash] = true;
 
         if ($placeholderNode->value instanceof Node\Scalar\String_) {
             $line = $placeholderNode->value->getAttribute('startLine');

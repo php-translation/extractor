@@ -49,10 +49,6 @@ final class FormTypeHelp extends AbstractFormType implements NodeVisitor
             return;
         }
 
-        if ($this->isKnownNode($helpNode)) {
-            return;
-        }
-
         if ($helpNode->value instanceof Node\Scalar\String_) {
             $line = $helpNode->value->getAttribute('startLine');
             if (null !== $location = $this->getLocation($helpNode->value->value, $line, $helpNode, ['domain' => $domain])) {
