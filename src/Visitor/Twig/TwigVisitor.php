@@ -58,6 +58,12 @@ abstract class TwigVisitor extends BaseVisitor
      */
     protected function doEnterNode($node)
     {
+        // If not initialized
+        if (null === $this->collection) {
+            // We have not executed BaseVisitor::init which means that we are not currently extracting
+            return $node;
+        }
+
         return $this->worker->work($node, $this->collection, function () {
             return $this->getAbsoluteFilePath();
         });
