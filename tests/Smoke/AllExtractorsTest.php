@@ -29,6 +29,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeInvalidMessage;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
+use Translation\Extractor\Visitor\Php\TranslateAnnotationVisitor;
 use Translation\Extractor\Visitor\Twig\TwigVisitorFactory;
 
 /**
@@ -153,6 +154,7 @@ class AllExtractorsTest extends TestCase
         $file->addVisitor(new FormTypeLabelImplicit());
         $file->addVisitor(new FormTypePlaceholder());
         $file->addVisitor(new SourceLocationContainerVisitor());
+        $file->addVisitor(new TranslateAnnotationVisitor());
 
         return $file;
     }
