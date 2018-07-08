@@ -1,6 +1,6 @@
 <?php
 
-namespace Translation\Extractor\Tests\Resources\Php\Symfony;
+namespace Translation\Extractor\Tests\Resources\Github;
 
 use Translation\Extractor\Annotation\Ignore;
 

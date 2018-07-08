@@ -37,7 +37,7 @@ final class FlashMessage extends BasePHPVisitor implements NodeVisitor
         $name = (string) $node->name;
         $caller = $node->var;
         // $caller might be "Node\Expr\New_"
-        $callerName = isset($caller->name) ? $caller->name : '';
+        $callerName = isset($caller->name) ? (string) $caller->name : '';
 
         /*
          * Make sure the caller is from a variable named "this" or a function called "getFlashbag"
