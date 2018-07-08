@@ -4,6 +4,13 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 1.7.0
+
+### Added
+
+- Support for `@translate` annotation. 
+- Better handle `@ignore` annotation on FormTypeChoices
+
 ## 1.6.0
 
 ### Added
