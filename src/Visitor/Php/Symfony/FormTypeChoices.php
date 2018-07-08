@@ -11,8 +11,10 @@
 
 namespace Translation\Extractor\Visitor\Php\Symfony;
 
+use Doctrine\Common\Annotations\DocParser;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
+use Translation\Extractor\Annotation\Ignore;
 use Translation\Extractor\Model\SourceLocation;
 
 /**
@@ -96,6 +98,11 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
                 continue;
             }
 
+            //do not parse choices if the @Ignore annotation is attached
+            if ($this->isIgnored($item->key)) {
+                continue;
+            }
+
             $choicesNodes[] = $item->value;
         }
 
@@ -124,5 +131,29 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
                 $this->lateCollect(new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'), ['domain' => $domain]));
             }
         }
+    }
+
+    /**
+     * @param Node $node
+     *
+     * @return bool
+     */
+    protected function isIgnored(Node $node)
+    {
+        //because of getDocParser method is private, we have to create a new custom instance
+        $docParser = new DocParser();
+        $docParser->setImports([
+            'ignore' => Ignore::class,
+        ]);
+        $docParser->setIgnoreNotImportedAnnotations(true);
+        if (null !== $docComment = $node->getDocComment()) {
+            foreach ($docParser->parse($docComment->getText()) as $annotation) {
+                if ($annotation instanceof Ignore) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
