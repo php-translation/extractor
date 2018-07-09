@@ -35,6 +35,12 @@ final class FlashMessage extends BasePHPVisitor implements NodeVisitor
         }
 
         $name = (string) $node->name;
+
+        // This prevents dealing with some fatal edge cases when getting the callerName
+        if ('addFlash' !== $name && 'add' !== $name) {
+            return;
+        }
+
         $caller = $node->var;
         // $caller might be "Node\Expr\New_"
         $callerName = isset($caller->name) ? (string) $caller->name : '';
