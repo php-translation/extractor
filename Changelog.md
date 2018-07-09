@@ -4,6 +4,12 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 1.7.1
+
+### Fixed
+
+- Error when getting caller name with the `FlashMessage` extractor.
+
 ## 1.7.0
 
 ### Added
