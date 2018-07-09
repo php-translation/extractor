@@ -37,7 +37,7 @@ final class FlashMessage extends BasePHPVisitor implements NodeVisitor
         $name = (string) $node->name;
 
         // This prevents dealing with some fatal edge cases when getting the callerName
-        if ('addFlash' !== $name && 'add' !== $name) {
+        if (!in_array($name, ['addFlash', 'add'])) {
             return;
         }
 
