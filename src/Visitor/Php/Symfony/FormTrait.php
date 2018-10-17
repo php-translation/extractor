@@ -34,4 +34,19 @@ trait FormTrait
 
         return $this->isFormType;
     }
+    
+    /**
+     * Several node types are not supported for translation extraction.
+     *
+     * As example: variables as keys are not supported, as their value can not get determined statically
+     *
+     * @param $attrValue
+     * @return bool
+     */
+    private function isNotSupported($attrValue)
+    {
+        $attributeKeyIsVariable = $attrValue->key instanceof Node\Expr\Variable;
+
+        return $attributeKeyIsVariable;
+    }
 }
