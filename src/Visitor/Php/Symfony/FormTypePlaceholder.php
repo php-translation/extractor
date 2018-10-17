@@ -54,7 +54,7 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
                     if ($this->isNotSupported($attrValue)) {
                         continue;
                     }
-                    
+
                     if ('placeholder' === $attrValue->key->value) {
                         $placeholderNode = $attrValue;
 
