@@ -52,6 +52,8 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
             } elseif ('attr' === $item->key->value && $item->value instanceof Node\Expr\Array_) {
                 foreach ($item->value->items as $attrValue) {
                     if ($this->isNotSupported($attrValue)) {
+                        $this->addError($node, 'Form attribute key is a variable.');
+
                         continue;
                     }
 

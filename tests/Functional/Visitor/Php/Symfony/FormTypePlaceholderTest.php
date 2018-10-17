@@ -26,7 +26,7 @@ final class FormTypePlaceholderTest extends BasePHPVisitorTest
         $collection = $this->getSourceLocations(new FormTypePlaceholder(),
             Resources\Php\Symfony\PlaceholderFormType::class);
 
-        $this->assertCount(4, $collection);
+        $this->assertCount(3, $collection);
         $this->assertEquals('form.placeholder.text', $collection->get(0)->getMessage());
         $this->assertEquals('form.placeholder.text.but.no.label', $collection->get(1)->getMessage());
         $this->assertEquals('form.choice_placeholder', $collection->get(2)->getMessage());
@@ -39,6 +39,15 @@ final class FormTypePlaceholderTest extends BasePHPVisitorTest
 
         $errors = $collection->getErrors();
         $this->assertCount(3, $errors);
+    }
+
+    public function testExtractErrorOnVariable()
+    {
+        $collection = $this->getSourceLocations(new FormTypePlaceholder(),
+            Resources\Php\Symfony\VariableAttributeFormType::class);
+
+        $errors = $collection->getErrors();
+        $this->assertCount(1, $errors);
     }
 
     public function testChildVisitationNotBlocked()
