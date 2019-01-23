@@ -33,15 +33,36 @@ abstract class BasePHPVisitor extends BaseVisitor
             return;
         }
 
-        if (!$node->args[$index]->value instanceof Node\Scalar\String_) {
-            return;
-        }
-
-        $label = $node->args[$index]->value->value;
+        $label = $this->getStringValue($node->args[$index]->value);
         if (empty($label)) {
             return;
         }
 
         return $label;
+    }
+
+    /**
+     * @param Node $node
+     *
+     * @return string|null
+     */
+    private function getStringValue(Node $node) {
+        if ($node instanceof Node\Scalar\String_) {
+            return $node->value;
+        }
+
+        if ($node instanceof Node\Expr\BinaryOp\Concat) {
+            $left = $this->getStringValue($node->left);
+            if ($left === null) {
+                return;
+            }
+
+            $right = $this->getStringValue($node->right);
+            if ($right === null) {
+                return;
+            }
+
+            return $left.$right;
+        }
     }
 }
