@@ -46,19 +46,20 @@ abstract class BasePHPVisitor extends BaseVisitor
      *
      * @return string|null
      */
-    private function getStringValue(Node $node) {
+    private function getStringValue(Node $node)
+    {
         if ($node instanceof Node\Scalar\String_) {
             return $node->value;
         }
 
         if ($node instanceof Node\Expr\BinaryOp\Concat) {
             $left = $this->getStringValue($node->left);
-            if ($left === null) {
+            if (null === $left) {
                 return;
             }
 
             $right = $this->getStringValue($node->right);
-            if ($right === null) {
+            if (null === $right) {
                 return;
             }
 
