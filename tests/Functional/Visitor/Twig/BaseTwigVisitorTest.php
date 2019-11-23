@@ -12,9 +12,13 @@
 namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 
 use PHPUnit\Framework\TestCase;
+use Translation\Extractor\FileExtractor\Twig3FileExtractor;
 use Translation\Extractor\FileExtractor\TwigFileExtractor;
 use Symfony\Component\Finder\Finder;
 use Translation\Extractor\Model\SourceCollection;
+use Translation\Extractor\Visitor\Twig\LegacyWorker;
+use Translation\Extractor\Visitor\Twig\Worker;
+use Twig\Environment;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -40,10 +44,14 @@ abstract class BaseTwigVisitorTest extends TestCase
     }
 
     /**
-     * @return TwigFileExtractor
+     * @return TwigFileExtractor|Twig3FileExtractor
      */
     private function getExtractor()
     {
-        return new TwigFileExtractor(TwigEnvironmentFactory::create());
+        if(-1 === version_compare(Environment::VERSION, '3.0')) {
+            return new TwigFileExtractor(TwigEnvironmentFactory::create());
+        }
+
+        return new Twig3FileExtractor(TwigEnvironmentFactory::create());
     }
 }

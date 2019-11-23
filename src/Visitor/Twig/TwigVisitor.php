@@ -12,6 +12,7 @@
 namespace Translation\Extractor\Visitor\Twig;
 
 use Translation\Extractor\Visitor\BaseVisitor;
+use Twig\Node\Node;
 
 /**
  * Factory class and base class for TwigVisitor.
@@ -21,40 +22,36 @@ use Translation\Extractor\Visitor\BaseVisitor;
 abstract class TwigVisitor extends BaseVisitor
 {
     /**
-     * @var Worker
+     * @var Worker|LegacyWorker
      */
     private $worker;
 
     /**
-     * @param Worker|null $worker
+     * @param Worker|LegacyWorker|null $worker
      */
-    public function __construct(Worker $worker = null)
+    public function __construct($worker = null)
     {
         if (null === $worker) {
-            $worker = new Worker();
+            $worker = WorkerFactory::create();
         }
 
         $this->worker = $worker;
     }
 
     /**
-     * @return Twig1Visitor|Twig2Visitor
+     * @return TwigVisitor
      *
      * @deprecated since 1.2. Will be removed in 2.0. Use TwigVisitorFactory instead.
      */
     public static function create()
     {
-        if (-1 === version_compare(\Twig_Environment::VERSION, '2.0')) {
-            return new Twig1Visitor();
-        }
-
-        return new Twig2Visitor();
+        return TwigVisitorFactory::create();
     }
 
     /**
-     * @param \Twig_Node|\Twig_NodeInterface $node
+     * @param \Twig_Node|\Twig_NodeInterface|Node $node
      *
-     * @return \Twig_Node|\Twig_NodeInterface
+     * @return \Twig_Node|\Twig_NodeInterface|Node
      */
     protected function doEnterNode($node)
     {

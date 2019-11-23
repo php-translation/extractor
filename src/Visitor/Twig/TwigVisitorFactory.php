@@ -11,6 +11,8 @@
 
 namespace Translation\Extractor\Visitor\Twig;
 
+use Twig\Environment;
+
 /**
  * Create a TwigVisitor depending on what version of Twig is installed.
  *
@@ -19,14 +21,17 @@ namespace Translation\Extractor\Visitor\Twig;
 final class TwigVisitorFactory
 {
     /**
-     * @return Twig1Visitor|Twig2Visitor
+     * @return TwigVisitor
      */
     public static function create()
     {
-        if (-1 === version_compare(\Twig_Environment::VERSION, '2.0')) {
-            return new Twig1Visitor();
+        switch (-1) {
+            case version_compare(Environment::VERSION, '2.0'):
+                return new Twig1Visitor();
+            case version_compare(Environment::VERSION, '3.0'):
+                return new Twig2Visitor();
+            default:
+                return new Twig3Visitor();
         }
-
-        return new Twig2Visitor();
     }
 }
