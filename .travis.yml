@@ -37,6 +37,8 @@ matrix:
           env: DEPENDENCIES="dunglas/symfony-lock:^3"
         - php: 7.2
           env: DEPENDENCIES="dunglas/symfony-lock:^4"
+        - php: 7.2
+          env: DEPENDENCIES="dunglas/symfony-lock:^5"
         - php: 5.6
           env: DEPENDENCIES="twig/twig:^1.30"
 
