@@ -13,33 +13,33 @@ namespace Translation\Extractor\FileExtractor;
 
 use Symfony\Component\Finder\SplFileInfo;
 use Translation\Extractor\Model\SourceCollection;
-use Translation\Extractor\Visitor\Visitor;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\NodeVisitor\NodeVisitorInterface;
+use Twig\Source;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class TwigFileExtractor extends \Twig_Extension implements FileExtractor
+final class TwigFileExtractor extends AbstractExtension implements FileExtractor
 {
     /**
-     * @var Visitor[]|\Twig_NodeVisitorInterface[]
+     * @var NodeVisitorInterface[]
      */
     private $visitors = [];
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     private $twig;
 
-    /**
-     * @param \Twig_Environment $twig
-     */
-    public function __construct(\Twig_Environment $twig)
+    public function __construct(Environment $twig)
     {
         $this->twig = $twig;
         $twig->addExtension($this);
     }
 
-    public function getSourceLocations(SplFileInfo $file, SourceCollection $collection)
+    public function getSourceLocations(SplFileInfo $file, SourceCollection $collection): void
     {
         foreach ($this->visitors as $v) {
             $v->init($collection, $file);
@@ -47,24 +47,16 @@ final class TwigFileExtractor extends \Twig_Extension implements FileExtractor
 
         $path = $file->getRelativePath();
 
-        if (class_exists('Twig_Source')) {
-            // Twig 2.0
-            $stream = $this->twig->tokenize(new \Twig_Source($file->getContents(), $file->getRelativePathname(), $path));
-        } else {
-            $stream = $this->twig->tokenize($file->getContents(), $path);
-        }
+        $stream = $this->twig->tokenize(new Source($file->getContents(), $file->getRelativePathname(), $path));
         $this->twig->parse($stream);
     }
 
-    public function getType()
+    public function getType(): string
     {
         return 'twig';
     }
 
-    /**
-     * @param \Twig_NodeVisitorInterface $visitor
-     */
-    public function addVisitor(\Twig_NodeVisitorInterface $visitor)
+    public function addVisitor(NodeVisitorInterface $visitor): void
     {
         $this->visitors[] = $visitor;
     }
@@ -72,12 +64,12 @@ final class TwigFileExtractor extends \Twig_Extension implements FileExtractor
     /**
      * {@inheritdoc}
      */
-    public function getNodeVisitors()
+    public function getNodeVisitors(): array
     {
         return $this->visitors;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'php.translation';
     }

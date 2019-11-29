@@ -18,15 +18,8 @@ namespace Translation\Extractor\Visitor\Twig;
  */
 final class TwigVisitorFactory
 {
-    /**
-     * @return Twig1Visitor|Twig2Visitor
-     */
-    public static function create()
+    public static function create(): Twig2Visitor
     {
-        if (-1 === version_compare(\Twig_Environment::VERSION, '2.0')) {
-            return new Twig1Visitor();
-        }
-
         return new Twig2Visitor();
     }
 }
