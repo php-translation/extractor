@@ -47,7 +47,7 @@ class AllExtractorsTest extends TestCase
         $extractor->addFileExtractor($this->getTwigFileExtractor());
 
         $finder = new Finder();
-        $finder->in(dirname(__DIR__));
+        $finder->in(\dirname(__DIR__));
         if (!class_exists(TransChoiceTokenParser::class)) {
             $finder->notName('transchoice.html.twig');
         }
@@ -95,7 +95,6 @@ class AllExtractorsTest extends TestCase
     /**
      * Assert that a translation key exists in source collection.
      *
-     * @param SourceCollection $sc
      * @param $translationKey
      * @param string $message
      *
@@ -125,7 +124,6 @@ class AllExtractorsTest extends TestCase
     /**
      * Assert that a translation key is missing in source collection.
      *
-     * @param SourceCollection $sc
      * @param $translationKey
      * @param string $message
      */

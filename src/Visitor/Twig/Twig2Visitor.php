@@ -20,16 +20,25 @@ use Twig\NodeVisitor\NodeVisitorInterface;
  */
 final class Twig2Visitor extends TwigVisitor implements NodeVisitorInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function enterNode(Node $node, Environment $env): Node
     {
         return $this->doEnterNode($node);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function leaveNode(Node $node, Environment $env): ?Node
     {
         return $node;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getPriority()
     {
         return 0;

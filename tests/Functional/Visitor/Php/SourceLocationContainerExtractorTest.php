@@ -11,8 +11,8 @@
 
 namespace Translation\Extractor\Tests\Functional\Visitor\Php;
 
-use Translation\Extractor\Visitor\Php\SourceLocationContainerVisitor;
 use Translation\Extractor\Tests\Resources;
+use Translation\Extractor\Visitor\Php\SourceLocationContainerVisitor;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>

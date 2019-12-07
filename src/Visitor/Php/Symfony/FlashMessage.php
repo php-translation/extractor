@@ -20,25 +20,32 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
  */
 final class FlashMessage extends BasePHPVisitor implements NodeVisitor
 {
-    public function beforeTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeTraverse(array $nodes): ?Node
     {
+        return null;
     }
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Expr\MethodCall) {
-            return;
+            return null;
         }
 
-        if (!is_string($node->name) && !$node->name instanceof Node\Identifier) {
-            return;
+        if (!\is_string($node->name) && !$node->name instanceof Node\Identifier) {
+            return null;
         }
 
         $name = (string) $node->name;
 
         // This prevents dealing with some fatal edge cases when getting the callerName
-        if (!in_array($name, ['addFlash', 'add'])) {
-            return;
+        if (!\in_array($name, ['addFlash', 'add'])) {
+            return null;
         }
 
         $caller = $node->var;
@@ -56,13 +63,23 @@ final class FlashMessage extends BasePHPVisitor implements NodeVisitor
                 $this->addLocation($label, $node->getAttribute('startLine'), $node);
             }
         }
+
+        return null;
     }
 
-    public function leaveNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function leaveNode(Node $node): ?Node
     {
+        return null;
     }
 
-    public function afterTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function afterTraverse(array $nodes): ?Node
     {
+        return null;
     }
 }

@@ -27,47 +27,59 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
     private $sourceLocations = [];
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $defaultDomain;
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Expr\MethodCall) {
-            if (!is_string($node->name) && !$node->name instanceof Node\Identifier) {
-                return;
+            if (!\is_string($node->name) && !$node->name instanceof Node\Identifier) {
+                return null;
             }
 
             $name = strtolower((string) $node->name);
             if ('setdefaults' === $name || 'replacedefaults' === $name || 'setdefault' === $name) {
                 $this->parseDefaultsCall($node);
 
-                return;
+                return null;
             }
         }
+
+        return null;
     }
 
-    protected function lateCollect(SourceLocation $location)
+    protected function lateCollect(SourceLocation $location): void
     {
         $this->sourceLocations[] = $location;
     }
 
-    public function leaveNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function leaveNode(Node $node): ?Node
     {
+        return null;
     }
 
-    public function beforeTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeTraverse(array $nodes): ?Node
     {
         $this->defaultDomain = null;
         $this->sourceLocations = [];
+
+        return null;
     }
 
     /**
      * From JMS Translation bundle.
-     *
-     * @param Node $node
      */
-    private function parseDefaultsCall(Node $node)
+    private function parseDefaultsCall(Node $node): void
     {
         static $returningMethods = [
             'setdefaults' => true, 'replacedefaults' => true, 'setoptional' => true, 'setrequired' => true,
@@ -125,7 +137,10 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
         }
     }
 
-    public function afterTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function afterTraverse(array $nodes): ?Node
     {
         /** @var SourceLocation $location */
         foreach ($this->sourceLocations as $location) {
@@ -139,5 +154,7 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
             $this->collection->addLocation($location);
         }
         $this->sourceLocations = [];
+
+        return null;
     }
 }

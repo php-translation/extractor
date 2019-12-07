@@ -22,14 +22,17 @@ final class FormTypeInvalidMessage extends BasePHPVisitor implements NodeVisitor
 {
     use FormTrait;
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
-            return;
+            return null;
         }
 
         if (!$node instanceof Node\Expr\Array_) {
-            return;
+            return null;
         }
 
         foreach ($node->items as $item) {
@@ -54,17 +57,31 @@ final class FormTypeInvalidMessage extends BasePHPVisitor implements NodeVisitor
 
             $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain' => 'validators']);
         }
+
+        return null;
     }
 
-    public function leaveNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function leaveNode(Node $node): ?Node
     {
+        return null;
     }
 
-    public function beforeTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeTraverse(array $nodes): ?Node
     {
+        return null;
     }
 
-    public function afterTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function afterTraverse(array $nodes): ?Node
     {
+        return null;
     }
 }

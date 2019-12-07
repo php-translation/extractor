@@ -29,7 +29,10 @@ final class PHPFileExtractor implements FileExtractor
      */
     private $visitors = [];
 
-    public function getSourceLocations(SplFileInfo $file, SourceCollection $collection)
+    /**
+     * {@inheritdoc}
+     */
+    public function getSourceLocations(SplFileInfo $file, SourceCollection $collection): void
     {
         $path = $file->getRelativePath();
         $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
@@ -47,15 +50,15 @@ final class PHPFileExtractor implements FileExtractor
         }
     }
 
-    public function getType()
+    /**
+     * {@inheritdoc}
+     */
+    public function getType(): string
     {
         return 'php';
     }
 
-    /**
-     * @param NodeVisitor $visitor
-     */
-    public function addVisitor(NodeVisitor $visitor)
+    public function addVisitor(NodeVisitor $visitor): void
     {
         $this->visitors[] = $visitor;
     }

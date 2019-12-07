@@ -76,13 +76,10 @@ final class Worker
         return $node;
     }
 
-    /**
-     * @return array
-     */
-    private function extractContextFromJoinedFilters()
+    private function extractContextFromJoinedFilters(): array
     {
         $context = [];
-        for ($i = count($this->stack) - 2; $i >= 0; $i -= 1) {
+        for ($i = \count($this->stack) - 2; $i >= 0; --$i) {
             if (!$this->stack[$i] instanceof FilterExpression) {
                 break;
             }

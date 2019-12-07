@@ -21,10 +21,13 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
 {
     use FormTrait;
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
-            return;
+            return null;
         }
 
         parent::enterNode($node);
@@ -32,12 +35,12 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
         $domain = null;
         // use add() function and look at first argument and if that's a string
         if ($node instanceof Node\Expr\MethodCall
-            && (!is_object($node->name) || method_exists($node->name, '__toString'))
+            && (!\is_object($node->name) || method_exists($node->name, '__toString'))
             && ('add' === (string) $node->name || 'create' === (string) $node->name)
             && $node->args[0]->value instanceof Node\Scalar\String_) {
             $skipLabel = false;
             // Check if the form type is "hidden"
-            if (count($node->args) >= 2) {
+            if (\count($node->args) >= 2) {
                 $type = $node->args[1]->value;
                 if ($type instanceof Node\Scalar\String_ && 'Symfony\Component\Form\Extension\Core\Type\HiddenType' === $type->value
                     || $type instanceof Node\Expr\ClassConstFetch && 'HiddenType' === $type->class->parts[0]) {
@@ -46,7 +49,7 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
             }
 
             // now make sure we don't have 'label' in the array of options
-            if (count($node->args) >= 3) {
+            if (\count($node->args) >= 3) {
                 if ($node->args[2]->value instanceof Node\Expr\Array_) {
                     foreach ($node->args[2]->value->items as $item) {
                         if (isset($item->key) && $item->key instanceof Node\Scalar\String_ && 'label' === $item->key->value) {
@@ -87,5 +90,7 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
                 }
             }
         }
+
+        return null;
     }
 }

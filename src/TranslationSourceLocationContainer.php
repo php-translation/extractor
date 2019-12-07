@@ -26,5 +26,5 @@ interface TranslationSourceLocationContainer
      *
      * @return SourceLocation[]
      */
-    public static function getTranslationSourceLocations();
+    public static function getTranslationSourceLocations(): array;
 }

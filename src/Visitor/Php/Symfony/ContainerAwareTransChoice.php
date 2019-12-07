@@ -20,18 +20,25 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
  */
 final class ContainerAwareTransChoice extends BasePHPVisitor implements NodeVisitor
 {
-    public function beforeTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeTraverse(array $nodes): ?Node
     {
+        return null;
     }
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Expr\MethodCall) {
-            return;
+            return null;
         }
 
-        if (!is_string($node->name) && !$node->name instanceof Node\Identifier) {
-            return;
+        if (!\is_string($node->name) && !$node->name instanceof Node\Identifier) {
+            return null;
         }
         $name = (string) $node->name;
 
@@ -42,13 +49,23 @@ final class ContainerAwareTransChoice extends BasePHPVisitor implements NodeVisi
 
             $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain' => $domain]);
         }
+
+        return null;
     }
 
-    public function leaveNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function leaveNode(Node $node): ?Node
     {
+        return null;
     }
 
-    public function afterTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function afterTraverse(array $nodes): ?Node
     {
+        return null;
     }
 }

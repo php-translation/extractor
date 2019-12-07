@@ -16,7 +16,10 @@ use Twig\TwigFilter;
 
 final class TranslationExtension extends AbstractExtension
 {
-    public function getFilters()
+    /**
+     * {@inheritdoc}
+     */
+    public function getFilters(): array
     {
         return [
             new TwigFilter('desc', [$this, 'runDescFilter']),
@@ -28,7 +31,10 @@ final class TranslationExtension extends AbstractExtension
         return $v;
     }
 
-    public function getName()
+    /**
+     * {@inheritdoc}
+     */
+    public function getName(): string
     {
         return 'php-translation';
     }

@@ -29,22 +29,12 @@ final class Extractor
      */
     private $fileExtractors = [];
 
-    /**
-     * @param Finder $finder
-     *
-     * @return SourceCollection
-     */
-    public function extract(Finder $finder)
+    public function extract(Finder $finder): SourceCollection
     {
         return $this->doExtract($finder);
     }
 
-    /**
-     * @param string $dir
-     *
-     * @return SourceCollection
-     */
-    public function extractFromDirectory($dir)
+    public function extractFromDirectory(string $dir): SourceCollection
     {
         $finder = new Finder();
         $finder->files()->in($dir);
@@ -52,12 +42,7 @@ final class Extractor
         return $this->doExtract($finder);
     }
 
-    /**
-     * @param SplFileInfo $file
-     *
-     * @return string
-     */
-    private function getType(SplFileInfo $file)
+    private function getType(SplFileInfo $file): string
     {
         $filename = $file->getFilename();
         if (preg_match('|.+\.blade\.php$|', $filename)) {
@@ -80,20 +65,12 @@ final class Extractor
         }
     }
 
-    /**
-     * @param FileExtractor $fileExtractors
-     */
-    public function addFileExtractor(FileExtractor $fileExtractor)
+    public function addFileExtractor(FileExtractor $fileExtractor): void
     {
         $this->fileExtractors[] = $fileExtractor;
     }
 
-    /**
-     * @param Finder $finder
-     *
-     * @return SourceCollection
-     */
-    private function doExtract(Finder $finder)
+    private function doExtract(Finder $finder): SourceCollection
     {
         $collection = new SourceCollection();
         foreach ($finder as $file) {
