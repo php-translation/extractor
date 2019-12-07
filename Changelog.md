@@ -1,8 +1,13 @@
 # Change Log
 
-The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release. 
+The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
 ## UNRELEASED
+
+- Remove support of Twig 1.x
+- Remove support of PHP < 7.2
+- Remove support of Symfony < 3.4
+- Add support of Symfony ^5.0
 
 ## 1.7.1
 
@@ -14,16 +19,16 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ### Added
 
-- Support for `@translate` annotation. 
+- Support for `@translate` annotation.
 - Better handle `@ignore` annotation on FormTypeChoices
 
 ## 1.6.0
 
 ### Added
 
-- Support for Symfony form help. 
+- Support for Symfony form help.
 
-### Fixed 
+### Fixed
 
 - Fixed issue where using the `@ignore` annotation ignored the wrong property.
 - Do not run the Twig worker if we are not extracting.
@@ -32,20 +37,20 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ### Fixed
 
-- Fixed Fatal Error in FormTypeImplicit when using method call from variable 
+- Fixed Fatal Error in FormTypeImplicit when using method call from variable
 
 ## 1.5.1
 
 ### Fixed
 
-- Fixed bug where form option key `attr` is not an array. 
+- Fixed bug where form option key `attr` is not an array.
 
 ## 1.5.0
 
 ### Added
 
 - Support for `nikic/php-parser:^4`
-- Support for `array_*` callback in `SourceLocation::createHere` 
+- Support for `array_*` callback in `SourceLocation::createHere`
 - Support for global 'translation_domain' in forms
 - Support for `@Ignore` annotation in $builder->add to prevent implicit label
 
@@ -67,7 +72,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 ### Fixed
 
 - Respect `"label" => false`
-- Form type extractors will only operate on form type classes.  
+- Form type extractors will only operate on form type classes.
 
 ## 1.3.1
 
@@ -94,7 +99,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ### Changed
 
-- Added TwigVisitorFactory to create a TwigVisitor. TwigVisitor::create has been deprecated. 
+- Added TwigVisitorFactory to create a TwigVisitor. TwigVisitor::create has been deprecated.
 
 ## 1.1.2
 
@@ -104,7 +109,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ### Added
 
-- More test to prove correctness. 
+- More test to prove correctness.
 
 ## 1.1.1
 
@@ -122,14 +127,14 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ### Deprecated
 
-- `Twig\TranslationBlock` and `Twig\TranslationFilter`. Use `Twig\Twig1Visitor` instead. 
+- `Twig\TranslationBlock` and `Twig\TranslationFilter`. Use `Twig\Twig1Visitor` instead.
 
 ## 1.0.0
 
 ## Added
 
 - Extractor for classes implementing `TranslationSourceLocationContainer`
-- Made classes final 
+- Made classes final
 
 ## 0.1.1
 

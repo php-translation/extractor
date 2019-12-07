@@ -12,6 +12,7 @@
 namespace Translation\Extractor\Tests\Smoke;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\Twig\TokenParser\TransChoiceTokenParser;
 use Symfony\Component\Finder\Finder;
 use Translation\Extractor\Extractor;
 use Translation\Extractor\FileExtractor\PHPFileExtractor;
@@ -47,6 +48,9 @@ class AllExtractorsTest extends TestCase
 
         $finder = new Finder();
         $finder->in(dirname(__DIR__));
+        if (!class_exists(TransChoiceTokenParser::class)) {
+            $finder->notName('transchoice.html.twig');
+        }
 
         $sc = $extractor->extract($finder);
         $this->translationExists($sc, 'trans.issue_34');
