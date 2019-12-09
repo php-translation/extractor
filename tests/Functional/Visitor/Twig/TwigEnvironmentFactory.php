@@ -11,14 +11,11 @@
 
 namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 
-use Symfony\Component\Translation\MessageCatalogue;
-use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\IdentityTranslator;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
-use Translation\Extractor\Twig\Translation3Extension;
 use Translation\Extractor\Twig\TranslationExtension as PHPTranslationExtension;
-use Twig\Environment;
 use Twig\Loader\ArrayLoader;
+use Twig\Environment;
 
 /**
  * Create a TwigEnvironment that will be used in tests.
@@ -29,18 +26,9 @@ final class TwigEnvironmentFactory
 {
     public static function create()
     {
-        if(-1 === version_compare(Environment::VERSION, '3.0')) {
-
-            $env = new \Twig_Environment(new \Twig_Loader_Array([]));
-            $env->addExtension(new TranslationExtension($translator = new IdentityTranslator(new MessageSelector())));
-            $env->addExtension(new PHPTranslationExtension());
-
-            return $env;
-        }
-
-        $env = new Environment(new ArrayLoader());
+        $env = new Environment(new ArrayLoader([]));
         $env->addExtension(new TranslationExtension($translator = new IdentityTranslator()));
-        $env->addExtension(new Translation3Extension());
+        $env->addExtension(new PHPTranslationExtension());
 
         return $env;
     }

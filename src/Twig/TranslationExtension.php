@@ -11,12 +11,15 @@
 
 namespace Translation\Extractor\Twig;
 
-final class TranslationExtension extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+
+final class TranslationExtension extends AbstractExtension
 {
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('desc', [$this, 'runDescFilter']),
+            new TwigFilter('desc', [$this, 'runDescFilter']),
         ];
     }
 

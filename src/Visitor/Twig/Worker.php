@@ -20,7 +20,7 @@ use Twig\Node\Expression\FilterExpression;
 use Twig\Node\Node;
 
 /**
- * The Worker tha actually extract the translations.
+ * The Worker that actually extract the translations.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  * @author Fabien Potencier <fabien@symfony.com>
@@ -31,14 +31,7 @@ final class Worker
 
     private $stack = [];
 
-    /**
-     * @param Node $node
-     * @param SourceCollection               $collection
-     * @param callable                       $getAbsoluteFilePath
-     *
-     * @return Node
-     */
-    public function work($node, SourceCollection $collection, callable $getAbsoluteFilePath)
+    public function work(Node $node, SourceCollection $collection, callable $getAbsoluteFilePath): Node
     {
         $this->stack[] = $node;
         if ($node instanceof FilterExpression && $node->getNode('node') instanceof ConstantExpression) {
@@ -112,13 +105,7 @@ final class Worker
         return $context;
     }
 
-    /**
-     * @param Node $arguments
-     * @param int        $index
-     *
-     * @return string|null
-     */
-    private function getReadDomainFromArguments(Node $arguments, $index)
+    private function getReadDomainFromArguments(Node $arguments, int $index): ?string
     {
         if ($arguments->hasNode('domain')) {
             $argument = $arguments->getNode('domain');
@@ -131,12 +118,7 @@ final class Worker
         return $this->getReadDomainFromNode($argument);
     }
 
-    /**
-     * @param Node $node
-     *
-     * @return string|null
-     */
-    private function getReadDomainFromNode(Node $node)
+    private function getReadDomainFromNode(Node $node): ?string
     {
         if ($node instanceof ConstantExpression) {
             return $node->getAttribute('value');

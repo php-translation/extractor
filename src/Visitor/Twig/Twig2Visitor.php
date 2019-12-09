@@ -11,20 +11,21 @@
 
 namespace Translation\Extractor\Visitor\Twig;
 
-use Twig_Environment;
-use Twig_Node;
+use Twig\Environment;
+use Twig\Node\Node;
+use Twig\NodeVisitor\NodeVisitorInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class Twig2Visitor extends TwigVisitor implements \Twig_NodeVisitorInterface
+final class Twig2Visitor extends TwigVisitor implements NodeVisitorInterface
 {
-    public function enterNode(Twig_Node $node, Twig_Environment $env)
+    public function enterNode(Node $node, Environment $env): Node
     {
         return $this->doEnterNode($node);
     }
 
-    public function leaveNode(Twig_Node $node, Twig_Environment $env)
+    public function leaveNode(Node $node, Environment $env): ?Node
     {
         return $node;
     }

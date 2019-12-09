@@ -21,39 +21,18 @@ use Twig\Node\Node;
  */
 abstract class TwigVisitor extends BaseVisitor
 {
-    /**
-     * @var Worker|LegacyWorker
-     */
     private $worker;
 
-    /**
-     * @param Worker|LegacyWorker|null $worker
-     */
-    public function __construct($worker = null)
+    public function __construct(Worker $worker = null)
     {
         if (null === $worker) {
-            $worker = WorkerFactory::create();
+            $worker = new Worker();
         }
 
         $this->worker = $worker;
     }
 
-    /**
-     * @return TwigVisitor
-     *
-     * @deprecated since 1.2. Will be removed in 2.0. Use TwigVisitorFactory instead.
-     */
-    public static function create()
-    {
-        return TwigVisitorFactory::create();
-    }
-
-    /**
-     * @param \Twig_Node|\Twig_NodeInterface|Node $node
-     *
-     * @return \Twig_Node|\Twig_NodeInterface|Node
-     */
-    protected function doEnterNode($node)
+    protected function doEnterNode(Node $node): Node
     {
         // If not initialized
         if (null === $this->collection) {
