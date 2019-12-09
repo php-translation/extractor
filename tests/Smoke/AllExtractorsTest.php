@@ -16,7 +16,6 @@ use Symfony\Bridge\Twig\TokenParser\TransChoiceTokenParser;
 use Symfony\Component\Finder\Finder;
 use Translation\Extractor\Extractor;
 use Translation\Extractor\FileExtractor\PHPFileExtractor;
-use Translation\Extractor\FileExtractor\Twig3FileExtractor;
 use Translation\Extractor\FileExtractor\TwigFileExtractor;
 use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Model\SourceLocation;
@@ -33,7 +32,6 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
 use Translation\Extractor\Visitor\Php\TranslateAnnotationVisitor;
 use Translation\Extractor\Visitor\Twig\TwigVisitorFactory;
-use Twig\Environment;
 
 /**
  * Smoke test to make sure no extractor throws exceptions.
@@ -171,19 +169,11 @@ class AllExtractorsTest extends TestCase
     }
 
     /**
-     * @return TwigFileExtractor|Twig3FileExtractor
+     * @return TwigFileExtractor
      */
     private function getTwigFileExtractor()
     {
-        if(-1 === version_compare(Environment::VERSION, '3.0')) {
-
-            $file = new TwigFileExtractor(TwigEnvironmentFactory::create());
-            $file->addVisitor(TwigVisitorFactory::create());
-
-            return $file;
-        }
-
-        $file = new Twig3FileExtractor(TwigEnvironmentFactory::create());
+        $file = new TwigFileExtractor(TwigEnvironmentFactory::create());
         $file->addVisitor(TwigVisitorFactory::create());
 
         return $file;
