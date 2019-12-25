@@ -21,11 +21,15 @@ final class FormTypeLabelExplicit extends AbstractFormType implements NodeVisito
 {
     use FormTrait;
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
-            return;
+            return null;
         }
+
         parent::enterNode($node);
 
         /*
@@ -37,7 +41,7 @@ final class FormTypeLabelExplicit extends AbstractFormType implements NodeVisito
          * been doing it like this for quite some time without major problems.
          */
         if (!$node instanceof Node\Expr\Array_) {
-            return;
+            return null;
         }
 
         $labelNode = null;
@@ -80,10 +84,12 @@ final class FormTypeLabelExplicit extends AbstractFormType implements NodeVisito
             $labelNode = $item;
         }
 
-        if ($labelNode && false !== $domain) {
+        if ($labelNode && false !== $domain && !empty($label)) {
             if (null !== $location = $this->getLocation($label, $node->getAttribute('startLine'), $labelNode, ['domain' => $domain])) {
                 $this->lateCollect($location);
             }
         }
+
+        return null;
     }
 }

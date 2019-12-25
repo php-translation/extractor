@@ -33,18 +33,18 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
 
     private $state;
 
-    /**
-     * @param int $sfMajorVersion
-     */
-    public function setSymfonyMajorVersion($sfMajorVersion)
+    public function setSymfonyMajorVersion(int $sfMajorVersion): void
     {
         $this->symfonyMajorVersion = $sfMajorVersion;
     }
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
-            return;
+            return null;
         }
 
         parent::enterNode($node);
@@ -69,7 +69,7 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
 
         // loop through array
         if (!$node instanceof Node\Expr\Array_) {
-            return;
+            return null;
         }
 
         $domain = null;
@@ -106,8 +106,8 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
             $choicesNodes[] = $item->value;
         }
 
-        if (0 === count($choicesNodes) || false === $domain) {
-            return;
+        if (0 === \count($choicesNodes) || false === $domain) {
+            return null;
         }
 
         // probably will be only 1, but who knows
@@ -131,14 +131,11 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
                 $this->lateCollect(new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'), ['domain' => $domain]));
             }
         }
+
+        return null;
     }
 
-    /**
-     * @param Node $node
-     *
-     * @return bool
-     */
-    protected function isIgnored(Node $node)
+    protected function isIgnored(Node $node): bool
     {
         //because of getDocParser method is private, we have to create a new custom instance
         $docParser = new DocParser();

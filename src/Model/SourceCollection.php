@@ -26,59 +26,51 @@ final class SourceCollection implements \Countable, \IteratorAggregate
      */
     private $errors = [];
 
-    public function getIterator()
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->sourceLocations);
     }
 
-    public function count()
+    /**
+     * {@inheritdoc}
+     */
+    public function count(): int
     {
-        return count($this->sourceLocations);
+        return \count($this->sourceLocations);
     }
 
-    /**
-     * @param SourceLocation $location
-     */
-    public function addLocation(SourceLocation $location)
+    public function addLocation(SourceLocation $location): void
     {
         $this->sourceLocations[] = $location;
     }
 
-    /**
-     * @param Error $error
-     */
-    public function addError(Error $error)
+    public function addError(Error $error): void
     {
         $this->errors[] = $error;
     }
 
-    /**
-     * @return SourceLocation|null
-     */
-    public function first()
+    public function first(): ?SourceLocation
     {
         if (empty($this->sourceLocations)) {
-            return;
+            return null;
         }
 
         return reset($this->sourceLocations);
     }
 
-    /**
-     * @param $key
-     *
-     * @return null|SourceLocation
-     */
-    public function get($key)
+    public function get(string $key): ?SourceLocation
     {
         if (!isset($this->sourceLocations[$key])) {
-            return;
+            return null;
         }
 
         return $this->sourceLocations[$key];
     }
 
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }

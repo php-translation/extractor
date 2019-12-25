@@ -11,11 +11,11 @@
 
 namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 
-use Symfony\Component\Translation\IdentityTranslator;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use Symfony\Component\Translation\IdentityTranslator;
 use Translation\Extractor\Twig\TranslationExtension as PHPTranslationExtension;
-use Twig\Loader\ArrayLoader;
 use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 /**
  * Create a TwigEnvironment that will be used in tests.

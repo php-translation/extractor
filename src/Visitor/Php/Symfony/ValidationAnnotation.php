@@ -15,8 +15,8 @@ use Doctrine\Common\Annotations\AnnotationException;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 use Symfony\Component\Validator\Mapping\Factory\MetadataFactoryInterface;
+use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -33,22 +33,25 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
      */
     private $namespace;
 
-    /**
-     * ValidationExtractor constructor.
-     *
-     * @param MetadataFactoryInterface $metadataFactory
-     */
     public function __construct(MetadataFactoryInterface $metadataFactory)
     {
         $this->metadataFactory = $metadataFactory;
     }
 
-    public function beforeTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeTraverse(array $nodes): ?Node
     {
         $this->namespace = '';
+
+        return null;
     }
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Stmt\Namespace_) {
             if (isset($node->name)) {
@@ -56,17 +59,17 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
                 $this->namespace = implode('\\', $node->name->parts);
             }
 
-            return;
+            return null;
         }
 
         if (!$node instanceof Node\Stmt\Class_) {
-            return;
+            return null;
         }
 
         $name = '' === $this->namespace ? $node->name : $this->namespace.'\\'.$node->name;
 
         if (!class_exists($name)) {
-            return;
+            return null;
         }
 
         try {
@@ -75,11 +78,11 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
         } catch (AnnotationException $e) {
             $this->addError($node, sprintf('Could not parse class "%s" for annotations. %s', $this->namespace, $e->getMessage()));
 
-            return;
+            return null;
         }
 
-        if (!$metadata->hasConstraints() && !count($metadata->getConstrainedProperties())) {
-            return;
+        if (!$metadata->hasConstraints() && !\count($metadata->getConstrainedProperties())) {
+            return null;
         }
 
         $this->extractFromConstraints($metadata->constraints);
@@ -88,12 +91,11 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
                 $this->extractFromConstraints($member->constraints);
             }
         }
+
+        return null;
     }
 
-    /**
-     * @param array $constraints
-     */
-    private function extractFromConstraints(array $constraints)
+    private function extractFromConstraints(array $constraints): void
     {
         foreach ($constraints as $constraint) {
             $ref = new \ReflectionClass($constraint);
@@ -105,7 +107,7 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
                 $propName = $property->getName();
 
                 // If the property ends with 'Message'
-                if ('message' === strtolower(substr($propName, -1 * strlen('Message')))) {
+                if ('message' === strtolower(substr($propName, -1 * \strlen('Message')))) {
                     // If it is different from the default value
                     if ($defaultValues[$propName] !== $constraint->{$propName}) {
                         $this->addLocation($constraint->{$propName}, 0, null, ['domain' => 'validators']);
@@ -115,11 +117,19 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
         }
     }
 
-    public function leaveNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function leaveNode(Node $node): ?Node
     {
+        return null;
     }
 
-    public function afterTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function afterTraverse(array $nodes): ?Node
     {
+        return null;
     }
 }

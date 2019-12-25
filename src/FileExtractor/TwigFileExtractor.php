@@ -13,6 +13,7 @@ namespace Translation\Extractor\FileExtractor;
 
 use Symfony\Component\Finder\SplFileInfo;
 use Translation\Extractor\Model\SourceCollection;
+use Translation\Extractor\Visitor\Visitor;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\NodeVisitor\NodeVisitorInterface;
@@ -27,10 +28,6 @@ final class TwigFileExtractor extends AbstractExtension implements FileExtractor
      * @var NodeVisitorInterface[]
      */
     private $visitors = [];
-
-    /**
-     * @var Environment
-     */
     private $twig;
 
     public function __construct(Environment $twig)
@@ -39,10 +36,15 @@ final class TwigFileExtractor extends AbstractExtension implements FileExtractor
         $twig->addExtension($this);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSourceLocations(SplFileInfo $file, SourceCollection $collection): void
     {
         foreach ($this->visitors as $v) {
-            $v->init($collection, $file);
+            if ($v instanceof Visitor) {
+                $v->init($collection, $file);
+            }
         }
 
         $path = $file->getRelativePath();
@@ -51,6 +53,9 @@ final class TwigFileExtractor extends AbstractExtension implements FileExtractor
         $this->twig->parse($stream);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getType(): string
     {
         return 'twig';
@@ -69,6 +74,9 @@ final class TwigFileExtractor extends AbstractExtension implements FileExtractor
         return $this->visitors;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName(): string
     {
         return 'php.translation';

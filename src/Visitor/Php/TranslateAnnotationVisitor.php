@@ -27,10 +27,7 @@ class TranslateAnnotationVisitor extends BasePHPVisitor implements NodeVisitor
     /** @var DocParser */
     protected $translateDocParser;
 
-    /**
-     * @return DocParser
-     */
-    private function getTranslateDocParser()
+    private function getTranslateDocParser(): DocParser
     {
         if (null === $this->translateDocParser) {
             $this->translateDocParser = new DocParser();
@@ -44,7 +41,10 @@ class TranslateAnnotationVisitor extends BasePHPVisitor implements NodeVisitor
         return $this->translateDocParser;
     }
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         // look for strings
         if (!$node instanceof Node\Scalar\String_) {
@@ -53,7 +53,7 @@ class TranslateAnnotationVisitor extends BasePHPVisitor implements NodeVisitor
 
         //look for string with comment
         $comments = $node->getAttribute('comments', []);
-        if (!count($comments)) {
+        if (!\count($comments)) {
             return null;
         }
 
@@ -69,17 +69,31 @@ class TranslateAnnotationVisitor extends BasePHPVisitor implements NodeVisitor
                 break;
             }
         }
+
+        return null;
     }
 
-    public function leaveNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function leaveNode(Node $node): ?Node
     {
+        return null;
     }
 
-    public function beforeTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeTraverse(array $nodes): ?Node
     {
+        return null;
     }
 
-    public function afterTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function afterTraverse(array $nodes): ?Node
     {
+        return null;
     }
 }
