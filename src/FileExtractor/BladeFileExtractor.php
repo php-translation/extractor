@@ -67,8 +67,8 @@ final class BladeFileExtractor implements FileExtractor
     /**
      * {@inheritdoc}
      */
-    public function getType(): string
+    public function supportsExtension(string $extension): bool
     {
-        return 'blade';
+        return 'blade.php' === $extension;
     }
 }

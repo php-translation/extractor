@@ -94,13 +94,8 @@ class AllExtractorsTest extends TestCase
 
     /**
      * Assert that a translation key exists in source collection.
-     *
-     * @param $translationKey
-     * @param string $message
-     *
-     * @return SourceLocation
      */
-    private function translationExists(SourceCollection $sc, $translationKey, $message = null)
+    private function translationExists(SourceCollection $sc, string $translationKey, string $message = null): SourceLocation
     {
         if (empty($message)) {
             $message = sprintf('Tried to find "%s" but failed', $translationKey);
@@ -123,11 +118,8 @@ class AllExtractorsTest extends TestCase
 
     /**
      * Assert that a translation key is missing in source collection.
-     *
-     * @param $translationKey
-     * @param string $message
      */
-    private function translationMissing(SourceCollection $sc, $translationKey, $message = null)
+    private function translationMissing(SourceCollection $sc, string $translationKey, string $message = null)
     {
         if (empty($message)) {
             $message = sprintf('The translation key "%s" should not exist', $translationKey);
@@ -145,10 +137,7 @@ class AllExtractorsTest extends TestCase
         $this->assertFalse($found, $message);
     }
 
-    /**
-     * @return PHPFileExtractor
-     */
-    private function getPHPFileExtractor()
+    private function getPHPFileExtractor(): PHPFileExtractor
     {
         $file = new PHPFileExtractor();
         $file->addVisitor(new ContainerAwareTrans());
@@ -166,10 +155,7 @@ class AllExtractorsTest extends TestCase
         return $file;
     }
 
-    /**
-     * @return TwigFileExtractor
-     */
-    private function getTwigFileExtractor()
+    private function getTwigFileExtractor(): TwigFileExtractor
     {
         $file = new TwigFileExtractor(TwigEnvironmentFactory::create());
         $file->addVisitor(new TwigVisitor());
