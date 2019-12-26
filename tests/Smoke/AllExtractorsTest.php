@@ -31,7 +31,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
 use Translation\Extractor\Visitor\Php\TranslateAnnotationVisitor;
-use Translation\Extractor\Visitor\Twig\TwigVisitorFactory;
+use Translation\Extractor\Visitor\Twig\TwigVisitor;
 
 /**
  * Smoke test to make sure no extractor throws exceptions.
@@ -172,7 +172,7 @@ class AllExtractorsTest extends TestCase
     private function getTwigFileExtractor()
     {
         $file = new TwigFileExtractor(TwigEnvironmentFactory::create());
-        $file->addVisitor(TwigVisitorFactory::create());
+        $file->addVisitor(new TwigVisitor());
 
         return $file;
     }

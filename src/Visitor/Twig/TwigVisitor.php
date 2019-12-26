@@ -12,14 +12,14 @@
 namespace Translation\Extractor\Visitor\Twig;
 
 use Translation\Extractor\Visitor\BaseVisitor;
+use Twig\Environment;
 use Twig\Node\Node;
+use Twig\NodeVisitor\NodeVisitorInterface;
 
 /**
- * Factory class and base class for TwigVisitor.
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-abstract class TwigVisitor extends BaseVisitor
+final class TwigVisitor extends BaseVisitor implements NodeVisitorInterface
 {
     private $worker;
 
@@ -32,7 +32,10 @@ abstract class TwigVisitor extends BaseVisitor
         $this->worker = $worker;
     }
 
-    protected function doEnterNode(Node $node): Node
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node, Environment $env): Node
     {
         // If not initialized
         if (null === $this->collection) {
@@ -43,5 +46,21 @@ abstract class TwigVisitor extends BaseVisitor
         return $this->worker->work($node, $this->collection, function () {
             return $this->getAbsoluteFilePath();
         });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function leaveNode(Node $node, Environment $env): ?Node
+    {
+        return $node;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPriority()
+    {
+        return 0;
     }
 }

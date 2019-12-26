@@ -11,7 +11,7 @@
 
 namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 
-use Translation\Extractor\Visitor\Twig\TwigVisitorFactory;
+use Translation\Extractor\Visitor\Twig\TwigVisitor;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -20,7 +20,7 @@ final class TranslationFilterTest extends BaseTwigVisitorTest
 {
     public function testExtract()
     {
-        $collection = $this->getSourceLocations(TwigVisitorFactory::create(), 'Twig/TranslationFilter/trans.html.twig');
+        $collection = $this->getSourceLocations(new TwigVisitor(), 'Twig/TranslationFilter/trans.html.twig');
 
         $this->assertCount(1, $collection);
         $source = $collection->first();
@@ -29,7 +29,7 @@ final class TranslationFilterTest extends BaseTwigVisitorTest
 
     public function testDescExtract()
     {
-        $collection = $this->getSourceLocations(TwigVisitorFactory::create(), 'Twig/TranslationFilter/desc.html.twig');
+        $collection = $this->getSourceLocations(new TwigVisitor(), 'Twig/TranslationFilter/desc.html.twig');
 
         $this->assertCount(1, $collection);
         $source = $collection->first();
@@ -39,7 +39,7 @@ final class TranslationFilterTest extends BaseTwigVisitorTest
 
     public function testDescExtractError()
     {
-        $collection = $this->getSourceLocations(TwigVisitorFactory::create(), 'Twig/TranslationFilter/desc-error.html.twig');
+        $collection = $this->getSourceLocations(new TwigVisitor(), 'Twig/TranslationFilter/desc-error.html.twig');
 
         $errors = $collection->getErrors();
         $this->assertCount(2, $errors);
