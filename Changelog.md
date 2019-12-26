@@ -4,10 +4,13 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 2.0.0
+
 - Remove support of Twig 1.x
 - Remove support of PHP < 7.2
 - Remove support of Symfony < 3.4
 - Add support of Symfony ^5.0
+- Add strict type hinting
 
 ## 1.7.1
 
