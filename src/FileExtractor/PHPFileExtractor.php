@@ -53,7 +53,7 @@ final class PHPFileExtractor implements FileExtractor
     /**
      * {@inheritdoc}
      */
-    public function getType(): array
+    public function getTypes(): array
     {
         return ['php'];
     }
