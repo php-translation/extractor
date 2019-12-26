@@ -23,6 +23,8 @@ interface FileExtractor
 
     /**
      * The file type the extractor supports.
+     *
+     * @return string[]
      */
-    public function getType(): string;
+    public function getTypes(): array;
 }

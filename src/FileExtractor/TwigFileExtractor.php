@@ -56,9 +56,9 @@ final class TwigFileExtractor extends AbstractExtension implements FileExtractor
     /**
      * {@inheritdoc}
      */
-    public function getType(): string
+    public function getTypes(): array
     {
-        return 'twig';
+        return ['twig'];
     }
 
     public function addVisitor(NodeVisitorInterface $visitor): void

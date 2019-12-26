@@ -67,8 +67,8 @@ final class BladeFileExtractor implements FileExtractor
     /**
      * {@inheritdoc}
      */
-    public function getType(): string
+    public function getTypes(): array
     {
-        return 'blade';
+        return ['blade'];
     }
 }

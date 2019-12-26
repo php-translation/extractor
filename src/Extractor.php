@@ -76,11 +76,9 @@ final class Extractor
         foreach ($finder as $file) {
             $type = $this->getType($file);
             foreach ($this->fileExtractors as $extractor) {
-                if ($extractor->getType() !== $type) {
-                    continue;
+                if (in_array($type, $extractor->getTypes())) {
+                    $extractor->getSourceLocations($file, $collection);
                 }
-
-                $extractor->getSourceLocations($file, $collection);
             }
         }
 
