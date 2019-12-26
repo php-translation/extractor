@@ -42,29 +42,6 @@ final class Extractor
         return $this->doExtract($finder);
     }
 
-    private function getType(SplFileInfo $file): string
-    {
-        $filename = $file->getFilename();
-        if (preg_match('|.+\.blade\.php$|', $filename)) {
-            $ext = 'blade.php';
-        } else {
-            $ext = $file->getExtension();
-        }
-
-        switch ($ext) {
-            case 'php':
-            case 'php5':
-            case 'phtml':
-                return 'php';
-            case 'twig':
-                return 'twig';
-            case 'blade.php':
-                return 'blade';
-            default:
-                return $ext;
-        }
-    }
-
     public function addFileExtractor(FileExtractor $fileExtractor): void
     {
         $this->fileExtractors[] = $fileExtractor;
@@ -74,16 +51,29 @@ final class Extractor
     {
         $collection = new SourceCollection();
         foreach ($finder as $file) {
-            $type = $this->getType($file);
-            foreach ($this->fileExtractors as $extractor) {
-                if ($extractor->getType() !== $type) {
-                    continue;
-                }
-
+            if (null !== $extractor = $this->getRelevantExtractorForFile($file)) {
                 $extractor->getSourceLocations($file, $collection);
             }
         }
 
         return $collection;
+    }
+
+    private function getRelevantExtractorForFile(SplFileInfo $file): ?FileExtractor
+    {
+        $filename = $file->getFilename();
+        if (preg_match('|.+\.blade\.php$|', $filename)) {
+            $ext = 'blade.php';
+        } else {
+            $ext = $file->getExtension();
+        }
+
+        foreach ($this->fileExtractors as $extractor) {
+            if ($extractor->supportsExtension($ext)) {
+                return $extractor;
+            }
+        }
+
+        return null;
     }
 }

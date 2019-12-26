@@ -53,9 +53,9 @@ final class PHPFileExtractor implements FileExtractor
     /**
      * {@inheritdoc}
      */
-    public function getType(): string
+    public function supportsExtension(string $extension): bool
     {
-        return 'php';
+        return \in_array($extension, ['php', 'php5', 'phtml']);
     }
 
     public function addVisitor(NodeVisitor $visitor): void
