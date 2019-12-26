@@ -6,11 +6,13 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## 2.0.0
 
-- Remove support of Twig 1.x
-- Remove support of PHP < 7.2
-- Remove support of Symfony < 3.4
 - Add support of Symfony ^5.0
 - Add strict type hinting
+- Added `PHPFileExtractor::supportsExtension(): bool`
+- Removed `PHPFileExtractor::getType()`
+- Remove support of Twig 1.x (`Twig2Visitor` and `TwigVisitorFactory`)
+- Remove support of PHP < 7.2
+- Remove support of Symfony < 3.4
 
 ## 1.7.1
 
