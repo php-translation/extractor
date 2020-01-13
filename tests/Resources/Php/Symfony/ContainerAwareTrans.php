@@ -55,4 +55,12 @@ class ContainerAwareTrans
     {
         $translator = static::$container->get('translator'); $foo = $translator->trans('bar');
     }
+
+    public function transWithVariable()
+    {
+        $key = 'trans_key';
+
+        // This should not be source Locations
+        return $this->translator->trans($key);
+    }
 }
