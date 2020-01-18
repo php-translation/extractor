@@ -45,6 +45,9 @@ final class ContainerAwareTrans extends BasePHPVisitor implements NodeVisitor
         //If $this->get('translator')->trans('foobar')
         if ('trans' === $name) {
             $label = $this->getStringArgument($node, 0);
+            if (null === $label) {
+                return null;
+            }
             $domain = $this->getStringArgument($node, 2);
 
             $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain' => $domain]);
