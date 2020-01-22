@@ -51,6 +51,9 @@ final class FormTypeTitle extends AbstractFormType implements NodeVisitor
                 }
             } elseif ('attr' === $item->key->value && $item->value instanceof Node\Expr\Array_) {
                 foreach ($item->value->items as $attrValue) {
+                    if (!$attrValue->key instanceof Node\Scalar\String_) {
+                        continue;
+                    }
                     if ('title' === $attrValue->key->value) {
                         $titleNode = $attrValue;
 
