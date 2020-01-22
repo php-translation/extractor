@@ -90,7 +90,7 @@ class AllExtractorsTest extends TestCase
          * It is okey to increase the error count if you adding more fixtures/code.
          * We just need to be aware that it changes.
          */
-        $this->assertCount(14, $sc->getErrors(), 'There was an unexpected number of errors. Please investigate.');
+        $this->assertCount(13, $sc->getErrors(), 'There was an unexpected number of errors. Please investigate.');
     }
 
     /**

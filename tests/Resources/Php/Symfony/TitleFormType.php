@@ -14,10 +14,6 @@ class TitleFormType extends AbstractType
                 'label' => 'field.with.title',
                 'attr' => array('title' => 'form.title.text')
             ))
-            ->add('field_without_label_with_attr_title', 'text', array(
-                'label' => false,
-                'attr' => array('title' => 'form.title.text.but.no.label')
-            ))
         ;
     }
 }

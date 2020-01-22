@@ -26,9 +26,8 @@ final class FormTypeTitleTest extends BasePHPVisitorTest
         $collection = $this->getSourceLocations(new FormTypeTitle(),
             Resources\Php\Symfony\TitleFormType::class);
 
-        $this->assertCount(2, $collection);
+        $this->assertCount(1, $collection);
         $this->assertEquals('form.title.text', $collection->get(0)->getMessage());
-        $this->assertEquals('form.title.text.but.no.label', $collection->get(1)->getMessage());
     }
 
     public function testExtractError()
@@ -37,7 +36,7 @@ final class FormTypeTitleTest extends BasePHPVisitorTest
             Resources\Php\Symfony\TitleFormErrorType::class);
 
         $errors = $collection->getErrors();
-        $this->assertCount(2, $errors);
+        $this->assertCount(1, $errors);
     }
 
     public function testChildVisitationNotBlocked()

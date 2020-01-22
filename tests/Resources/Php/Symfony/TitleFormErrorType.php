@@ -15,10 +15,6 @@ class TitleFormErrorType extends AbstractType
                 'label' => 'field.with.title',
                 'attr' => array('title' => $string)
             ))
-            ->add('field_without_label_with_attr_title', 'text', array(
-                'label' => false,
-                'attr' => array('title' => $string)
-            ))
         ;
     }
 }
