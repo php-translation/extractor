@@ -19,6 +19,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeInvalidMessage;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
+use Translation\Extractor\Visitor\Php\Symfony\FormTypeTitle;
 
 /**
  * @author Rein Baarsma <rein@solidwebcode.com>
@@ -36,6 +37,7 @@ class FormTypeLabelTest extends BasePHPVisitorTest
             new FormTypeLabelExplicit(),
             new FormTypeLabelImplicit(),
             new FormTypePlaceholder(),
+            new FormTypeTitle(),
         ];
 
         parent::__construct();

@@ -30,6 +30,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeInvalidMessage;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
+use Translation\Extractor\Visitor\Php\Symfony\FormTypeTitle;
 use Translation\Extractor\Visitor\Php\TranslateAnnotationVisitor;
 use Translation\Extractor\Visitor\Twig\TwigVisitor;
 
@@ -89,7 +90,7 @@ class AllExtractorsTest extends TestCase
          * It is okey to increase the error count if you adding more fixtures/code.
          * We just need to be aware that it changes.
          */
-        $this->assertCount(12, $sc->getErrors(), 'There was an unexpected number of errors. Please investigate.');
+        $this->assertCount(13, $sc->getErrors(), 'There was an unexpected number of errors. Please investigate.');
     }
 
     /**
@@ -149,6 +150,7 @@ class AllExtractorsTest extends TestCase
         $file->addVisitor(new FormTypeLabelExplicit());
         $file->addVisitor(new FormTypeLabelImplicit());
         $file->addVisitor(new FormTypePlaceholder());
+        $file->addVisitor(new FormTypeTitle());
         $file->addVisitor(new SourceLocationContainerVisitor());
         $file->addVisitor(new TranslateAnnotationVisitor());
 
