@@ -4,6 +4,16 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 2.0.1
+
+### Fixed
+
+- Avoid exception when calling `trans` with a variable.
+
+### Added
+
+- Added extractor for form field titles
+
 ## 2.0.0
 
 - Add support of Symfony ^5.0
@@ -151,5 +161,4 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 ## 0.1.0
 
 Init release
-
 
