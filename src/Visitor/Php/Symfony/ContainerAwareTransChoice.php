@@ -42,9 +42,12 @@ final class ContainerAwareTransChoice extends BasePHPVisitor implements NodeVisi
         }
         $name = (string) $node->name;
 
-        //If $this->get('translator')->trans('foobar')
+        //If $this->get('translator')->transChoice('foobar')
         if ('transChoice' === $name) {
             $label = $this->getStringArgument($node, 0);
+            if (null === $label) {
+                return null;
+            }
             $domain = $this->getStringArgument($node, 3);
 
             $this->addLocation($label, $node->getAttribute('startLine'), $node, ['domain' => $domain]);
