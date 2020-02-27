@@ -16,7 +16,7 @@ use PhpParser\NodeVisitor;
 
 /**
  * This class extracts knp menu item link titles:
- *     - $menu['foo']->setLinkAttribute('title', 'my.title')
+ *     - $menu['foo']->setLinkAttribute('title', 'my.title').
  */
 final class LinkTitle extends AbstractKnpMenuVisitor implements NodeVisitor
 {

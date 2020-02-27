@@ -17,8 +17,7 @@ use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
- * This class extracts knp menu item link titles:
- *     - $menu['foo']->setLinkAttribute('title', 'my.title')
+ * This class provides common functionality for KnpMenu extractors.
  */
 abstract class AbstractKnpMenuVisitor extends BasePHPVisitor implements NodeVisitor
 {

@@ -17,7 +17,7 @@ use PhpParser\NodeVisitor;
 /**
  * This class extracts knp menu item labels:
  *     - $menu->addChild('foo')
- *     - $menu['foo']->setLabel('bar')
+ *     - $menu['foo']->setLabel('bar').
  */
 final class ItemLabel extends AbstractKnpMenuVisitor implements NodeVisitor
 {
