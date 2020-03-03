@@ -20,7 +20,8 @@
         "symfony/translation": "^3.4 || ^4.3 || ^5.0",
         "symfony/validator": "^3.4 || ^4.3 || ^5.0",
         "symfony/twig-bridge": "^3.4 || ^4.3 || ^5.0",
-        "phpunit/phpunit": "^8.4"
+        "phpunit/phpunit": "^8.4",
+        "knplabs/knp-menu": "^3.1"
     },
     "autoload": {
         "psr-4": {
