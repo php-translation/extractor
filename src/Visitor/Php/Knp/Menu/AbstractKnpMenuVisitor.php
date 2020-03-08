@@ -99,10 +99,10 @@ abstract class AbstractKnpMenuVisitor extends BasePHPVisitor implements NodeVisi
                 $returnType = $returnType->type;
             }
 
-            if (!$returnType instanceof Node\Name || !method_exists($returnType, 'toCodeString')) {
+            if (!$returnType instanceof Node\Name) {
                 $this->isKnpMenuBuildingMethod = false;
             } else {
-                $this->isKnpMenuBuildingMethod = 'ItemInterface' === $returnType->toCodeString();
+                $this->isKnpMenuBuildingMethod = 'ItemInterface' === $returnType->toString();
             }
         }
 
