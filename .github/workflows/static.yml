@@ -4,6 +4,7 @@ name: Static analysis
 
 jobs:
   php-cs-fixer:
+    name: PHP-CS-Fixer
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -13,10 +14,11 @@ jobs:
             args: php-cs-fixer fix --dry-run --diff-format udiff -vvv
 
   phpstan:
+    name: PHPStan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - name: PHPStan
-        uses: docker://oskarstark/phpstan-ga
+        uses: docker://jakzal/phpqa:php7.3-alpine
         with:
-          args: analyze --no-progress
+          args: phpstan analyze --no-progress
