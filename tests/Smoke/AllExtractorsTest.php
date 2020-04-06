@@ -20,6 +20,8 @@ use Translation\Extractor\FileExtractor\TwigFileExtractor;
 use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Tests\Functional\Visitor\Twig\TwigEnvironmentFactory;
+use Translation\Extractor\Visitor\Php\Knp\Menu\ItemLabel;
+use Translation\Extractor\Visitor\Php\Knp\Menu\LinkTitle;
 use Translation\Extractor\Visitor\Php\SourceLocationContainerVisitor;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTrans;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTransChoice;
@@ -153,6 +155,8 @@ class AllExtractorsTest extends TestCase
         $file->addVisitor(new FormTypeTitle());
         $file->addVisitor(new SourceLocationContainerVisitor());
         $file->addVisitor(new TranslateAnnotationVisitor());
+        $file->addVisitor(new ItemLabel());
+        $file->addVisitor(new LinkTitle());
 
         return $file;
     }
