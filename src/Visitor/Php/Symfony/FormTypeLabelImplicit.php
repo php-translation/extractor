@@ -84,6 +84,7 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
 
                 $label = $node->args[0]->value->value;
                 if (!empty($label)) {
+                    $label = $this->humanize($label);
                     if (null !== $location = $this->getLocation($label, $node->getAttribute('startLine'), $node, ['domain' => $domain])) {
                         $this->lateCollect($location);
                     }
@@ -92,5 +93,13 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
         }
 
         return null;
+    }
+
+    /**
+     * @see Symfony\Component\Form\FormRenderer::humanize
+     */
+    private function humanize(string $text): string
+    {
+        return ucfirst(strtolower(trim(preg_replace(['/([A-Z])/', '/[_\s]+/'], ['_$1', ' '], $text))));
     }
 }
