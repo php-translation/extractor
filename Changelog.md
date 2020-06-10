@@ -4,6 +4,17 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 2.0.2
+
+### Fixed
+
+- Update image used in github actions to fix CS errors #153
+- Fixed error when using variable in transChoice() #151
+
+### Added
+
+- Knp menu extractors #152
+
 ## 2.0.1
 
 ### Fixed
