@@ -94,6 +94,13 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
         } elseif ($placeholderNode->value instanceof Node\Expr\ConstFetch && 'false' === $placeholderNode->value->name->toString()) {
             // 'placeholder' => false,
             // Do noting
+        } elseif ($placeholderNode->value instanceof Node\Expr\Array_) {
+            foreach ($placeholderNode->value->items as $placeholderNode) {
+                $line = $placeholderNode->value->getAttribute('startLine');
+                if (null !== $location = $this->getLocation($placeholderNode->value->value, $line, $placeholderNode, ['domain' => $domain])) {
+                    $this->lateCollect($location);
+                }
+            }
         } else {
             $this->addError($placeholderNode, 'Form placeholder is not a scalar string');
         }
