@@ -4,6 +4,12 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 2.0.3
+
+### Added
+
+- Add support for PHP 8 #157
+
 ## 2.0.2
 
 ### Fixed
