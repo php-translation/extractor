@@ -33,6 +33,7 @@ matrix:
           env: DEPENDENCIES="dunglas/symfony-lock:^4" SYMFONY_DEPRECATIONS_HELPER="2"
 
         - php: 7.3
+        - php: 8.0
 
           # Latest commit to master
         - php: 7.4

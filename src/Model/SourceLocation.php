@@ -37,7 +37,7 @@ final class SourceLocation
      */
     public static function createHere(string $message, array $context = []): self
     {
-        foreach (debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2) as $trace) {
+        foreach (debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT, 2) as $trace) {
             // File is not set if we call from an anonymous context like an array_map function.
             if (isset($trace['file'])) {
                 break;
