@@ -8,6 +8,8 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 final class Constraint extends BasePHPVisitor implements NodeVisitor
 {
+    const VALIDATORS_DOMAIN = 'validators';
+
     const CONSTRAINT_CLASS_NAMES = [
         'AbstractComparison',
         'All',
@@ -99,12 +101,17 @@ final class Constraint extends BasePHPVisitor implements NodeVisitor
 
         $parts = $className->parts;
         $isConstraintClass = false;
+
+        // we need to check every part since `Assert\NotBlank` would be split in 2 different pieces
         foreach ($parts as $part) {
             if (\in_array($part, self::CONSTRAINT_CLASS_NAMES)) {
                 $isConstraintClass = true;
+
+                break;
             }
         }
 
+        // unsupported class
         if (!$isConstraintClass) {
             return null;
         }
@@ -132,7 +139,9 @@ final class Constraint extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
-            if ('message' !== $item->key->value) {
+            // there could be false positives but it should catch most of the useful properties
+            // (e.g. `message`, `minMessage`)
+            if (false === stripos($item->key->value, 'message')) {
                 continue;
             }
 
@@ -149,7 +158,9 @@ final class Constraint extends BasePHPVisitor implements NodeVisitor
         }
 
         if (!empty($message) && null !== $messageNode) {
-            $this->addLocation($message, $messageNode->getAttribute('startLine'), $messageNode, ['domain' => 'validators']);
+            $this->addLocation($message, $messageNode->getAttribute('startLine'), $messageNode, [
+                'domain' => self::VALIDATORS_DOMAIN,
+            ]);
         }
 
         return null;
