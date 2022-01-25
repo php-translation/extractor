@@ -59,7 +59,7 @@ final class TwigVisitor extends BaseVisitor implements NodeVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return 0;
     }
