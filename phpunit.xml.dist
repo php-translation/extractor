@@ -11,6 +11,10 @@
          bootstrap="./tests/bootstrap.php"
     >
 
+    <php>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="verbose=1" />
+    </php>
+
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
     </listeners>
