@@ -13,7 +13,7 @@
         "nikic/php-parser": "^3.0 || ^4.0",
         "symfony/finder": "^3.4 || ^4.3 || ^5.0",
         "twig/twig": "^2.0 || ^3.0",
-        "doctrine/annotations": "^1.2"
+        "doctrine/annotations": "^1.7"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.0",
