@@ -4,6 +4,16 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 2.0.4
+
+### Added
+* Add GitHub Actions CI config by @bocharsky-bw in https://github.com/php-translation/extractor/pull/164
+* Add return type to fix deprecation by @gimler in https://github.com/php-translation/extractor/pull/161
+
+### Removed
+* Remove phpcs-fixer --diff-fomat option by @gimler in https://github.com/php-translation/extractor/pull/163
+* Delete Travis config - repo migrated to GitHub Actions by @bocharsky-bw in https://github.com/php-translation/extractor/pull/162
+
 ## 2.0.3
 
 ### Added
