@@ -20,7 +20,10 @@ use Translation\Extractor\Model\SourceLocation;
  */
 final class BladeFileExtractor implements FileExtractor
 {
-    public function getSourceLocations(SplFileInfo $file, SourceCollection $collection)
+    /**
+     * {@inheritdoc}
+     */
+    public function getSourceLocations(SplFileInfo $file, SourceCollection $collection): void
     {
         $realPath = $file->getRealPath();
         $messages = $this->findTranslations($file);
@@ -32,11 +35,9 @@ final class BladeFileExtractor implements FileExtractor
     /**
      * @author uusa35 and contributors to {@link https://github.com/barryvdh/laravel-translation-manager}
      *
-     * @param SplFileInfo $file
-     *
      * @return string[]
      */
-    public function findTranslations(SplFileInfo $file)
+    public function findTranslations(SplFileInfo $file): array
     {
         $keys = [];
         $functions = ['trans', 'trans_choice', 'Lang::get', 'Lang::choice', 'Lang::trans', 'Lang::transChoice', '@lang', '@choice'];
@@ -63,8 +64,11 @@ final class BladeFileExtractor implements FileExtractor
         return $keys;
     }
 
-    public function getType()
+    /**
+     * {@inheritdoc}
+     */
+    public function supportsExtension(string $extension): bool
     {
-        return 'blade';
+        return 'blade.php' === $extension;
     }
 }

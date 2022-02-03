@@ -29,22 +29,12 @@ final class Extractor
      */
     private $fileExtractors = [];
 
-    /**
-     * @param Finder $finder
-     *
-     * @return SourceCollection
-     */
-    public function extract(Finder $finder)
+    public function extract(Finder $finder): SourceCollection
     {
         return $this->doExtract($finder);
     }
 
-    /**
-     * @param string $dir
-     *
-     * @return SourceCollection
-     */
-    public function extractFromDirectory($dir)
+    public function extractFromDirectory(string $dir): SourceCollection
     {
         $finder = new Finder();
         $finder->files()->in($dir);
@@ -52,12 +42,24 @@ final class Extractor
         return $this->doExtract($finder);
     }
 
-    /**
-     * @param SplFileInfo $file
-     *
-     * @return string
-     */
-    private function getType(SplFileInfo $file)
+    public function addFileExtractor(FileExtractor $fileExtractor): void
+    {
+        $this->fileExtractors[] = $fileExtractor;
+    }
+
+    private function doExtract(Finder $finder): SourceCollection
+    {
+        $collection = new SourceCollection();
+        foreach ($finder as $file) {
+            if (null !== $extractor = $this->getRelevantExtractorForFile($file)) {
+                $extractor->getSourceLocations($file, $collection);
+            }
+        }
+
+        return $collection;
+    }
+
+    private function getRelevantExtractorForFile(SplFileInfo $file): ?FileExtractor
     {
         $filename = $file->getFilename();
         if (preg_match('|.+\.blade\.php$|', $filename)) {
@@ -66,47 +68,12 @@ final class Extractor
             $ext = $file->getExtension();
         }
 
-        switch ($ext) {
-            case 'php':
-            case 'php5':
-            case 'phtml':
-                return 'php';
-            case 'twig':
-                return 'twig';
-            case 'blade.php':
-                return 'blade';
-            default:
-                return $ext;
-        }
-    }
-
-    /**
-     * @param FileExtractor $fileExtractors
-     */
-    public function addFileExtractor(FileExtractor $fileExtractor)
-    {
-        $this->fileExtractors[] = $fileExtractor;
-    }
-
-    /**
-     * @param Finder $finder
-     *
-     * @return SourceCollection
-     */
-    private function doExtract(Finder $finder)
-    {
-        $collection = new SourceCollection();
-        foreach ($finder as $file) {
-            $type = $this->getType($file);
-            foreach ($this->fileExtractors as $extractor) {
-                if ($extractor->getType() !== $type) {
-                    continue;
-                }
-
-                $extractor->getSourceLocations($file, $collection);
+        foreach ($this->fileExtractors as $extractor) {
+            if ($extractor->supportsExtension($ext)) {
+                return $extractor;
             }
         }
 
-        return $collection;
+        return null;
     }
 }

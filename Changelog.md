@@ -1,10 +1,111 @@
 # Change Log
 
-The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release. 
+The change log describes what is "Added", "Removed", "Changed" or "Fixed" between each release.
 
 ## UNRELEASED
 
-### 1.4.0
+## 2.0.4
+
+### Added
+* Add GitHub Actions CI config by @bocharsky-bw in https://github.com/php-translation/extractor/pull/164
+* Add return type to fix deprecation by @gimler in https://github.com/php-translation/extractor/pull/161
+
+### Removed
+* Remove phpcs-fixer --diff-fomat option by @gimler in https://github.com/php-translation/extractor/pull/163
+* Delete Travis config - repo migrated to GitHub Actions by @bocharsky-bw in https://github.com/php-translation/extractor/pull/162
+
+## 2.0.3
+
+### Added
+
+- Add support for PHP 8 #157
+
+## 2.0.2
+
+### Fixed
+
+- Update image used in github actions to fix CS errors #153
+- Fixed error when using variable in transChoice() #151
+
+### Added
+
+- Knp menu extractors #152
+
+## 2.0.1
+
+### Fixed
+
+- Avoid exception when calling `trans` with a variable.
+
+### Added
+
+- Added extractor for form field titles
+
+## 2.0.0
+
+- Add support of Symfony ^5.0
+- Add strict type hinting
+- Added `PHPFileExtractor::supportsExtension(): bool`
+- Removed `PHPFileExtractor::getType()`
+- Remove support of Twig 1.x (`Twig2Visitor` and `TwigVisitorFactory`)
+- Remove support of PHP < 7.2
+- Remove support of Symfony < 3.4
+
+## 1.7.1
+
+### Fixed
+
+- Error when getting caller name with the `FlashMessage` extractor.
+
+## 1.7.0
+
+### Added
+
+- Support for `@translate` annotation.
+- Better handle `@ignore` annotation on FormTypeChoices
+
+## 1.6.0
+
+### Added
+
+- Support for Symfony form help.
+
+### Fixed
+
+- Fixed issue where using the `@ignore` annotation ignored the wrong property.
+- Do not run the Twig worker if we are not extracting.
+
+## 1.5.2
+
+### Fixed
+
+- Fixed Fatal Error in FormTypeImplicit when using method call from variable
+
+## 1.5.1
+
+### Fixed
+
+- Fixed bug where form option key `attr` is not an array.
+
+## 1.5.0
+
+### Added
+
+- Support for `nikic/php-parser:^4`
+- Support for `array_*` callback in `SourceLocation::createHere`
+- Support for global 'translation_domain' in forms
+- Support for `@Ignore` annotation in $builder->add to prevent implicit label
+
+### Changes
+
+- Make sure we do not extract implicit labels form HiddenType
+
+### Fixed
+
+- Added missing `sprintf` in `ValidationAnnotaion`
+- Do not generate an error on "placeholder=>false"
+
+## 1.4.0
 
 ### Added
 
@@ -13,7 +114,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 ### Fixed
 
 - Respect `"label" => false`
-- Form type extractors will only operate on form type classes.  
+- Form type extractors will only operate on form type classes.
 
 ## 1.3.1
 
@@ -40,7 +141,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ### Changed
 
-- Added TwigVisitorFactory to create a TwigVisitor. TwigVisitor::create has been deprecated. 
+- Added TwigVisitorFactory to create a TwigVisitor. TwigVisitor::create has been deprecated.
 
 ## 1.1.2
 
@@ -50,7 +151,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ### Added
 
-- More test to prove correctness. 
+- More test to prove correctness.
 
 ## 1.1.1
 
@@ -68,14 +169,14 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ### Deprecated
 
-- `Twig\TranslationBlock` and `Twig\TranslationFilter`. Use `Twig\Twig1Visitor` instead. 
+- `Twig\TranslationBlock` and `Twig\TranslationFilter`. Use `Twig\Twig1Visitor` instead.
 
 ## 1.0.0
 
 ## Added
 
 - Extractor for classes implementing `TranslationSourceLocationContainer`
-- Made classes final 
+- Made classes final
 
 ## 0.1.1
 
@@ -87,5 +188,4 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 ## 0.1.0
 
 Init release
-
 

@@ -7,7 +7,7 @@ use Translation\Extractor\TranslationSourceLocationContainer;
 
 class SourceLocationContainer implements TranslationSourceLocationContainer
 {
-    public static function getTranslationSourceLocations()
+    public static function getTranslationSourceLocations(): array
     {
         return [
             SourceLocation::createHere('foo'),

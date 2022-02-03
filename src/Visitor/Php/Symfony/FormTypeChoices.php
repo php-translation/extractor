@@ -11,15 +11,16 @@
 
 namespace Translation\Extractor\Visitor\Php\Symfony;
 
+use Doctrine\Common\Annotations\DocParser;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
+use Translation\Extractor\Annotation\Ignore;
 use Translation\Extractor\Model\SourceLocation;
-use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
  * @author Rein Baarsma <rein@solidwebcode.com>
  */
-final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
+final class FormTypeChoices extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
@@ -32,19 +33,21 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
 
     private $state;
 
-    /**
-     * @param int $sfMajorVersion
-     */
-    public function setSymfonyMajorVersion($sfMajorVersion)
+    public function setSymfonyMajorVersion(int $sfMajorVersion): void
     {
         $this->symfonyMajorVersion = $sfMajorVersion;
     }
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
-            return;
+            return null;
         }
+
+        parent::enterNode($node);
 
         if (null === $this->state && $node instanceof Node\Expr\Assign) {
             $this->state = 'variable';
@@ -66,7 +69,7 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
 
         // loop through array
         if (!$node instanceof Node\Expr\Array_) {
-            return;
+            return null;
         }
 
         $domain = null;
@@ -95,11 +98,16 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
+            //do not parse choices if the @Ignore annotation is attached
+            if ($this->isIgnored($item->key)) {
+                continue;
+            }
+
             $choicesNodes[] = $item->value;
         }
 
-        if (0 === count($choicesNodes) || false === $domain) {
-            return;
+        if (0 === \count($choicesNodes) || false === $domain) {
+            return null;
         }
 
         // probably will be only 1, but who knows
@@ -120,21 +128,29 @@ final class FormTypeChoices extends BasePHPVisitor implements NodeVisitor
                     continue;
                 }
 
-                $sl = new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'), ['domain' => $domain]);
-                $this->collection->addLocation($sl);
+                $this->lateCollect(new SourceLocation($labelNode->value, $this->getAbsoluteFilePath(), $choices->getAttribute('startLine'), ['domain' => $domain]));
             }
         }
+
+        return null;
     }
 
-    public function leaveNode(Node $node)
+    protected function isIgnored(Node $node): bool
     {
-    }
+        //because of getDocParser method is private, we have to create a new custom instance
+        $docParser = new DocParser();
+        $docParser->setImports([
+            'ignore' => Ignore::class,
+        ]);
+        $docParser->setIgnoreNotImportedAnnotations(true);
+        if (null !== $docComment = $node->getDocComment()) {
+            foreach ($docParser->parse($docComment->getText()) as $annotation) {
+                if ($annotation instanceof Ignore) {
+                    return true;
+                }
+            }
+        }
 
-    public function beforeTraverse(array $nodes)
-    {
-    }
-
-    public function afterTraverse(array $nodes)
-    {
+        return false;
     }
 }

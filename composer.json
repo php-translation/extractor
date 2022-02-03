@@ -9,17 +9,18 @@
         }
     ],
     "require": {
-        "php": "^5.5 || ^7.0",
-        "nikic/php-parser": "^3.0",
-        "symfony/finder": "^2.7 || ^3.0 || ^4.0",
-        "twig/twig": "^1.27 || ^2.0",
-        "doctrine/annotations": "^1.2"
+        "php": "^7.2 || ^8.0",
+        "nikic/php-parser": "^3.0 || ^4.0",
+        "symfony/finder": "^3.4 || ^4.4 || ^5.0",
+        "twig/twig": "^2.0 || ^3.0",
+        "doctrine/annotations": "^1.7"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^3.4 || ^4.0",
-        "symfony/translation": "^3.0 || ^4.0",
-        "symfony/validator": "^3.0 || ^4.0",
-        "symfony/twig-bridge": "^3.0 || ^4.0"
+        "symfony/phpunit-bridge": "^5.0",
+        "symfony/translation": "^3.4 || ^4.4 || ^5.0",
+        "symfony/validator": "^3.4 || ^4.4 || ^5.0",
+        "symfony/twig-bridge": "^3.4 || ^4.4 || ^5.0",
+        "knplabs/knp-menu": "^3.1"
     },
     "autoload": {
         "psr-4": {
@@ -32,12 +33,12 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/simple-phpunit",
-        "test-ci": "vendor/bin/simple-phpunit --coverage-text --coverage-clover=build/coverage.xml"
+        "test": "vendor/bin/phpunit",
+        "test-ci": "vendor/bin/phpunit --coverage-text --coverage-clover=build/coverage.xml"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.4-dev"
+            "dev-master": "2.0-dev"
         }
     }
 }

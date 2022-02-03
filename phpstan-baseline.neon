@@ -1,0 +1,16 @@
+parameters:
+    ignoreErrors:
+        -
+            message: "#^Variable \\$trace might not be defined\\.$#"
+            count: 2
+            path: src/Model/SourceLocation.php
+
+        -
+            message: "#^Access to an undefined property PhpParser\\\\Node\\:\\:\\$var\\.$#"
+            count: 1
+            path: src/Visitor/Php/Symfony/AbstractFormType.php
+
+        -
+            message: "#^Access to an undefined property PhpParser\\\\Node\\:\\:\\$args\\.$#"
+            count: 1
+            path: src/Visitor/Php/Symfony/AbstractFormType.php

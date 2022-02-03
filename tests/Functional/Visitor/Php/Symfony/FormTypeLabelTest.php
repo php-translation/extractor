@@ -19,6 +19,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeInvalidMessage;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
+use Translation\Extractor\Visitor\Php\Symfony\FormTypeTitle;
 
 /**
  * @author Rein Baarsma <rein@solidwebcode.com>
@@ -36,6 +37,7 @@ class FormTypeLabelTest extends BasePHPVisitorTest
             new FormTypeLabelExplicit(),
             new FormTypeLabelImplicit(),
             new FormTypePlaceholder(),
+            new FormTypeTitle(),
         ];
 
         parent::__construct();
@@ -44,6 +46,9 @@ class FormTypeLabelTest extends BasePHPVisitorTest
     public function testTranslationDomain()
     {
         $collection = $this->getSourceLocations($this->allFormVisitors, Resources\Php\Symfony\FormDomainType::class);
+
+        // We should not have "test_d" or "test_e"
+        $this->assertEquals(3, $collection->count(), 'We should ignore choices where "translation_domain" is "false"');
 
         $messageA = $collection->get(0);
         $this->assertEquals('label1', $messageA->getMessage());
@@ -56,8 +61,5 @@ class FormTypeLabelTest extends BasePHPVisitorTest
         $messageC = $collection->get(2);
         $this->assertEquals('test_c', $messageC->getMessage());
         $this->assertNull($messageC->getContext()['domain']);
-
-        // We should not have "test_d" or "test_e"
-        $this->assertEquals(3, $collection->count(), 'We should ignore choices where "translation_domain" is "false"');
     }
 }

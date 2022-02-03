@@ -12,22 +12,17 @@
 namespace Translation\Extractor\Visitor\Twig;
 
 use Translation\Extractor\Visitor\BaseVisitor;
+use Twig\Environment;
+use Twig\Node\Node;
+use Twig\NodeVisitor\NodeVisitorInterface;
 
 /**
- * Factory class and base class for TwigVisitor.
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-abstract class TwigVisitor extends BaseVisitor
+final class TwigVisitor extends BaseVisitor implements NodeVisitorInterface
 {
-    /**
-     * @var Worker
-     */
     private $worker;
 
-    /**
-     * @param Worker|null $worker
-     */
     public function __construct(Worker $worker = null)
     {
         if (null === $worker) {
@@ -38,28 +33,34 @@ abstract class TwigVisitor extends BaseVisitor
     }
 
     /**
-     * @return Twig1Visitor|Twig2Visitor
-     *
-     * @deprecated since 1.2. Will be removed in 2.0. Use TwigVisitorFactory instead.
+     * {@inheritdoc}
      */
-    public static function create()
+    public function enterNode(Node $node, Environment $env): Node
     {
-        if (-1 === version_compare(\Twig_Environment::VERSION, '2.0')) {
-            return new Twig1Visitor();
+        // If not initialized
+        if (null === $this->collection) {
+            // We have not executed BaseVisitor::init which means that we are not currently extracting
+            return $node;
         }
 
-        return new Twig2Visitor();
-    }
-
-    /**
-     * @param \Twig_Node|\Twig_NodeInterface $node
-     *
-     * @return \Twig_Node|\Twig_NodeInterface
-     */
-    protected function doEnterNode($node)
-    {
         return $this->worker->work($node, $this->collection, function () {
             return $this->getAbsoluteFilePath();
         });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function leaveNode(Node $node, Environment $env): ?Node
+    {
+        return $node;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPriority(): int
+    {
+        return 0;
     }
 }

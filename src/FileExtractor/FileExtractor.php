@@ -19,15 +19,7 @@ use Translation\Extractor\Model\SourceCollection;
  */
 interface FileExtractor
 {
-    /**
-     * @param SplFileInfo $file
-     */
-    public function getSourceLocations(SplFileInfo $file, SourceCollection $collection);
+    public function getSourceLocations(SplFileInfo $file, SourceCollection $collection): void;
 
-    /**
-     * The file type the extractor supports.
-     *
-     * @return string
-     */
-    public function getType();
+    public function supportsExtension(string $extension): bool;
 }

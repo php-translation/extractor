@@ -24,9 +24,12 @@ class FormTypeLabelImplicitTest extends BasePHPVisitorTest
     {
         $collection = $this->getSourceLocations(new FormTypeLabelImplicit(), Resources\Php\Symfony\ImplicitLabelType::class);
 
-        $this->assertCount(3, $collection, print_r($collection, true));
+        $this->assertCount(5, $collection, print_r($collection, true));
         $this->assertEquals('find1', $collection->get(0)->getMessage());
         $this->assertEquals('bigger_find2', $collection->get(1)->getMessage());
         $this->assertEquals('camelFind3', $collection->get(2)->getMessage());
+
+        //issue87: support for Ignore annotation
+        $this->assertEquals('issue87-willBeAdded', $collection->get(3)->getMessage());
     }
 }

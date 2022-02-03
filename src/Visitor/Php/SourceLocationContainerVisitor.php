@@ -33,11 +33,18 @@ final class SourceLocationContainerVisitor extends BasePHPVisitor implements Nod
      */
     private $useStatements = [];
 
-    public function beforeTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeTraverse(array $nodes): ?Node
     {
+        return null;
     }
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Stmt\Namespace_) {
             if (isset($node->name)) {
@@ -46,17 +53,18 @@ final class SourceLocationContainerVisitor extends BasePHPVisitor implements Nod
             }
             $this->useStatements = [];
 
-            return;
+            return null;
         }
 
         if ($node instanceof Node\Stmt\UseUse) {
-            $this->useStatements[$node->alias] = implode('\\', $node->name->parts);
+            $key = isset($node->alias) ? $node->alias : $node->name->parts[\count($node->name->parts) - 1];
+            $this->useStatements[(string) $key] = implode('\\', $node->name->parts);
 
-            return;
+            return null;
         }
 
         if (!$node instanceof Node\Stmt\Class_) {
-            return;
+            return null;
         }
 
         $isContainer = false;
@@ -74,28 +82,35 @@ final class SourceLocationContainerVisitor extends BasePHPVisitor implements Nod
         }
 
         if (!$isContainer) {
-            return;
+            return null;
         }
 
-        $sourceLocations = call_user_func([$this->namespace.'\\'.$node->name, 'getTranslationSourceLocations']);
-        if (!is_array($sourceLocations)) {
-            throw new \RuntimeException(sprintf('%s::getTranslationSourceLocations() was expected to return an array of SourceLocations, but got %s.', $this->namespace.'\\'.$node->name, gettype($sourceLocations)));
-        }
+        $sourceLocations = \call_user_func([$this->namespace.'\\'.$node->name, 'getTranslationSourceLocations']);
 
         foreach ($sourceLocations as $sourceLocation) {
             if (!$sourceLocation instanceof SourceLocation) {
-                throw new \RuntimeException(sprintf('%s::getTranslationSourceLocations() was expected to return an array of SourceLocations, but got an array which contains an item of type %s.', $this->namespace.'\\'.$node->name, gettype($sourceLocation)));
+                throw new \RuntimeException(sprintf('%s::getTranslationSourceLocations() was expected to return an array of SourceLocations, but got an array which contains an item of type %s.', $this->namespace.'\\'.$node->name, \gettype($sourceLocation)));
             }
 
             $this->collection->addLocation($sourceLocation);
         }
+
+        return null;
     }
 
-    public function leaveNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function leaveNode(Node $node): ?Node
     {
+        return null;
     }
 
-    public function afterTraverse(array $nodes)
+    /**
+     * {@inheritdoc}
+     */
+    public function afterTraverse(array $nodes): ?Node
     {
+        return null;
     }
 }

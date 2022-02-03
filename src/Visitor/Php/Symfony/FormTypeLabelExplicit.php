@@ -13,28 +13,35 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
  * @author Rein Baarsma <rein@solidwebcode.com>
  */
-final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
+final class FormTypeLabelExplicit extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
-            return;
+            return null;
         }
 
-        // we could have chosen to traverse specifically the buildForm function or ->add()
-        // we will probably miss some easy to catch instances when the actual array of options
-        // is provided statically or through another function.
-        // I don't see any disadvantages now to simply parsing arrays and JMSTranslationBundle has
-        // been doing it like this for quite some time without major problems.
+        parent::enterNode($node);
+
+        /*
+         * We could have chosen to traverse specifically the buildForm function or ->add()
+         * we will probably miss some easy to catch instances when the actual array of options
+         * is provided statically or through another function.
+         *
+         * I don't see any disadvantages now to simply parsing arrays and JMSTranslationBundle has
+         * been doing it like this for quite some time without major problems.
+         */
         if (!$node instanceof Node\Expr\Array_) {
-            return;
+            return null;
         }
 
         $labelNode = null;
@@ -77,20 +84,12 @@ final class FormTypeLabelExplicit extends BasePHPVisitor implements NodeVisitor
             $labelNode = $item;
         }
 
-        if ($labelNode && false !== $domain) {
-            $this->addLocation($label, $node->getAttribute('startLine'), $item, ['domain' => $domain]);
+        if ($labelNode && false !== $domain && !empty($label)) {
+            if (null !== $location = $this->getLocation($label, $node->getAttribute('startLine'), $labelNode, ['domain' => $domain])) {
+                $this->lateCollect($location);
+            }
         }
-    }
 
-    public function leaveNode(Node $node)
-    {
-    }
-
-    public function beforeTraverse(array $nodes)
-    {
-    }
-
-    public function afterTraverse(array $nodes)
-    {
+        return null;
     }
 }

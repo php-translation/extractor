@@ -13,50 +13,91 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Visitor\Php\BasePHPVisitor;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class FormTypePlaceholder extends BasePHPVisitor implements NodeVisitor
+final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
-    public function enterNode(Node $node)
+    private $arrayNodeVisited = [];
+
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
-            return;
+            return null;
         }
+
+        parent::enterNode($node);
 
         if (!$node instanceof Node\Expr\Array_) {
-            return;
+            return null;
         }
 
+        $placeholderNode = null;
+        $domain = null;
         foreach ($node->items as $item) {
             if (!$item->key instanceof Node\Scalar\String_) {
                 continue;
             }
-
-            if ('placeholder' === $item->key->value) {
+            if ('translation_domain' === $item->key->value) {
+                // Try to find translation domain
                 if ($item->value instanceof Node\Scalar\String_) {
-                    $line = $item->value->getAttribute('startLine');
-                    $this->addLocation($item->value->value, $line, $item);
-                } else {
-                    $this->addError($item, 'Form placeholder is not a scalar string');
+                    $domain = $item->value->value;
+                } elseif ($item->value instanceof Node\Expr\ConstFetch && 'false' === $item->value->name->toString()) {
+                    $domain = false;
+                }
+            } elseif ('placeholder' === $item->key->value) {
+                $placeholderNode = $item;
+            } elseif ('attr' === $item->key->value && $item->value instanceof Node\Expr\Array_) {
+                foreach ($item->value->items as $attrValue) {
+                    if (!$attrValue->key instanceof Node\Scalar\String_) {
+                        continue;
+                    }
+                    if ('placeholder' === $attrValue->key->value) {
+                        $placeholderNode = $attrValue;
+
+                        break;
+                    }
                 }
             }
         }
-    }
 
-    public function leaveNode(Node $node)
-    {
-    }
+        if (null === $placeholderNode) {
+            return null;
+        }
 
-    public function beforeTraverse(array $nodes)
-    {
-    }
+        /**
+         * Make sure we do not visit the same placeholder node twice.
+         *
+         * The placeholder information is not always in the same place:
+         * * it can be in Type options (for example when using `ChoiceType`)
+         * * it can be in `attr` (for example when using `TextType`)
+         *
+         * @see https://github.com/php-translation/extractor/pull/114#issuecomment-400329507
+         */
+        $hash = spl_object_hash($placeholderNode);
+        if (isset($this->arrayNodeVisited[$hash])) {
+            return null;
+        }
+        $this->arrayNodeVisited[$hash] = true;
 
-    public function afterTraverse(array $nodes)
-    {
+        if ($placeholderNode->value instanceof Node\Scalar\String_) {
+            $line = $placeholderNode->value->getAttribute('startLine');
+            if (null !== $location = $this->getLocation($placeholderNode->value->value, $line, $placeholderNode, ['domain' => $domain])) {
+                $this->lateCollect($location);
+            }
+        } elseif ($placeholderNode->value instanceof Node\Expr\ConstFetch && 'false' === $placeholderNode->value->name->toString()) {
+            // 'placeholder' => false,
+            // Do noting
+        } else {
+            $this->addError($placeholderNode, 'Form placeholder is not a scalar string');
+        }
+
+        return null;
     }
 }
