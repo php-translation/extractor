@@ -1,3 +1,4 @@
+/.phpunit.result.cache
 /behat.yml
 /build/
 /composer.lock
