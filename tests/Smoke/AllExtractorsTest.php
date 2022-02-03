@@ -12,6 +12,7 @@
 namespace Translation\Extractor\Tests\Smoke;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\Twig\TokenParser\TransChoiceTokenParser;
 use Symfony\Component\Finder\Finder;
 use Translation\Extractor\Extractor;
 use Translation\Extractor\FileExtractor\PHPFileExtractor;
@@ -19,6 +20,8 @@ use Translation\Extractor\FileExtractor\TwigFileExtractor;
 use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Model\SourceLocation;
 use Translation\Extractor\Tests\Functional\Visitor\Twig\TwigEnvironmentFactory;
+use Translation\Extractor\Visitor\Php\Knp\Menu\ItemLabel;
+use Translation\Extractor\Visitor\Php\Knp\Menu\LinkTitle;
 use Translation\Extractor\Visitor\Php\SourceLocationContainerVisitor;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTrans;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTransChoice;
@@ -29,8 +32,9 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeInvalidMessage;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
+use Translation\Extractor\Visitor\Php\Symfony\FormTypeTitle;
 use Translation\Extractor\Visitor\Php\TranslateAnnotationVisitor;
-use Translation\Extractor\Visitor\Twig\TwigVisitorFactory;
+use Translation\Extractor\Visitor\Twig\TwigVisitor;
 
 /**
  * Smoke test to make sure no extractor throws exceptions.
@@ -46,7 +50,10 @@ class AllExtractorsTest extends TestCase
         $extractor->addFileExtractor($this->getTwigFileExtractor());
 
         $finder = new Finder();
-        $finder->in(dirname(__DIR__));
+        $finder->in(\dirname(__DIR__));
+        if (!class_exists(TransChoiceTokenParser::class)) {
+            $finder->notName('transchoice.html.twig');
+        }
 
         $sc = $extractor->extract($finder);
         $this->translationExists($sc, 'trans.issue_34');
@@ -87,19 +94,13 @@ class AllExtractorsTest extends TestCase
          * It is okey to increase the error count if you adding more fixtures/code.
          * We just need to be aware that it changes.
          */
-        $this->assertCount(12, $sc->getErrors(), 'There was an unexpected number of errors. Please investigate.');
+        $this->assertCount(13, $sc->getErrors(), 'There was an unexpected number of errors. Please investigate.');
     }
 
     /**
      * Assert that a translation key exists in source collection.
-     *
-     * @param SourceCollection $sc
-     * @param $translationKey
-     * @param string $message
-     *
-     * @return SourceLocation
      */
-    private function translationExists(SourceCollection $sc, $translationKey, $message = null)
+    private function translationExists(SourceCollection $sc, string $translationKey, string $message = null): SourceLocation
     {
         if (empty($message)) {
             $message = sprintf('Tried to find "%s" but failed', $translationKey);
@@ -122,12 +123,8 @@ class AllExtractorsTest extends TestCase
 
     /**
      * Assert that a translation key is missing in source collection.
-     *
-     * @param SourceCollection $sc
-     * @param $translationKey
-     * @param string $message
      */
-    private function translationMissing(SourceCollection $sc, $translationKey, $message = null)
+    private function translationMissing(SourceCollection $sc, string $translationKey, string $message = null)
     {
         if (empty($message)) {
             $message = sprintf('The translation key "%s" should not exist', $translationKey);
@@ -145,10 +142,7 @@ class AllExtractorsTest extends TestCase
         $this->assertFalse($found, $message);
     }
 
-    /**
-     * @return PHPFileExtractor
-     */
-    private function getPHPFileExtractor()
+    private function getPHPFileExtractor(): PHPFileExtractor
     {
         $file = new PHPFileExtractor();
         $file->addVisitor(new ContainerAwareTrans());
@@ -160,19 +154,19 @@ class AllExtractorsTest extends TestCase
         $file->addVisitor(new FormTypeLabelExplicit());
         $file->addVisitor(new FormTypeLabelImplicit());
         $file->addVisitor(new FormTypePlaceholder());
+        $file->addVisitor(new FormTypeTitle());
         $file->addVisitor(new SourceLocationContainerVisitor());
         $file->addVisitor(new TranslateAnnotationVisitor());
+        $file->addVisitor(new ItemLabel());
+        $file->addVisitor(new LinkTitle());
 
         return $file;
     }
 
-    /**
-     * @return TwigFileExtractor
-     */
-    private function getTwigFileExtractor()
+    private function getTwigFileExtractor(): TwigFileExtractor
     {
         $file = new TwigFileExtractor(TwigEnvironmentFactory::create());
-        $file->addVisitor(TwigVisitorFactory::create());
+        $file->addVisitor(new TwigVisitor());
 
         return $file;
     }

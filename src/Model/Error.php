@@ -18,53 +18,28 @@ namespace Translation\Extractor\Model;
  */
 final class Error
 {
-    /**
-     * @var string
-     */
     private $message;
-
-    /**
-     * @var string
-     */
     private $path;
-
-    /**
-     * @var int
-     */
     private $line;
 
-    /**
-     * @param string $message
-     * @param string $path
-     * @param int    $line
-     */
-    public function __construct($message, $path, $line)
+    public function __construct(string $message, string $path, int $line)
     {
         $this->message = $message;
         $this->path = (string) $path;
         $this->line = $line;
     }
 
-    /**
-     * @return string
-     */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
 
-    /**
-     * @return string
-     */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
 
-    /**
-     * @return int
-     */
-    public function getLine()
+    public function getLine(): int
     {
         return $this->line;
     }

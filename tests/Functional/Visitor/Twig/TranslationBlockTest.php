@@ -11,7 +11,8 @@
 
 namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 
-use Translation\Extractor\Visitor\Twig\TwigVisitorFactory;
+use Symfony\Bridge\Twig\TokenParser\TransChoiceTokenParser;
+use Translation\Extractor\Visitor\Twig\TwigVisitor;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -20,7 +21,7 @@ final class TranslationBlockTest extends BaseTwigVisitorTest
 {
     public function testTrans()
     {
-        $collection = $this->getSourceLocations(TwigVisitorFactory::create(), 'Twig/TranslationBlock/trans.html.twig');
+        $collection = $this->getSourceLocations(new TwigVisitor(), 'Twig/TranslationBlock/trans.html.twig');
 
         $this->assertCount(3, $collection);
         $source = $collection->get(0);
@@ -38,7 +39,11 @@ final class TranslationBlockTest extends BaseTwigVisitorTest
 
     public function testTranschoice()
     {
-        $collection = $this->getSourceLocations(TwigVisitorFactory::create(), 'Twig/TranslationBlock/transchoice.html.twig');
+        if (!class_exists(TransChoiceTokenParser::class)) {
+            $this->markTestSkipped('Transchoice is not available anymore.');
+        }
+
+        $collection = $this->getSourceLocations(new TwigVisitor(), 'Twig/TranslationBlock/transchoice.html.twig');
 
         $this->assertCount(1, $collection);
         $source = $collection->first();

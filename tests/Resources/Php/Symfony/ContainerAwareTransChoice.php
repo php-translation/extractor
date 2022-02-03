@@ -13,4 +13,10 @@ class ContainerAwareTransChoice
 
         return array();
     }
+
+    public function transWithVariable()
+    {
+        $var = 'toto';
+        $translated = $this->get('translator')->transChoice($var);
+    }
 }

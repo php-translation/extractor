@@ -24,7 +24,7 @@ class FormTypeLabelImplicitTest extends BasePHPVisitorTest
     {
         $collection = $this->getSourceLocations(new FormTypeLabelImplicit(), Resources\Php\Symfony\ImplicitLabelType::class);
 
-        $this->assertCount(4, $collection, print_r($collection, true));
+        $this->assertCount(5, $collection, print_r($collection, true));
         $this->assertEquals('find1', $collection->get(0)->getMessage());
         $this->assertEquals('bigger_find2', $collection->get(1)->getMessage());
         $this->assertEquals('camelFind3', $collection->get(2)->getMessage());

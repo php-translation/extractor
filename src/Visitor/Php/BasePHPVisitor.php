@@ -21,21 +21,15 @@ use Translation\Extractor\Visitor\BaseVisitor;
  */
 abstract class BasePHPVisitor extends BaseVisitor
 {
-    /**
-     * @param Node\Expr\MethodCall $node
-     * @param int                  $index
-     *
-     * @return string|null
-     */
-    protected function getStringArgument(Node\Expr\MethodCall $node, $index)
+    protected function getStringArgument(Node\Expr\MethodCall $node, int $index): ?string
     {
         if (!isset($node->args[$index])) {
-            return;
+            return null;
         }
 
         $label = $this->getStringValue($node->args[$index]->value);
         if (empty($label)) {
-            return;
+            return null;
         }
 
         return $label;

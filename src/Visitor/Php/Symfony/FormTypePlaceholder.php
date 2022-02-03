@@ -23,15 +23,19 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
 
     private $arrayNodeVisited = [];
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
-            return;
+            return null;
         }
+
         parent::enterNode($node);
 
         if (!$node instanceof Node\Expr\Array_) {
-            return;
+            return null;
         }
 
         $placeholderNode = null;
@@ -51,6 +55,9 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
                 $placeholderNode = $item;
             } elseif ('attr' === $item->key->value && $item->value instanceof Node\Expr\Array_) {
                 foreach ($item->value->items as $attrValue) {
+                    if (!$attrValue->key instanceof Node\Scalar\String_) {
+                        continue;
+                    }
                     if ('placeholder' === $attrValue->key->value) {
                         $placeholderNode = $attrValue;
 
@@ -61,7 +68,7 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
         }
 
         if (null === $placeholderNode) {
-            return;
+            return null;
         }
 
         /**
@@ -75,7 +82,7 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
          */
         $hash = spl_object_hash($placeholderNode);
         if (isset($this->arrayNodeVisited[$hash])) {
-            return;
+            return null;
         }
         $this->arrayNodeVisited[$hash] = true;
 
@@ -90,5 +97,7 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
         } else {
             $this->addError($placeholderNode, 'Form placeholder is not a scalar string');
         }
+
+        return null;
     }
 }
