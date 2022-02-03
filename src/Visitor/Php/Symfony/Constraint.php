@@ -20,9 +20,9 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
  */
 final class Constraint extends BasePHPVisitor implements NodeVisitor
 {
-    const VALIDATORS_DOMAIN = 'validators';
+    public const VALIDATORS_DOMAIN = 'validators';
 
-    const CONSTRAINT_CLASS_NAMES = [
+    public const CONSTRAINT_CLASS_NAMES = [
         'AbstractComparison',
         'All',
         'Bic',
