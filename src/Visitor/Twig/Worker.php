@@ -27,7 +27,7 @@ use Twig\Node\Node;
  */
 final class Worker
 {
-    const UNDEFINED_DOMAIN = 'messages';
+    public const UNDEFINED_DOMAIN = 'messages';
 
     private $stack = [];
 
