@@ -4,6 +4,14 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 
 ## UNRELEASED
 
+## 2.1.0
+
+### Added
+* Allow Symfony 6 by @bocharsky-bw in https://github.com/php-translation/extractor/pull/165
+* New extractor for constraints by @lukepass in https://github.com/php-translation/extractor/pull/160
+* Concatenated labels by @Stadly in https://github.com/php-translation/extractor/pull/127
+* Add support to placeholders as array by @cristoforocervino in https://github.com/php-translation/extractor/pull/158
+
 ## 2.0.4
 
 ### Added
