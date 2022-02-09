@@ -12,8 +12,8 @@
 namespace Translation\Extractor\Tests\Functional\Visitor\Twig;
 
 use PHPUnit\Framework\TestCase;
-use Translation\Extractor\FileExtractor\TwigFileExtractor;
 use Symfony\Component\Finder\Finder;
+use Translation\Extractor\FileExtractor\TwigFileExtractor;
 use Translation\Extractor\Model\SourceCollection;
 
 /**

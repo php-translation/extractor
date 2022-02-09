@@ -18,15 +18,19 @@ final class FormTypeHelp extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
-            return;
+            return null;
         }
+
         parent::enterNode($node);
 
         if (!$node instanceof Node\Expr\Array_) {
-            return;
+            return null;
         }
 
         $helpNode = null;
@@ -46,7 +50,7 @@ final class FormTypeHelp extends AbstractFormType implements NodeVisitor
         }
 
         if (null === $helpNode) {
-            return;
+            return null;
         }
 
         if ($helpNode->value instanceof Node\Scalar\String_) {
@@ -57,5 +61,7 @@ final class FormTypeHelp extends AbstractFormType implements NodeVisitor
         } else {
             $this->addError($helpNode, 'Form help is not a scalar string');
         }
+
+        return null;
     }
 }

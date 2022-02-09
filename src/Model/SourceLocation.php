@@ -18,33 +18,13 @@ final class SourceLocation
 {
     /**
      * Translation key.
-     *
-     * @var string
      */
     private $message;
-
-    /**
-     * @var string
-     */
     private $path;
-
-    /**
-     * @var int
-     */
     private $line;
-
-    /**
-     * @var array
-     */
     private $context;
 
-    /**
-     * @param string $message
-     * @param string $path
-     * @param int    $line
-     * @param array  $context
-     */
-    public function __construct($message, $path, $line, array $context = [])
+    public function __construct(string $message, string $path, int $line, array $context = [])
     {
         $this->message = $message;
         $this->path = (string) $path;
@@ -54,15 +34,10 @@ final class SourceLocation
 
     /**
      * Create a source location from your current location.
-     *
-     * @param string $message
-     * @param array  $context
-     *
-     * @return SourceLocation
      */
-    public static function createHere($message, array $context = [])
+    public static function createHere(string $message, array $context = []): self
     {
-        foreach (debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2) as $trace) {
+        foreach (debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT, 2) as $trace) {
             // File is not set if we call from an anonymous context like an array_map function.
             if (isset($trace['file'])) {
                 break;
@@ -72,34 +47,22 @@ final class SourceLocation
         return new self($message, $trace['file'], $trace['line'], $context);
     }
 
-    /**
-     * @return string
-     */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
 
-    /**
-     * @return string
-     */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
 
-    /**
-     * @return int
-     */
-    public function getLine()
+    public function getLine(): int
     {
         return $this->line;
     }
 
-    /**
-     * @return array
-     */
-    public function getContext()
+    public function getContext(): array
     {
         return $this->context;
     }

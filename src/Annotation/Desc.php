@@ -16,5 +16,8 @@ namespace Translation\Extractor\Annotation;
  */
 final class Desc
 {
+    /**
+     * @var string
+     */
     public $text;
 }

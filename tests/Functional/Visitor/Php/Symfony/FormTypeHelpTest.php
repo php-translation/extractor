@@ -13,8 +13,8 @@ namespace Translation\Extractor\Tests\Functional\Visitor\Php\Symfony;
 
 use Translation\Extractor\Tests\Functional\Visitor\Php\BasePHPVisitorTest;
 use Translation\Extractor\Tests\Resources;
-use Translation\Extractor\Visitor\Php\Symfony\FormTypeHelp;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTrans;
+use Translation\Extractor\Visitor\Php\Symfony\FormTypeHelp;
 
 final class FormTypeHelpTest extends BasePHPVisitorTest
 {

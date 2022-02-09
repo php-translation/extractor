@@ -15,30 +15,26 @@ use Symfony\Bridge\Twig\Node\TransNode;
 use Translation\Extractor\Model\Error;
 use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Model\SourceLocation;
+use Twig\Node\Expression\ConstantExpression;
+use Twig\Node\Expression\FilterExpression;
+use Twig\Node\Node;
 
 /**
- * The Worker tha actually extract the translations.
+ * The Worker that actually extract the translations.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  * @author Fabien Potencier <fabien@symfony.com>
  */
 final class Worker
 {
-    const UNDEFINED_DOMAIN = 'messages';
+    public const UNDEFINED_DOMAIN = 'messages';
 
     private $stack = [];
 
-    /**
-     * @param \Twig_Node|\Twig_NodeInterface $node
-     * @param SourceCollection               $collection
-     * @param callable                       $getAbsoluteFilePath
-     *
-     * @return \Twig_Node|\Twig_NodeInterface
-     */
-    public function work($node, SourceCollection $collection, callable $getAbsoluteFilePath)
+    public function work(Node $node, SourceCollection $collection, callable $getAbsoluteFilePath): Node
     {
         $this->stack[] = $node;
-        if ($node instanceof \Twig_Node_Expression_Filter && $node->getNode('node') instanceof \Twig_Node_Expression_Constant) {
+        if ($node instanceof FilterExpression && $node->getNode('node') instanceof ConstantExpression) {
             $domain = null;
             if ('trans' === $node->getNode('filter')->getAttribute('value')) {
                 $domain = $this->getReadDomainFromArguments($node->getNode('arguments'), 1);
@@ -80,14 +76,11 @@ final class Worker
         return $node;
     }
 
-    /**
-     * @return array
-     */
-    private function extractContextFromJoinedFilters()
+    private function extractContextFromJoinedFilters(): array
     {
         $context = [];
-        for ($i = count($this->stack) - 2; $i >= 0; $i -= 1) {
-            if (!$this->stack[$i] instanceof \Twig_Node_Expression_Filter) {
+        for ($i = \count($this->stack) - 2; $i >= 0; --$i) {
+            if (!$this->stack[$i] instanceof FilterExpression) {
                 break;
             }
             $name = $this->stack[$i]->getNode('filter')->getAttribute('value');
@@ -99,7 +92,7 @@ final class Worker
                     throw new \LogicException(sprintf('The "%s" filter requires exactly one argument, the description text.', $name));
                 }
                 $text = $arguments->getNode(0);
-                if (!$text instanceof \Twig_Node_Expression_Constant) {
+                if (!$text instanceof ConstantExpression) {
                     throw new \LogicException(sprintf('The first argument of the "%s" filter must be a constant expression, such as a string.', $name));
                 }
                 $context['desc'] = $text->getAttribute('value');
@@ -109,13 +102,7 @@ final class Worker
         return $context;
     }
 
-    /**
-     * @param \Twig_Node $arguments
-     * @param int        $index
-     *
-     * @return string|null
-     */
-    private function getReadDomainFromArguments(\Twig_Node $arguments, $index)
+    private function getReadDomainFromArguments(Node $arguments, int $index): ?string
     {
         if ($arguments->hasNode('domain')) {
             $argument = $arguments->getNode('domain');
@@ -128,14 +115,9 @@ final class Worker
         return $this->getReadDomainFromNode($argument);
     }
 
-    /**
-     * @param \Twig_Node $node
-     *
-     * @return string|null
-     */
-    private function getReadDomainFromNode(\Twig_Node $node)
+    private function getReadDomainFromNode(Node $node): ?string
     {
-        if ($node instanceof \Twig_Node_Expression_Constant) {
+        if ($node instanceof ConstantExpression) {
             return $node->getAttribute('value');
         }
 

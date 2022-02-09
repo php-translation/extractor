@@ -8,12 +8,18 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false"
-         codecoverage="true"
          bootstrap="./tests/bootstrap.php"
-        >
+    >
 
-    <formatter type="clover" usefile="false"/>
+    <php>
+        <env name="SYMFONY_PHPUNIT_VERSION" value="8.5" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="verbose=1" />
+    </php>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
+    </listeners>
+
     <testsuites>
         <testsuite name="Tests">
             <directory>./tests</directory>

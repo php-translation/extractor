@@ -23,15 +23,19 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
 
     private $arrayNodeVisited = [];
 
-    public function enterNode(Node $node)
+    /**
+     * {@inheritdoc}
+     */
+    public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
-            return;
+            return null;
         }
+
         parent::enterNode($node);
 
         if (!$node instanceof Node\Expr\Array_) {
-            return;
+            return null;
         }
 
         $placeholderNode = null;
@@ -57,6 +61,10 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
                         continue;
                     }
 
+                    if (!$attrValue->key instanceof Node\Scalar\String_) {
+                        continue;
+                    }
+
                     if ('placeholder' === $attrValue->key->value) {
                         $placeholderNode = $attrValue;
 
@@ -67,7 +75,7 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
         }
 
         if (null === $placeholderNode) {
-            return;
+            return null;
         }
 
         /**
@@ -81,7 +89,7 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
          */
         $hash = spl_object_hash($placeholderNode);
         if (isset($this->arrayNodeVisited[$hash])) {
-            return;
+            return null;
         }
         $this->arrayNodeVisited[$hash] = true;
 
@@ -93,8 +101,17 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
         } elseif ($placeholderNode->value instanceof Node\Expr\ConstFetch && 'false' === $placeholderNode->value->name->toString()) {
             // 'placeholder' => false,
             // Do noting
+        } elseif ($placeholderNode->value instanceof Node\Expr\Array_) {
+            foreach ($placeholderNode->value->items as $placeholderNode) {
+                $line = $placeholderNode->value->getAttribute('startLine');
+                if (null !== $location = $this->getLocation($placeholderNode->value->value, $line, $placeholderNode, ['domain' => $domain])) {
+                    $this->lateCollect($location);
+                }
+            }
         } else {
             $this->addError($placeholderNode, 'Form placeholder is not a scalar string');
         }
+
+        return null;
     }
 }

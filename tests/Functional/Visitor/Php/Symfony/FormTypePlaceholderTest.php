@@ -13,8 +13,8 @@ namespace Translation\Extractor\Tests\Functional\Visitor\Php\Symfony;
 
 use Translation\Extractor\Tests\Functional\Visitor\Php\BasePHPVisitorTest;
 use Translation\Extractor\Tests\Resources;
-use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
 use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTrans;
+use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -26,10 +26,13 @@ final class FormTypePlaceholderTest extends BasePHPVisitorTest
         $collection = $this->getSourceLocations(new FormTypePlaceholder(),
             Resources\Php\Symfony\PlaceholderFormType::class);
 
-        $this->assertCount(3, $collection);
+        $this->assertCount(6, $collection);
         $this->assertEquals('form.placeholder.text', $collection->get(0)->getMessage());
         $this->assertEquals('form.placeholder.text.but.no.label', $collection->get(1)->getMessage());
         $this->assertEquals('form.choice_placeholder', $collection->get(2)->getMessage());
+        $this->assertEquals('form.date_placeholder.year', $collection->get(3)->getMessage());
+        $this->assertEquals('form.date_placeholder.month', $collection->get(4)->getMessage());
+        $this->assertEquals('form.date_placeholder.day', $collection->get(5)->getMessage());
     }
 
     public function testExtractError()

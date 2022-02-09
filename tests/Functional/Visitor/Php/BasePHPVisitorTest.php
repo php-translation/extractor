@@ -12,8 +12,8 @@
 namespace Translation\Extractor\Tests\Functional\Visitor\Php;
 
 use PHPUnit\Framework\TestCase;
-use Translation\Extractor\FileExtractor\PHPFileExtractor;
 use Symfony\Component\Finder\Finder;
+use Translation\Extractor\FileExtractor\PHPFileExtractor;
 use Translation\Extractor\Model\SourceCollection;
 
 /**
@@ -22,18 +22,13 @@ use Translation\Extractor\Model\SourceCollection;
 abstract class BasePHPVisitorTest extends TestCase
 {
     /**
-     * @param $visitor
-     * @param $namespaceForTestFile
-     *
-     * @return SourceCollection
-     *
      * @throws \Exception
      */
-    protected function getSourceLocations($visitor, $namespaceForTestFile)
+    protected function getSourceLocations($visitor, string $namespaceForTestFile): SourceCollection
     {
         $extractor = new PHPFileExtractor();
 
-        if (is_array($visitor)) {
+        if (\is_array($visitor)) {
             foreach ($visitor as $nodeVisitor) {
                 $extractor->addVisitor($nodeVisitor);
             }
@@ -49,7 +44,7 @@ abstract class BasePHPVisitorTest extends TestCase
         foreach ($fileNamespace as $i => $part) {
             if ($currentNamespace[$i] !== $part) {
                 // Assert: The namespaces is different now
-                for ($j = $i; $j < count($fileNamespace); ++$j) {
+                for ($j = $i; $j < \count($fileNamespace); ++$j) {
                     $path .= '/'.$fileNamespace[$j];
                 }
 

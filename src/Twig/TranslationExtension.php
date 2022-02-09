@@ -11,12 +11,18 @@
 
 namespace Translation\Extractor\Twig;
 
-final class TranslationExtension extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+
+final class TranslationExtension extends AbstractExtension
 {
-    public function getFilters()
+    /**
+     * {@inheritdoc}
+     */
+    public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('desc', [$this, 'runDescFilter']),
+            new TwigFilter('desc', [$this, 'runDescFilter']),
         ];
     }
 
@@ -25,7 +31,10 @@ final class TranslationExtension extends \Twig_Extension
         return $v;
     }
 
-    public function getName()
+    /**
+     * {@inheritdoc}
+     */
+    public function getName(): string
     {
         return 'php-translation';
     }

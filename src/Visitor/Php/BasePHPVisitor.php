@@ -21,27 +21,40 @@ use Translation\Extractor\Visitor\BaseVisitor;
  */
 abstract class BasePHPVisitor extends BaseVisitor
 {
-    /**
-     * @param Node\Expr\MethodCall $node
-     * @param int                  $index
-     *
-     * @return string|null
-     */
-    protected function getStringArgument(Node\Expr\MethodCall $node, $index)
+    protected function getStringArgument(Node\Expr\MethodCall $node, int $index): ?string
     {
         if (!isset($node->args[$index])) {
-            return;
+            return null;
         }
 
-        if (!$node->args[$index]->value instanceof Node\Scalar\String_) {
-            return;
-        }
-
-        $label = $node->args[$index]->value->value;
+        $label = $this->getStringValue($node->args[$index]->value);
         if (empty($label)) {
-            return;
+            return null;
         }
 
         return $label;
+    }
+
+    private function getStringValue(Node $node): ?string
+    {
+        if ($node instanceof Node\Scalar\String_) {
+            return $node->value;
+        }
+
+        if ($node instanceof Node\Expr\BinaryOp\Concat) {
+            $left = $this->getStringValue($node->left);
+            if (null === $left) {
+                return null;
+            }
+
+            $right = $this->getStringValue($node->right);
+            if (null === $right) {
+                return null;
+            }
+
+            return $left.$right;
+        }
+
+        return null;
     }
 }

@@ -20,7 +20,7 @@ class SourceLocationTest extends TestCase
     {
         $location = SourceLocation::createHere('foobar', ['foo' => 'bar']);
 
-        $this->assertContains('tests/Unit/Model/SourceLocationTest.php', $location->getPath());
+        $this->assertStringContainsString('tests/Unit/Model/SourceLocationTest.php', $location->getPath());
         $this->assertEquals(21, $location->getLine());
 
         $this->assertEquals('foobar', $location->getMessage());
@@ -31,7 +31,7 @@ class SourceLocationTest extends TestCase
     {
         $location = array_map('\Translation\Extractor\Model\SourceLocation::createHere', ['baz'])[0];
 
-        $this->assertContains('tests/Unit/Model/SourceLocationTest.php', $location->getPath());
+        $this->assertStringContainsString('tests/Unit/Model/SourceLocationTest.php', $location->getPath());
         $this->assertEquals(32, $location->getLine());
 
         $this->assertEquals('baz', $location->getMessage());
