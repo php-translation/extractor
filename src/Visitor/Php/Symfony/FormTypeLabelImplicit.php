@@ -96,7 +96,7 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
     }
 
     /**
-     * @see Symfony\Component\Form\FormRenderer::humanize
+     * @see Symfony\Component\Form\FormRenderer::humanize()
      */
     private function humanize(string $text): string
     {
