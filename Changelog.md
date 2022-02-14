@@ -11,6 +11,7 @@ The change log describes what is "Added", "Removed", "Changed" or "Fixed" betwee
 * New extractor for constraints by @lukepass in https://github.com/php-translation/extractor/pull/160
 * Concatenated labels by @Stadly in https://github.com/php-translation/extractor/pull/127
 * Add support to placeholders as array by @cristoforocervino in https://github.com/php-translation/extractor/pull/158
+* Humanize the implicit label of symfony form types https://github.com/php-translation/extractor/pull/154
 
 ## 2.0.4
 
