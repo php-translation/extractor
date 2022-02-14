@@ -55,11 +55,11 @@ class FormTypeLabelTest extends BasePHPVisitorTest
         $this->assertEquals('admin0', $messageA->getContext()['domain']);
 
         $messageB = $collection->get(1);
-        $this->assertEquals('test_b', $messageB->getMessage());
+        $this->assertEquals('Test b', $messageB->getMessage());
         $this->assertEquals('admin1', $messageB->getContext()['domain']);
 
         $messageC = $collection->get(2);
-        $this->assertEquals('test_c', $messageC->getMessage());
+        $this->assertEquals('Test c', $messageC->getMessage());
         $this->assertNull($messageC->getContext()['domain']);
     }
 }
