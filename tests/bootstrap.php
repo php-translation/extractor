@@ -13,4 +13,10 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 
 require __DIR__.'/../vendor/autoload.php';
 
-AnnotationRegistry::registerLoader('class_exists');
+if (!class_exists(AnnotationRegistry::class, false) && class_exists(AnnotationRegistry::class)) {
+    if (method_exists(AnnotationRegistry::class, 'registerUniqueLoader')) {
+        AnnotationRegistry::registerUniqueLoader('class_exists');
+    } elseif (method_exists(AnnotationRegistry::class, 'registerLoader')) {
+        AnnotationRegistry::registerLoader('class_exists');
+    }
+}
