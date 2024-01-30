@@ -13,7 +13,7 @@
 
     <php>
         <env name="SYMFONY_PHPUNIT_VERSION" value="8.5" />
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="verbose=1" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="verbose=1&amp;max[direct]=2" />
     </php>
 
     <listeners>
