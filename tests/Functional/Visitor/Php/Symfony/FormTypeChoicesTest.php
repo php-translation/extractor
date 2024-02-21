@@ -86,4 +86,22 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
         // We should not have "test_c"
         $this->assertEquals(4, $collection->count(), 'We should ignore choices where "choice_translation_domain" is "false"');
     }
+
+    public function testFunctions()
+    {
+        $collection = $this->getSourceLocations(new FormTypeChoices(), Resources\Php\Symfony\SimpleChoicePassFunctionType::class);
+
+        $this->assertCount(1, $collection, print_r($collection, true));
+        $this->assertEquals('label1', $collection->get(0)->getMessage());
+        $this->assertEquals(10, $collection->get(0)->getLine());
+    }
+
+    public function testStaticFunctions()
+    {
+        $collection = $this->getSourceLocations(new FormTypeChoices(), Resources\Php\Symfony\SimpleChoicePassStaticFunctionType::class);
+
+        $this->assertCount(1, $collection, print_r($collection, true));
+        $this->assertEquals('label1', $collection->get(0)->getMessage());
+        $this->assertEquals(10, $collection->get(0)->getLine());
+    }
 }
