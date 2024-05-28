@@ -9,20 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Translation\Extractor\Annotation;
+namespace Translation\Extractor\Attribute;
 
-use JetBrains\PhpStorm\Deprecated;
-
-/**
- * @Annotation
- */
-#[Deprecated]
+#[\Attribute]
 class Translate
 {
-    /**
-     * @var string
-     */
-    private $domain = 'messages';
+    private string $domain = 'messages';
 
     /**
      * Translate constructor.

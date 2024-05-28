@@ -111,7 +111,7 @@ final class Constraint extends BasePHPVisitor implements NodeVisitor
             return null;
         }
 
-        $parts = $className->parts;
+        $parts = $className->getParts();
         $isConstraintClass = false;
 
         // we need to check every part since `Assert\NotBlank` would be split in 2 different pieces
@@ -151,7 +151,7 @@ final class Constraint extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
-            // there could be false positives but it should catch most of the useful properties
+            // there could be false positives, but it should catch most of the useful properties
             // (e.g. `message`, `minMessage`)
             if (false === stripos($item->key->value, 'message')) {
                 continue;

@@ -2,7 +2,7 @@
 
 namespace Translation\Extractor\Tests\Resources\Github;
 
-use Translation\Extractor\Annotation\Ignore;
+use Translation\Extractor\Attribute\Ignore;
 
 class ConcatenatedStrings
 {

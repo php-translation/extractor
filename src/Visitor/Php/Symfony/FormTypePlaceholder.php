@@ -21,7 +21,7 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
-    private $arrayNodeVisited = [];
+    private array $arrayNodeVisited = [];
 
     /**
      * {@inheritdoc}

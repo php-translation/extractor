@@ -27,7 +27,7 @@ final class Extractor
     /**
      * @var FileExtractor[]
      */
-    private $fileExtractors = [];
+    private array $fileExtractors = [];
 
     public function extract(Finder $finder): SourceCollection
     {

@@ -18,14 +18,14 @@ namespace Translation\Extractor\Model;
  */
 final class Error
 {
-    private $message;
-    private $path;
-    private $line;
+    private string $message;
+    private string $path;
+    private int $line;
 
     public function __construct(string $message, string $path, int $line)
     {
         $this->message = $message;
-        $this->path = (string) $path;
+        $this->path = $path;
         $this->line = $line;
     }
 

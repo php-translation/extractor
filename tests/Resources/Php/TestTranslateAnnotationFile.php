@@ -3,13 +3,15 @@
 
 namespace Translation\Extractor\Tests\Resources\Php;
 
-use Translation\Extractor\Annotation\Desc;
+use Translation\Extractor\Attribute\Translate;
+use Translation\Extractor\Attribute\Desc;
 
 class TestTranslateAnnotationFile
 {
-    const SOME_CONST = /** @Translate */'const_for_translation';
+    #[Translate(['messages'])]
+    const SOME_CONST = 'const_for_translation';
 
-    protected function test()
+    protected function test(): void
     {
         $a = 'not_commented';
         $b = /* some weird comment */'commented';

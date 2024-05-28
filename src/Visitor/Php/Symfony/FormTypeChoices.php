@@ -14,7 +14,7 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 use Doctrine\Common\Annotations\DocParser;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Annotation\Ignore;
+use Translation\Extractor\Attribute\Ignore;
 use Translation\Extractor\Model\SourceLocation;
 
 /**
@@ -27,11 +27,11 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
     /**
      * @var int defaults to major version 3
      */
-    protected $symfonyMajorVersion = 3;
+    protected int $symfonyMajorVersion = 3;
 
-    private $variables = [];
+    private array $variables = [];
 
-    private $state;
+    private ?string $state;
 
     public function setSymfonyMajorVersion(int $sfMajorVersion): void
     {
@@ -120,10 +120,10 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
                 continue;
             }
 
-            foreach ($choices->items as $citem) {
-                $labelNode = $useKey ? $citem->key : $citem->value;
+            foreach ($choices->items as $cItem) {
+                $labelNode = $useKey ? $cItem->key : $cItem->value;
                 if (!$labelNode instanceof Node\Scalar\String_) {
-                    $this->addError($citem, 'Choice label is not a scalar string');
+                    $this->addError($cItem, 'Choice label is not a scalar string');
 
                     continue;
                 }

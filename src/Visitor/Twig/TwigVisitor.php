@@ -21,7 +21,7 @@ use Twig\NodeVisitor\NodeVisitorInterface;
  */
 final class TwigVisitor extends BaseVisitor implements NodeVisitorInterface
 {
-    private $worker;
+    private ?Worker $worker;
 
     public function __construct(Worker $worker = null)
     {

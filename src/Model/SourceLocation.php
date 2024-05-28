@@ -19,15 +19,15 @@ final class SourceLocation
     /**
      * Translation key.
      */
-    private $message;
-    private $path;
-    private $line;
-    private $context;
+    private string $message;
+    private string $path;
+    private int $line;
+    private array $context;
 
     public function __construct(string $message, string $path, int $line, array $context = [])
     {
         $this->message = $message;
-        $this->path = (string) $path;
+        $this->path = $path;
         $this->line = $line;
         $this->context = $context;
     }

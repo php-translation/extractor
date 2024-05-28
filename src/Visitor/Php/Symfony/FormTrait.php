@@ -16,7 +16,7 @@ use PhpParser\Node\Stmt;
 
 trait FormTrait
 {
-    private $isFormType = false;
+    private bool $isFormType = false;
 
     /**
      * Check if this node is a form type.

@@ -14,8 +14,8 @@ namespace Translation\Extractor\Visitor;
 use Doctrine\Common\Annotations\DocParser;
 use PhpParser\Node;
 use Symfony\Component\Finder\SplFileInfo;
-use Translation\Extractor\Annotation\Desc;
-use Translation\Extractor\Annotation\Ignore;
+use Translation\Extractor\Attribute\Desc;
+use Translation\Extractor\Attribute\Ignore;
 use Translation\Extractor\Model\Error;
 use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Model\SourceLocation;
@@ -27,17 +27,11 @@ use Translation\Extractor\Model\SourceLocation;
  */
 abstract class BaseVisitor implements Visitor
 {
-    protected $collection;
-    protected $file;
+    private ?DocParser $docParser = null;
 
-    /**
-     * @var DocParser
-     */
-    private $docParser;
+    protected SourceCollection $collection;
+    protected SplFileInfo $file;
 
-    /**
-     * {@inheritdoc}
-     */
     public function init(SourceCollection $collection, SplFileInfo $file): void
     {
         $this->collection = $collection;

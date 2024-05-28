@@ -43,7 +43,7 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
             if (\count($node->args) >= 2) {
                 $type = $node->args[1]->value;
                 if ($type instanceof Node\Scalar\String_ && 'Symfony\Component\Form\Extension\Core\Type\HiddenType' === $type->value
-                    || $type instanceof Node\Expr\ClassConstFetch && 'HiddenType' === $type->class->parts[0]) {
+                    || $type instanceof Node\Expr\ClassConstFetch && 'HiddenType' === $type->class->getParts()[0]) {
                     $skipLabel = true;
                 }
             }
@@ -66,7 +66,7 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
                     }
                 }
                 /*
-                 * Actually there's another case here.. if the 3rd argument is anything else, it could well be
+                 * Actually there's another case here: if the 3rd argument is anything else, it could well be
                  * that label is set through a static array. This will not be a common use-case so yeah in this case
                  * it may be the translation is double.
                  */

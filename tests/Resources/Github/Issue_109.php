@@ -1,7 +1,7 @@
 <?php
 
 namespace Translation\Extractor\Tests\Resources\Github;
-use Translation\Extractor\Annotation\Ignore;
+use Translation\Extractor\Attribute\Ignore;
 
 class MustNotBeIgnoredType
 {
@@ -10,11 +10,11 @@ class MustNotBeIgnoredType
     $builder
       ->add('field_a', 'text', array(
         'label' => 'github.issue_109.a',
-        /** @Ignore */
+        /** @Ignore */ // cannot replace these with attributes, it will syntax error
         'placeholder' => 'github.issue_109.b',
       ))
       ->add('field_b', 'text', array(
-        /** @Ignore */
+        /** @Ignore */// cannot replace these with attributes, it will syntax error
         'label' => 'github.issue_109.c',
         'placeholder' => 'github.issue_109.d',
       ));

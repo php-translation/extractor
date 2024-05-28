@@ -5,7 +5,7 @@ namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Translation\Extractor\Annotation\Desc;
+use Translation\Extractor\Attribute\Desc;
 
 class DescriptionType extends AbstractType
 {

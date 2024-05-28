@@ -21,20 +21,14 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
  */
 abstract class AbstractKnpMenuVisitor extends BasePHPVisitor implements NodeVisitor
 {
-    /**
-     * @var bool
-     */
-    private $isKnpMenuBuildingMethod = false;
+    private bool $isKnpMenuBuildingMethod = false;
 
-    /**
-     * @var string|bool
-     */
-    private $domain;
+    private string|bool|null $domain;
 
     /**
      * @var SourceLocation[]
      */
-    private $sourceLocations = [];
+    private array $sourceLocations = [];
 
     public function beforeTraverse(array $nodes): ?Node
     {
@@ -126,7 +120,6 @@ abstract class AbstractKnpMenuVisitor extends BasePHPVisitor implements NodeVisi
             return null;
         }
 
-        /** @var SourceLocation $location */
         foreach ($this->sourceLocations as $location) {
             if (null !== $this->domain) {
                 $context = $location->getContext();

@@ -9,14 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Translation\Extractor\Annotation;
+namespace Translation\Extractor\Attribute;
 
-use JetBrains\PhpStorm\Deprecated;
-
-/**
- * @Annotation
- */
-#[Deprecated]
+#[\Attribute]
 final class Ignore
 {
 }

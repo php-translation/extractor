@@ -2,7 +2,7 @@
 
 namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
-use Translation\Extractor\Annotation\Ignore;
+use Translation\Extractor\Attribute\Ignore;
 
 class ExplicitLabelType
 {

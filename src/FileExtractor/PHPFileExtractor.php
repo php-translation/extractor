@@ -27,7 +27,7 @@ final class PHPFileExtractor implements FileExtractor
     /**
      * @var Visitor[]|NodeVisitor[]
      */
-    private $visitors = [];
+    private array $visitors = [];
 
     /**
      * {@inheritdoc}

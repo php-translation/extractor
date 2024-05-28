@@ -19,12 +19,12 @@ final class SourceCollection implements \Countable, \IteratorAggregate
     /**
      * @var SourceLocation[]
      */
-    private $sourceLocations = [];
+    private array $sourceLocations = [];
 
     /**
      * @var Error[]
      */
-    private $errors = [];
+    private array $errors = [];
 
     /**
      * {@inheritdoc}

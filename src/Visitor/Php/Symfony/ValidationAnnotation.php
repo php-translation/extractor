@@ -26,12 +26,12 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
     /**
      * @var MetadataFactoryInterface
      */
-    private $metadataFactory;
+    private MetadataFactoryInterface $metadataFactory;
 
     /**
      * @var string
      */
-    private $namespace;
+    private string $namespace;
 
     public function __construct(MetadataFactoryInterface $metadataFactory)
     {
@@ -56,7 +56,7 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
         if ($node instanceof Node\Stmt\Namespace_) {
             if (isset($node->name)) {
                 // save the namespace
-                $this->namespace = implode('\\', $node->name->parts);
+                $this->namespace = implode('\\', $node->name->getParts());
             }
 
             return null;

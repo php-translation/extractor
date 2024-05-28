@@ -15,7 +15,7 @@ use Doctrine\Common\Annotations\DocParser;
 use PhpParser\Comment;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Annotation\Translate;
+use Translation\Extractor\Attribute\Translate;
 
 /**
  * Class TranslationAnnotationVisitor.
@@ -24,8 +24,7 @@ use Translation\Extractor\Annotation\Translate;
  */
 class TranslateAnnotationVisitor extends BasePHPVisitor implements NodeVisitor
 {
-    /** @var DocParser */
-    protected $translateDocParser;
+    protected ?DocParser $translateDocParser = null;
 
     private function getTranslateDocParser(): DocParser
     {

@@ -11,9 +11,12 @@
 
 namespace Translation\Extractor\Annotation;
 
+use JetBrains\PhpStorm\Deprecated;
+
 /**
  * @Annotation
  */
+#[Deprecated]
 final class Desc
 {
     /**

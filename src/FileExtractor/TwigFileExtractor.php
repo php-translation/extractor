@@ -27,12 +27,10 @@ final class TwigFileExtractor extends AbstractExtension implements FileExtractor
     /**
      * @var NodeVisitorInterface[]
      */
-    private $visitors = [];
-    private $twig;
+    private array $visitors = [];
 
-    public function __construct(Environment $twig)
+    public function __construct(private readonly Environment $twig)
     {
-        $this->twig = $twig;
         $twig->addExtension($this);
     }
 

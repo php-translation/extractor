@@ -24,12 +24,9 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
     /**
      * @var SourceLocation[]
      */
-    private $sourceLocations = [];
+    private array $sourceLocations = [];
 
-    /**
-     * @var string|null
-     */
-    private $defaultDomain;
+    private string|null $defaultDomain;
 
     /**
      * {@inheritdoc}
@@ -121,7 +118,6 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
         }
 
         // check if a translation_domain is set as a default option
-        $domain = null;
         foreach ($node->args[0]->value->items as $item) {
             if (!$item->key instanceof Node\Scalar\String_) {
                 continue;
@@ -142,7 +138,6 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
      */
     public function afterTraverse(array $nodes): ?Node
     {
-        /** @var SourceLocation $location */
         foreach ($this->sourceLocations as $location) {
             if (null !== $this->defaultDomain) {
                 $context = $location->getContext();
