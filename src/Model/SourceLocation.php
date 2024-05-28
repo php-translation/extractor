@@ -16,21 +16,12 @@ namespace Translation\Extractor\Model;
  */
 final class SourceLocation
 {
-    /**
-     * Translation key.
-     */
-    private string $message;
-    private string $path;
-    private int $line;
-    private array $context;
-
-    public function __construct(string $message, string $path, int $line, array $context = [])
-    {
-        $this->message = $message;
-        $this->path = $path;
-        $this->line = $line;
-        $this->context = $context;
-    }
+    public function __construct(
+        private readonly string $message, /** Translation key. */
+        private readonly string $path,
+        private readonly int $line,
+        private readonly array $context = []
+    ) {}
 
     /**
      * Create a source location from your current location.
