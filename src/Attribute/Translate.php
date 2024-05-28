@@ -14,12 +14,12 @@ namespace Translation\Extractor\Attribute;
 #[\Attribute]
 class Translate
 {
-    private string $domain = 'messages';
+    private string $domain = '';
 
     /**
      * Translate constructor.
      */
-    public function __construct(array $values)
+    public function __construct(array $values = ['domain' => 'messages'])
     {
         if (isset($values['domain'])) {
             $this->domain = $values['domain'];

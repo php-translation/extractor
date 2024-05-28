@@ -8,7 +8,7 @@ use Translation\Extractor\Attribute\Desc;
 
 class TestTranslateAnnotationFile
 {
-    #[Translate(['messages'])]
+    #[Translate]
     const SOME_CONST = 'const_for_translation';
 
     protected function test(): void
