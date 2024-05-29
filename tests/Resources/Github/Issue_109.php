@@ -1,7 +1,7 @@
 <?php
 
 namespace Translation\Extractor\Tests\Resources\Github;
-use Translation\Extractor\Attribute\Ignore;
+use Translation\Extractor\Annotation\Ignore;
 
 class MustNotBeIgnoredType
 {
