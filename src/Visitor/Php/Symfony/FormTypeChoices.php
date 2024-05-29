@@ -31,7 +31,7 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
 
     private array $variables = [];
 
-    private ?string $state;
+    private ?string $state = null;
 
     public function setSymfonyMajorVersion(int $sfMajorVersion): void
     {

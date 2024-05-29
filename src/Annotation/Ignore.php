@@ -11,12 +11,10 @@
 
 namespace Translation\Extractor\Annotation;
 
-use JetBrains\PhpStorm\Deprecated;
-
 /**
+ * @deprecated
  * @Annotation
  */
-#[Deprecated]
 final class Ignore
 {
 }
