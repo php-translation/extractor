@@ -3,13 +3,12 @@
 
 namespace Translation\Extractor\Tests\Resources\Php;
 
-use Translation\Extractor\Attribute\Translate;
-use Translation\Extractor\Attribute\Desc;
+use Translation\Extractor\Annotation\Translate;
+use Translation\Extractor\Annotation\Desc;
 
 class TestTranslateAnnotationFile
 {
-    #[Translate]
-    const SOME_CONST = 'const_for_translation';
+    const string SOME_CONST = /** @Translate */'const_for_translation';
 
     protected function test(): void
     {

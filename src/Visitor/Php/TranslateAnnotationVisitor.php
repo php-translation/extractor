@@ -15,7 +15,7 @@ use Doctrine\Common\Annotations\DocParser;
 use PhpParser\Comment;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Attribute\Translate;
+use Translation\Extractor\Annotation\Translate;
 
 /**
  * Class TranslationAnnotationVisitor.

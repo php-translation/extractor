@@ -12,7 +12,6 @@
 namespace Translation\Extractor\Annotation;
 
 /**
- * @deprecated
  * @Annotation
  */
 class Translate

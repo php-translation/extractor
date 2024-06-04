@@ -7,13 +7,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ValidatorAnnotation
 {
-    /**
-     * @Assert\NotNull(message="start.null")
-     */
-    private $start;
 
-    /**
-     * @NotBlank(message="end.blank")
-     */
-    private $end;
+    #[Assert\NotNull(message: "start.null")]
+    private string $start;
+
+    #[NotBlank(message: "end.blank")]
+    private string $end;
 }
