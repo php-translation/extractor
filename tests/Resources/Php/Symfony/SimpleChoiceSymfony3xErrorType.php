@@ -2,7 +2,7 @@
 
 namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
-use Translation\Extractor\Attribute\Ignore;
+use Translation\Extractor\Annotation\Ignore;
 
 class SimpleChoiceSymfony3xErrorType
 {

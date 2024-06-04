@@ -1,7 +1,7 @@
 <?php
 
 use Symfony\Component\Form\AbstractType;
-use Translation\Extractor\Attribute\Ignore;
+use Translation\Extractor\Annotation\Ignore;
 
 class ExplicitLabelFalseType extends AbstractType
 {
