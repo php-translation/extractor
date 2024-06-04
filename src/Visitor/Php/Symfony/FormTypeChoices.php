@@ -14,7 +14,7 @@ namespace Translation\Extractor\Visitor\Php\Symfony;
 use Doctrine\Common\Annotations\DocParser;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Attribute\Ignore;
+use Translation\Extractor\Annotation\Ignore;
 use Translation\Extractor\Model\SourceLocation;
 
 /**

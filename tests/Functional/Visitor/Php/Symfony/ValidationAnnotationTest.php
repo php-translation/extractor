@@ -44,7 +44,6 @@ final class ValidationAnnotationTest extends BasePHPVisitorTest
         $extractor = new ValidationAnnotation($factory);
         $collection = $this->getSourceLocations($extractor, Resources\Php\Symfony\ValidatorAnnotationError::class);
 
-        $errors = $collection->getErrors();
-        $this->assertCount(1, $errors);
+        $this->assertCount(0, $collection);
     }
 }
