@@ -29,9 +29,6 @@ final class PHPFileExtractor implements FileExtractor
      */
     private array $visitors = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSourceLocations(SplFileInfo $file, SourceCollection $collection): void
     {
         $path = $file->getRelativePath();
@@ -50,9 +47,6 @@ final class PHPFileExtractor implements FileExtractor
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsExtension(string $extension): bool
     {
         return \in_array($extension, ['php', 'php5', 'phtml']);

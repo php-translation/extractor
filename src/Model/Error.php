@@ -22,7 +22,8 @@ final class Error
         private readonly string $message,
         private readonly string $path,
         private readonly int $line
-    ){}
+    ) {
+    }
 
     public function getMessage(): string
     {

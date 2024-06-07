@@ -20,17 +20,11 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
  */
 final class ContainerAwareTrans extends BasePHPVisitor implements NodeVisitor
 {
-    /**
-     * {@inheritdoc}
-     */
     public function beforeTraverse(array $nodes): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Expr\MethodCall) {
@@ -42,7 +36,7 @@ final class ContainerAwareTrans extends BasePHPVisitor implements NodeVisitor
         }
         $name = (string) $node->name;
 
-        //If $this->get('translator')->trans('foobar')
+        // If $this->get('translator')->trans('foobar')
         if ('trans' === $name) {
             $label = $this->getStringArgument($node, 0);
             if (null === $label) {
@@ -56,17 +50,11 @@ final class ContainerAwareTrans extends BasePHPVisitor implements NodeVisitor
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function leaveNode(Node $node): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function afterTraverse(array $nodes): ?Node
     {
         return null;

@@ -26,11 +26,8 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
      */
     private array $sourceLocations = [];
 
-    private string|null $defaultDomain;
+    private ?string $defaultDomain;
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Expr\MethodCall) {
@@ -54,17 +51,11 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
         $this->sourceLocations[] = $location;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function leaveNode(Node $node): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function beforeTraverse(array $nodes): ?Node
     {
         $this->defaultDomain = null;
@@ -94,6 +85,10 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
         }
 
         if (!$var instanceof Node\Expr\Variable) {
+            return;
+        }
+
+        if (!isset($node->args) || false === \is_array($node->args) || 0 === \count($node->args)) {
             return;
         }
 
@@ -133,9 +128,6 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function afterTraverse(array $nodes): ?Node
     {
         foreach ($this->sourceLocations as $location) {

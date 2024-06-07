@@ -29,7 +29,7 @@ abstract class BaseVisitor implements Visitor
 {
     private ?DocParser $docParser = null;
 
-    protected SourceCollection $collection;
+    protected ?SourceCollection $collection = null;
     protected SplFileInfo $file;
 
     public function init(SourceCollection $collection, SplFileInfo $file): void
@@ -65,7 +65,7 @@ abstract class BaseVisitor implements Visitor
         $this->collection->addError(new Error($errorMessage, $file, $line));
     }
 
-    protected function addLocation(string $text, int $line, Node $node = null, array $context = []): void
+    protected function addLocation(string $text, int $line, ?Node $node = null, array $context = []): void
     {
         if (null === $location = $this->getLocation($text, $line, $node, $context)) {
             return;
@@ -74,7 +74,7 @@ abstract class BaseVisitor implements Visitor
         $this->collection->addLocation($location);
     }
 
-    protected function getLocation(string $text, int $line, Node $node = null, array $context = []): ?SourceLocation
+    protected function getLocation(string $text, int $line, ?Node $node = null, array $context = []): ?SourceLocation
     {
         $file = $this->getAbsoluteFilePath();
         if (null !== $node && null !== $docComment = $node->getDocComment()) {

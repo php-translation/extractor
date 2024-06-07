@@ -20,9 +20,6 @@ use Translation\Extractor\Model\SourceLocation;
  */
 final class BladeFileExtractor implements FileExtractor
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getSourceLocations(SplFileInfo $file, SourceCollection $collection): void
     {
         $realPath = $file->getRealPath();
@@ -64,9 +61,6 @@ final class BladeFileExtractor implements FileExtractor
         return $keys;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsExtension(string $extension): bool
     {
         return 'blade.php' === $extension;

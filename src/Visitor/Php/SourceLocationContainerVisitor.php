@@ -26,17 +26,11 @@ final class SourceLocationContainerVisitor extends BasePHPVisitor implements Nod
     private string $namespace = '';
     private array $useStatements = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function beforeTraverse(array $nodes): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Stmt\Namespace_) {
@@ -91,17 +85,11 @@ final class SourceLocationContainerVisitor extends BasePHPVisitor implements Nod
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function leaveNode(Node $node): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function afterTraverse(array $nodes): ?Node
     {
         return null;

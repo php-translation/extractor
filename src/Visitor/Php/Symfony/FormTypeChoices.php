@@ -38,9 +38,6 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
         $this->symfonyMajorVersion = $sfMajorVersion;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
@@ -98,7 +95,7 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
                 continue;
             }
 
-            //do not parse choices if the @Ignore annotation is attached
+            // do not parse choices if the @Ignore annotation is attached
             if ($this->isIgnored($item->key)) {
                 continue;
             }
@@ -137,7 +134,7 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
 
     protected function isIgnored(Node $node): bool
     {
-        //because of getDocParser method is private, we have to create a new custom instance
+        // because of getDocParser method is private, we have to create a new custom instance
         $docParser = new DocParser();
         $docParser->setImports([
             'ignore' => Ignore::class,

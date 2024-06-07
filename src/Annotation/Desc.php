@@ -10,6 +10,7 @@
  */
 
 namespace Translation\Extractor\Annotation;
+
 /**
  * @Annotation
  */

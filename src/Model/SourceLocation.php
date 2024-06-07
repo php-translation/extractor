@@ -21,7 +21,8 @@ final class SourceLocation
         private readonly string $path,
         private readonly int $line,
         private readonly array $context = []
-    ) {}
+    ) {
+    }
 
     /**
      * Create a source location from your current location.

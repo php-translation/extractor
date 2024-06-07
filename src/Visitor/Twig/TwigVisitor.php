@@ -23,7 +23,7 @@ final class TwigVisitor extends BaseVisitor implements NodeVisitorInterface
 {
     private ?Worker $worker;
 
-    public function __construct(Worker $worker = null)
+    public function __construct(?Worker $worker = null)
     {
         if (null === $worker) {
             $worker = new Worker();
@@ -32,9 +32,6 @@ final class TwigVisitor extends BaseVisitor implements NodeVisitorInterface
         $this->worker = $worker;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node, Environment $env): Node
     {
         // If not initialized
@@ -48,17 +45,11 @@ final class TwigVisitor extends BaseVisitor implements NodeVisitorInterface
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function leaveNode(Node $node, Environment $env): ?Node
     {
         return $node;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return 0;

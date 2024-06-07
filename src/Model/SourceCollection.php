@@ -26,17 +26,11 @@ final class SourceCollection implements \Countable, \IteratorAggregate
      */
     private array $errors = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->sourceLocations);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function count(): int
     {
         return \count($this->sourceLocations);

@@ -22,9 +22,6 @@ final class FormTypeEmptyValue extends BasePHPVisitor implements NodeVisitor
 {
     use FormTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
@@ -72,25 +69,16 @@ final class FormTypeEmptyValue extends BasePHPVisitor implements NodeVisitor
         $this->addLocation($label, $node->getAttribute('startLine'), $node);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function leaveNode(Node $node): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function beforeTraverse(array $nodes): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function afterTraverse(array $nodes): ?Node
     {
         return null;

@@ -89,17 +89,11 @@ final class Constraint extends BasePHPVisitor implements NodeVisitor
         'Valid',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function beforeTraverse(array $nodes): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Expr\New_) {
@@ -178,17 +172,11 @@ final class Constraint extends BasePHPVisitor implements NodeVisitor
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function leaveNode(Node $node): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function afterTraverse(array $nodes): ?Node
     {
         return null;
