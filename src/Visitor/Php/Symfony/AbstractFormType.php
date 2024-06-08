@@ -88,7 +88,7 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
             return;
         }
 
-        if (!isset($node->args) || false === \is_array($node->args) || 0 === \count($node->args)) {
+        if (null === $node->args || false === \is_array($node->args) || 0 === \count($node->args)) {
             return;
         }
 
