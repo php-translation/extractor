@@ -50,15 +50,15 @@ class FormTypeLabelTest extends BasePHPVisitorTest
         // We should not have "test_d" or "test_e"
         $this->assertEquals(3, $collection->count(), 'We should ignore choices where "translation_domain" is "false"');
 
-        $messageA = $collection->get(0);
+        $messageA = $collection->get(2);
         $this->assertEquals('label1', $messageA->getMessage());
         $this->assertEquals('admin0', $messageA->getContext()['domain']);
 
-        $messageB = $collection->get(1);
+        $messageB = $collection->get(0);
         $this->assertEquals('Test b', $messageB->getMessage());
         $this->assertEquals('admin1', $messageB->getContext()['domain']);
 
-        $messageC = $collection->get(2);
+        $messageC = $collection->get(1);
         $this->assertEquals('Test c', $messageC->getMessage());
         $this->assertNull($messageC->getContext()['domain']);
     }

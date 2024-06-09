@@ -134,6 +134,7 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
 
     protected function isIgnored(Node $node): bool
     {
+        var_dump($node);
         // because of getDocParser method is private, we have to create a new custom instance
         $docParser = new DocParser();
         $docParser->setImports([
