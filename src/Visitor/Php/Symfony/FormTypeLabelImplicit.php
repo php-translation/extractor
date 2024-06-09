@@ -79,7 +79,11 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
                     $node->setDocComment($node->args[0]->getDocComment());
                 }
 
-                $label = $node->args[0]->value->value;
+                $label = '';
+                if ($node->args[0]->value instanceof Node\Scalar\String_) {
+                    $label = null == $node->args[0]->value->value ? '' : $node->args[0]->value->value;
+                }
+
                 if (!empty($label)) {
                     $label = $this->humanize($label);
                     if (null !== $location = $this->getLocation($label, $node->getAttribute('startLine'), $node, ['domain' => $domain])) {
