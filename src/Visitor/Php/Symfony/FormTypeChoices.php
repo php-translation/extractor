@@ -96,7 +96,7 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
             }
 
             // do not parse choices if the @Ignore annotation is attached
-            if ($this->isIgnored($item->key)) {
+            if ($this->isIgnored($item)) {
                 continue;
             }
 
