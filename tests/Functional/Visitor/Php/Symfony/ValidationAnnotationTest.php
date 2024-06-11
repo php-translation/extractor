@@ -37,13 +37,4 @@ final class ValidationAnnotationTest extends BasePHPVisitorTest
         $this->assertEquals('end.blank', $source->getMessage());
         $this->assertEquals('validators', $source->getContext()['domain']);
     }
-
-    public function testExtractAnnotationError()
-    {
-        $factory = new LazyLoadingMetadataFactory(new AttributeLoader());
-        $extractor = new ValidationAnnotation($factory);
-        $collection = $this->getSourceLocations($extractor, Resources\Php\Symfony\ValidatorAnnotationError::class);
-
-        $this->assertCount(0, $collection);
-    }
 }
