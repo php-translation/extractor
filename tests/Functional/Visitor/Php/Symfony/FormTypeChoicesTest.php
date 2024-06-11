@@ -12,7 +12,6 @@
 namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
 use Translation\Extractor\Tests\Functional\Visitor\Php\BasePHPVisitorTest;
-use Translation\Extractor\Tests\Resources;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeChoices;
 
 /**
@@ -22,7 +21,7 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
 {
     public function testSimpleSymfony3x()
     {
-        $collection = $this->getSourceLocations(new FormTypeChoices(), Resources\Php\Symfony\SimpleChoiceSymfony3xType::class);
+        $collection = $this->getSourceLocations(new FormTypeChoices(), SimpleChoiceSymfony3xType::class);
 
         $this->assertCount(1, $collection, print_r($collection, true));
         $this->assertEquals('label1', $collection->get(0)->getMessage());
@@ -33,7 +32,7 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
     {
         $visitor = new FormTypeChoices();
         $visitor->setSymfonyMajorVersion(2);
-        $collection = $this->getSourceLocations($visitor, Resources\Php\Symfony\SimpleChoiceSymfony27Type::class);
+        $collection = $this->getSourceLocations($visitor, SimpleChoiceSymfony27Type::class);
 
         $this->assertCount(4, $collection, print_r($collection, true));
         $this->assertEquals('label1', $collection->get(0)->getMessage());
@@ -47,7 +46,7 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
     {
         $visitor = new FormTypeChoices();
         $visitor->setSymfonyMajorVersion(3);
-        $collection = $this->getSourceLocations($visitor, Resources\Php\Symfony\ChainedChoiceType::class);
+        $collection = $this->getSourceLocations($visitor, ChainedChoiceType::class);
 
         $this->assertCount(2, $collection, print_r($collection, true));
         $this->assertEquals('label1', $collection->get(0)->getMessage());
@@ -56,7 +55,7 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
 
     public function testExtractError()
     {
-        $collection = $this->getSourceLocations(new FormTypeChoices(), Resources\Php\Symfony\SimpleChoiceSymfony3xErrorType::class);
+        $collection = $this->getSourceLocations(new FormTypeChoices(), SimpleChoiceSymfony3xErrorType::class);
 
         $errors = $collection->getErrors();
         $this->assertCount(1, $errors);
@@ -64,7 +63,7 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
 
     public function testPassedChoices()
     {
-        $collection = $this->getSourceLocations(new FormTypeChoices(), Resources\Php\Symfony\SimpleChoicePassArrayType::class);
+        $collection = $this->getSourceLocations(new FormTypeChoices(), SimpleChoicePassArrayType::class);
 
         $this->assertCount(1, $collection, print_r($collection, true));
         $this->assertEquals('label1', $collection->get(0)->getMessage());
@@ -73,7 +72,7 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
 
     public function testChoiceTranslationDomain()
     {
-        $collection = $this->getSourceLocations(new FormTypeChoices(), Resources\Php\Symfony\FormDomainChoiceType::class);
+        $collection = $this->getSourceLocations(new FormTypeChoices(), FormDomainChoiceType::class);
 
         $messageA = $collection->get(0);
         $this->assertEquals('label1_a', $messageA->getMessage());

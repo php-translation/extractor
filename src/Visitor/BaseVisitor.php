@@ -27,17 +27,11 @@ use Translation\Extractor\Model\SourceLocation;
  */
 abstract class BaseVisitor implements Visitor
 {
-    protected $collection;
-    protected $file;
+    private ?DocParser $docParser = null;
 
-    /**
-     * @var DocParser
-     */
-    private $docParser;
+    protected ?SourceCollection $collection = null;
+    protected SplFileInfo $file;
 
-    /**
-     * {@inheritdoc}
-     */
     public function init(SourceCollection $collection, SplFileInfo $file): void
     {
         $this->collection = $collection;
@@ -71,7 +65,7 @@ abstract class BaseVisitor implements Visitor
         $this->collection->addError(new Error($errorMessage, $file, $line));
     }
 
-    protected function addLocation(string $text, int $line, Node $node = null, array $context = []): void
+    protected function addLocation(string $text, int $line, ?Node $node = null, array $context = []): void
     {
         if (null === $location = $this->getLocation($text, $line, $node, $context)) {
             return;
@@ -80,7 +74,7 @@ abstract class BaseVisitor implements Visitor
         $this->collection->addLocation($location);
     }
 
-    protected function getLocation(string $text, int $line, Node $node = null, array $context = []): ?SourceLocation
+    protected function getLocation(string $text, int $line, ?Node $node = null, array $context = []): ?SourceLocation
     {
         $file = $this->getAbsoluteFilePath();
         if (null !== $node && null !== $docComment = $node->getDocComment()) {

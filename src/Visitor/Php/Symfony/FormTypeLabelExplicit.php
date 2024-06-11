@@ -21,9 +21,6 @@ final class FormTypeLabelExplicit extends AbstractFormType implements NodeVisito
 {
     use FormTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {

@@ -27,20 +27,17 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
     /**
      * @var int defaults to major version 3
      */
-    protected $symfonyMajorVersion = 3;
+    protected int $symfonyMajorVersion = 3;
 
-    private $variables = [];
+    private array $variables = [];
 
-    private $state;
+    private ?string $state = null;
 
     public function setSymfonyMajorVersion(int $sfMajorVersion): void
     {
         $this->symfonyMajorVersion = $sfMajorVersion;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
@@ -98,8 +95,8 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
                 continue;
             }
 
-            //do not parse choices if the @Ignore annotation is attached
-            if ($this->isIgnored($item->key)) {
+            // do not parse choices if the @Ignore annotation is attached
+            if ($this->isIgnored($item)) {
                 continue;
             }
 
@@ -120,10 +117,10 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
                 continue;
             }
 
-            foreach ($choices->items as $citem) {
-                $labelNode = $useKey ? $citem->key : $citem->value;
+            foreach ($choices->items as $cItem) {
+                $labelNode = $useKey ? $cItem->key : $cItem->value;
                 if (!$labelNode instanceof Node\Scalar\String_) {
-                    $this->addError($citem, 'Choice label is not a scalar string');
+                    $this->addError($cItem, 'Choice label is not a scalar string');
 
                     continue;
                 }
@@ -137,7 +134,7 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
 
     protected function isIgnored(Node $node): bool
     {
-        //because of getDocParser method is private, we have to create a new custom instance
+        // because of getDocParser method is private, we have to create a new custom instance
         $docParser = new DocParser();
         $docParser->setImports([
             'ignore' => Ignore::class,

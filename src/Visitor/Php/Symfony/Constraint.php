@@ -89,17 +89,11 @@ final class Constraint extends BasePHPVisitor implements NodeVisitor
         'Valid',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function beforeTraverse(array $nodes): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Expr\New_) {
@@ -111,7 +105,7 @@ final class Constraint extends BasePHPVisitor implements NodeVisitor
             return null;
         }
 
-        $parts = $className->parts;
+        $parts = $className->getParts();
         $isConstraintClass = false;
 
         // we need to check every part since `Assert\NotBlank` would be split in 2 different pieces
@@ -151,7 +145,7 @@ final class Constraint extends BasePHPVisitor implements NodeVisitor
                 continue;
             }
 
-            // there could be false positives but it should catch most of the useful properties
+            // there could be false positives, but it should catch most of the useful properties
             // (e.g. `message`, `minMessage`)
             if (false === stripos($item->key->value, 'message')) {
                 continue;
@@ -178,17 +172,11 @@ final class Constraint extends BasePHPVisitor implements NodeVisitor
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function leaveNode(Node $node): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function afterTraverse(array $nodes): ?Node
     {
         return null;

@@ -23,33 +23,20 @@ use Translation\Extractor\Model\SourceLocation;
  */
 final class SourceLocationContainerVisitor extends BasePHPVisitor implements NodeVisitor
 {
-    /**
-     * @var string
-     */
-    private $namespace = '';
+    private string $namespace = '';
+    private array $useStatements = [];
 
-    /**
-     * @var array
-     */
-    private $useStatements = [];
-
-    /**
-     * {@inheritdoc}
-     */
     public function beforeTraverse(array $nodes): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Stmt\Namespace_) {
             if (isset($node->name)) {
                 // Save namespace of this class for later.
-                $this->namespace = implode('\\', $node->name->parts);
+                $this->namespace = implode('\\', $node->name->getParts());
             }
             $this->useStatements = [];
 
@@ -57,8 +44,8 @@ final class SourceLocationContainerVisitor extends BasePHPVisitor implements Nod
         }
 
         if ($node instanceof Node\Stmt\UseUse) {
-            $key = isset($node->alias) ? $node->alias : $node->name->parts[\count($node->name->parts) - 1];
-            $this->useStatements[(string) $key] = implode('\\', $node->name->parts);
+            $key = $node->alias ?? $node->name->getParts()[\count($node->name->getParts()) - 1];
+            $this->useStatements[(string) $key] = implode('\\', $node->name->getParts());
 
             return null;
         }
@@ -69,7 +56,7 @@ final class SourceLocationContainerVisitor extends BasePHPVisitor implements Nod
 
         $isContainer = false;
         foreach ($node->implements as $interface) {
-            $name = implode('\\', $interface->parts);
+            $name = implode('\\', $interface->getParts());
             if (isset($this->useStatements[$name])) {
                 $name = $this->useStatements[$name];
             }
@@ -98,17 +85,11 @@ final class SourceLocationContainerVisitor extends BasePHPVisitor implements Nod
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function leaveNode(Node $node): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function afterTraverse(array $nodes): ?Node
     {
         return null;

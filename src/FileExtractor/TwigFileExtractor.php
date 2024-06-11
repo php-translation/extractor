@@ -27,18 +27,13 @@ final class TwigFileExtractor extends AbstractExtension implements FileExtractor
     /**
      * @var NodeVisitorInterface[]
      */
-    private $visitors = [];
-    private $twig;
+    private array $visitors = [];
 
-    public function __construct(Environment $twig)
+    public function __construct(private readonly Environment $twig)
     {
-        $this->twig = $twig;
         $twig->addExtension($this);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSourceLocations(SplFileInfo $file, SourceCollection $collection): void
     {
         foreach ($this->visitors as $v) {
@@ -53,9 +48,6 @@ final class TwigFileExtractor extends AbstractExtension implements FileExtractor
         $this->twig->parse($stream);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsExtension(string $extension): bool
     {
         return 'twig' === $extension;
@@ -66,17 +58,11 @@ final class TwigFileExtractor extends AbstractExtension implements FileExtractor
         $this->visitors[] = $visitor;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNodeVisitors(): array
     {
         return $this->visitors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'php.translation';

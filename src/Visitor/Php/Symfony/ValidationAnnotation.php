@@ -23,24 +23,15 @@ use Translation\Extractor\Visitor\Php\BasePHPVisitor;
  */
 final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
 {
-    /**
-     * @var MetadataFactoryInterface
-     */
-    private $metadataFactory;
+    private MetadataFactoryInterface $metadataFactory;
 
-    /**
-     * @var string
-     */
-    private $namespace;
+    private string $namespace;
 
     public function __construct(MetadataFactoryInterface $metadataFactory)
     {
         $this->metadataFactory = $metadataFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function beforeTraverse(array $nodes): ?Node
     {
         $this->namespace = '';
@@ -48,15 +39,12 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Stmt\Namespace_) {
             if (isset($node->name)) {
                 // save the namespace
-                $this->namespace = implode('\\', $node->name->parts);
+                $this->namespace = implode('\\', $node->name->getParts());
             }
 
             return null;
@@ -117,17 +105,11 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function leaveNode(Node $node): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function afterTraverse(array $nodes): ?Node
     {
         return null;

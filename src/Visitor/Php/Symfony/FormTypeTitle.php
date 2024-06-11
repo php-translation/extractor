@@ -21,9 +21,6 @@ final class FormTypeTitle extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {

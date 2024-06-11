@@ -12,7 +12,6 @@
 namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
 use Translation\Extractor\Tests\Functional\Visitor\Php\BasePHPVisitorTest;
-use Translation\Extractor\Tests\Resources;
 use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
 
 /**
@@ -22,14 +21,14 @@ class FormTypeLabelImplicitTest extends BasePHPVisitorTest
 {
     public function testExtract()
     {
-        $collection = $this->getSourceLocations(new FormTypeLabelImplicit(), Resources\Php\Symfony\ImplicitLabelType::class);
+        $collection = $this->getSourceLocations(new FormTypeLabelImplicit(), ImplicitLabelType::class);
 
         $this->assertCount(5, $collection, print_r($collection, true));
         $this->assertEquals('Find1', $collection->get(0)->getMessage());
         $this->assertEquals('Bigger find2', $collection->get(1)->getMessage());
         $this->assertEquals('Camel find3', $collection->get(2)->getMessage());
 
-        //issue87: support for Ignore annotation
+        // issue87: support for Ignore annotation
         $this->assertEquals('Issue87-will be added', $collection->get(3)->getMessage());
     }
 }

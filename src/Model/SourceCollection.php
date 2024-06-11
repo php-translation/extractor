@@ -19,24 +19,18 @@ final class SourceCollection implements \Countable, \IteratorAggregate
     /**
      * @var SourceLocation[]
      */
-    private $sourceLocations = [];
+    private array $sourceLocations = [];
 
     /**
      * @var Error[]
      */
-    private $errors = [];
+    private array $errors = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->sourceLocations);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function count(): int
     {
         return \count($this->sourceLocations);

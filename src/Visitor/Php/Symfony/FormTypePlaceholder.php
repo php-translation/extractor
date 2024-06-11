@@ -21,11 +21,8 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
 {
     use FormTrait;
 
-    private $arrayNodeVisited = [];
+    private array $arrayNodeVisited = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
@@ -97,8 +94,10 @@ final class FormTypePlaceholder extends AbstractFormType implements NodeVisitor
         } elseif ($placeholderNode->value instanceof Node\Expr\Array_) {
             foreach ($placeholderNode->value->items as $placeholderNode) {
                 $line = $placeholderNode->value->getAttribute('startLine');
-                if (null !== $location = $this->getLocation($placeholderNode->value->value, $line, $placeholderNode, ['domain' => $domain])) {
-                    $this->lateCollect($location);
+                if (isset($placeholderNode->value->value)) {
+                    if (null !== $location = $this->getLocation($placeholderNode->value->value, $line, $placeholderNode, ['domain' => $domain])) {
+                        $this->lateCollect($location);
+                    }
                 }
             }
         } else {

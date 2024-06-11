@@ -21,9 +21,6 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
 {
     use FormTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if (!$this->isFormType($node)) {
@@ -43,7 +40,7 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
             if (\count($node->args) >= 2) {
                 $type = $node->args[1]->value;
                 if ($type instanceof Node\Scalar\String_ && 'Symfony\Component\Form\Extension\Core\Type\HiddenType' === $type->value
-                    || $type instanceof Node\Expr\ClassConstFetch && 'HiddenType' === $type->class->parts[0]) {
+                    || $type instanceof Node\Expr\ClassConstFetch && 'HiddenType' === $type->class->getParts()[0]) {
                     $skipLabel = true;
                 }
             }
@@ -66,7 +63,7 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
                     }
                 }
                 /*
-                 * Actually there's another case here.. if the 3rd argument is anything else, it could well be
+                 * Actually there's another case here: if the 3rd argument is anything else, it could well be
                  * that label is set through a static array. This will not be a common use-case so yeah in this case
                  * it may be the translation is double.
                  */
@@ -82,7 +79,11 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
                     $node->setDocComment($node->args[0]->getDocComment());
                 }
 
-                $label = $node->args[0]->value->value;
+                $label = '';
+                if ($node->args[0]->value instanceof Node\Scalar\String_) {
+                    $label = null == $node->args[0]->value->value ? '' : $node->args[0]->value->value;
+                }
+
                 if (!empty($label)) {
                     $label = $this->humanize($label);
                     if (null !== $location = $this->getLocation($label, $node->getAttribute('startLine'), $node, ['domain' => $domain])) {

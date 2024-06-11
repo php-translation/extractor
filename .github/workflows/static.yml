@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: PHP-CS-Fixer
-        uses: docker://jakzal/phpqa:php7.3-alpine
+        uses: docker://jakzal/phpqa:php8.1-alpine
         with:
             args: php-cs-fixer fix --diff --dry-run -vvv
 
@@ -19,6 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: PHPStan
-        uses: docker://jakzal/phpqa:php7.3-alpine
+        uses: docker://jakzal/phpqa:php8.1-alpine
         with:
           args: phpstan analyze --no-progress

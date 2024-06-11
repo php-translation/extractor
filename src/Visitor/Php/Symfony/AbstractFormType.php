@@ -24,16 +24,10 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
     /**
      * @var SourceLocation[]
      */
-    private $sourceLocations = [];
+    private array $sourceLocations = [];
 
-    /**
-     * @var string|null
-     */
-    private $defaultDomain;
+    private ?string $defaultDomain;
 
-    /**
-     * {@inheritdoc}
-     */
     public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Expr\MethodCall) {
@@ -57,17 +51,11 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
         $this->sourceLocations[] = $location;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function leaveNode(Node $node): ?Node
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function beforeTraverse(array $nodes): ?Node
     {
         $this->defaultDomain = null;
@@ -100,6 +88,10 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
             return;
         }
 
+        if (null === $node->args || false === \is_array($node->args) || 0 === \count($node->args)) {
+            return;
+        }
+
         // check if options were passed
         if (!isset($node->args[0])) {
             return;
@@ -121,7 +113,6 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
         }
 
         // check if a translation_domain is set as a default option
-        $domain = null;
         foreach ($node->args[0]->value->items as $item) {
             if (!$item->key instanceof Node\Scalar\String_) {
                 continue;
@@ -137,12 +128,8 @@ abstract class AbstractFormType extends BasePHPVisitor implements NodeVisitor
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function afterTraverse(array $nodes): ?Node
     {
-        /** @var SourceLocation $location */
         foreach ($this->sourceLocations as $location) {
             if (null !== $this->defaultDomain) {
                 $context = $location->getContext();
