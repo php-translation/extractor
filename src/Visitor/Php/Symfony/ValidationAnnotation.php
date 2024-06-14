@@ -59,8 +59,14 @@ final class ValidationAnnotation extends BasePHPVisitor implements NodeVisitor
             return null;
         }
 
-        /** @var ClassMetadata $metadata */
-        $metadata = $this->metadataFactory->getMetadataFor($name);
+        try {
+            /** @var ClassMetadata $metadata */
+            $metadata = $this->metadataFactory->getMetadataFor($name);
+        } catch (\Throwable $e) {
+            $this->addError($node, sprintf('Could not parse class "%s" for annotations. %s', $this->namespace, $e->getMessage()));
+
+            return null;
+        }
 
         if (!$metadata->hasConstraints() && !\count($metadata->getConstrainedProperties())) {
             return null;
