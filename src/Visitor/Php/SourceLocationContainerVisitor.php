@@ -76,7 +76,7 @@ final class SourceLocationContainerVisitor extends BasePHPVisitor implements Nod
 
         foreach ($sourceLocations as $sourceLocation) {
             if (!$sourceLocation instanceof SourceLocation) {
-                throw new \RuntimeException(sprintf('%s::getTranslationSourceLocations() was expected to return an array of SourceLocations, but got an array which contains an item of type %s.', $this->namespace.'\\'.$node->name, \gettype($sourceLocation)));
+                throw new \RuntimeException(\sprintf('%s::getTranslationSourceLocations() was expected to return an array of SourceLocations, but got an array which contains an item of type %s.', $this->namespace.'\\'.$node->name, \gettype($sourceLocation)));
             }
 
             $this->collection->addLocation($sourceLocation);
