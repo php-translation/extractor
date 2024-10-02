@@ -36,9 +36,9 @@ final class Worker
         $this->stack[] = $node;
         if ($node instanceof FilterExpression && $node->getNode('node') instanceof ConstantExpression) {
             $domain = null;
-            if ('trans' === $node->getNode('filter')->getAttribute('value')) {
+            if ('trans' === $node->getAttribute('twig_callable')->getName()) {
                 $domain = $this->getReadDomainFromArguments($node->getNode('arguments'), 1);
-            } elseif ('transchoice' === $node->getNode('filter')->getAttribute('value')) {
+            } elseif ('transchoice' === $node->getAttribute('twig_callable')->getName()) {
                 $domain = $this->getReadDomainFromArguments($node->getNode('arguments'), 2);
             }
 
@@ -83,7 +83,7 @@ final class Worker
             if (!$this->stack[$i] instanceof FilterExpression) {
                 break;
             }
-            $name = $this->stack[$i]->getNode('filter')->getAttribute('value');
+            $name = $this->stack[$i]->getAttribute('twig_callable')->getName();
             if ('trans' === $name) {
                 break;
             } elseif ('desc' === $name) {
