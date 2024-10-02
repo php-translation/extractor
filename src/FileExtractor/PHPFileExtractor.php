@@ -44,7 +44,7 @@ final class PHPFileExtractor implements FileExtractor
             $tokens = $parser->parse($file->getContents());
             $traverser->traverse($tokens);
         } catch (Error $e) {
-            trigger_error(sprintf('Skipping file "%s" because of parse Error: %s. ', $path, $e->getMessage()));
+            trigger_error(\sprintf('Skipping file "%s" because of parse Error: %s. ', $path, $e->getMessage()));
         }
     }
 

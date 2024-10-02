@@ -21,7 +21,7 @@ final class Error
     public function __construct(
         private readonly string $message,
         private readonly string $path,
-        private readonly int $line
+        private readonly int $line,
     ) {
     }
 

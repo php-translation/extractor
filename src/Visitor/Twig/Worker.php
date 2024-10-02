@@ -89,11 +89,11 @@ final class Worker
             } elseif ('desc' === $name) {
                 $arguments = $this->stack[$i]->getNode('arguments');
                 if (!$arguments->hasNode(0)) {
-                    throw new \LogicException(sprintf('The "%s" filter requires exactly one argument, the description text.', $name));
+                    throw new \LogicException(\sprintf('The "%s" filter requires exactly one argument, the description text.', $name));
                 }
                 $text = $arguments->getNode(0);
                 if (!$text instanceof ConstantExpression) {
-                    throw new \LogicException(sprintf('The first argument of the "%s" filter must be a constant expression, such as a string.', $name));
+                    throw new \LogicException(\sprintf('The first argument of the "%s" filter must be a constant expression, such as a string.', $name));
                 }
                 $context['desc'] = $text->getAttribute('value');
             }

@@ -103,7 +103,7 @@ class AllExtractorsTest extends TestCase
     private function translationExists(SourceCollection $sc, string $translationKey, ?string $message = null): SourceLocation
     {
         if (empty($message)) {
-            $message = sprintf('Tried to find "%s" but failed', $translationKey);
+            $message = \sprintf('Tried to find "%s" but failed', $translationKey);
         }
 
         $source = null;
@@ -127,7 +127,7 @@ class AllExtractorsTest extends TestCase
     private function translationMissing(SourceCollection $sc, string $translationKey, ?string $message = null): void
     {
         if (empty($message)) {
-            $message = sprintf('The translation key "%s" should not exist', $translationKey);
+            $message = \sprintf('The translation key "%s" should not exist', $translationKey);
         }
 
         $found = false;

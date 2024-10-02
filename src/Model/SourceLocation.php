@@ -20,7 +20,7 @@ final class SourceLocation
         private readonly string $message, /** Translation key. */
         private readonly string $path,
         private readonly int $line,
-        private readonly array $context = []
+        private readonly array $context = [],
     ) {
     }
 
