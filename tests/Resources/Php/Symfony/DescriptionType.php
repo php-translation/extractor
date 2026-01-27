@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Translation\Extractor\Annotation\Desc;
 
-class DescriptionType extends AbstractType
+class DescriptionType implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

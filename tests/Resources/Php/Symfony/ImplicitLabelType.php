@@ -2,7 +2,7 @@
 
 namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
-class ImplicitLabelType
+class ImplicitLabelType implements FormTypeInterface
 {
     const ISSUE_131 = 'issue_131';
 

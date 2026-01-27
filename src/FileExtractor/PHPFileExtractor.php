@@ -33,8 +33,10 @@ final class PHPFileExtractor implements FileExtractor
     public function getSourceLocations(SplFileInfo $file, SourceCollection $collection): void
     {
         $path = $file->getRelativePath();
+        /** @phpstan-ignore-next-line */
         $parser = (new ParserFactory())->createForVersion(PhpVersion::fromString('8.1'));
         $traverser = new NodeTraverser();
+        $traverser->addVisitor(new NodeVisitor\NameResolver());
         foreach ($this->visitors as $v) {
             $v->init($collection, $file);
             $traverser->addVisitor($v);

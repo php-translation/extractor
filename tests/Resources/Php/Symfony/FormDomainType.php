@@ -2,7 +2,7 @@
 
 namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
-class FormDomainType
+class FormDomainType implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

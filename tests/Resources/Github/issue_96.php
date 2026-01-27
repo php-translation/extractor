@@ -2,7 +2,7 @@
 
 namespace Translation\Extractor\Tests\Resources\Github;
 
-class GlobalTranslationDomainWithPlaceholderType
+class GlobalTranslationDomainWithPlaceholderType implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

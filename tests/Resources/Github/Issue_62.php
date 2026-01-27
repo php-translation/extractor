@@ -3,7 +3,7 @@
 use Symfony\Component\Form\AbstractType;
 use Translation\Extractor\Annotation\Ignore;
 
-class EmptyValueType extends AbstractType
+class EmptyValueType implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

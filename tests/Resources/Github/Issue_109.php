@@ -3,7 +3,7 @@
 namespace Translation\Extractor\Tests\Resources\Github;
 use Translation\Extractor\Annotation\Ignore;
 
-class MustNotBeIgnoredType
+class MustNotBeIgnoredType implements FormTypeInterface
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {

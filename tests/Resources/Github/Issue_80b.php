@@ -2,7 +2,7 @@
 
 use Symfony\Component\Form\AbstractType;
 
-class PlaceholderAsBooleanType extends AbstractType
+class PlaceholderAsBooleanType implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

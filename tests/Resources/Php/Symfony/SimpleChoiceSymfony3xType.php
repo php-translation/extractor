@@ -2,7 +2,7 @@
 
 namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
-class SimpleChoiceSymfony3xType
+class SimpleChoiceSymfony3xType implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

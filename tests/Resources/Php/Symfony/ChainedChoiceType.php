@@ -2,7 +2,7 @@
 
 namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
-class ChainedChoiceType
+class ChainedChoiceType implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

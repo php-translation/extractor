@@ -4,7 +4,7 @@ namespace Translation\Extractor\Tests\Resources\Github;
 
 use Translation\Extractor\Annotation\Ignore;
 
-class Issue111Type
+class Issue111Type implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

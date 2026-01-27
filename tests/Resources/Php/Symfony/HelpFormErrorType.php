@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Translation\Extractor\Annotation\Ignore;
 
-class PlaceholderFormErrorType extends AbstractType
+class PlaceholderFormErrorType implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

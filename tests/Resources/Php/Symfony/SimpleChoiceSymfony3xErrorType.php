@@ -4,7 +4,7 @@ namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
 use Translation\Extractor\Annotation\Ignore;
 
-class SimpleChoiceSymfony3xErrorType
+class SimpleChoiceSymfony3xErrorType implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

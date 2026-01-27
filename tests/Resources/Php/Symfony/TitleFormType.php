@@ -5,7 +5,7 @@ namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class TitleFormType extends AbstractType
+class TitleFormType implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

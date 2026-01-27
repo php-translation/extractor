@@ -3,7 +3,7 @@
 use Symfony\Component\Form\AbstractType;
 use Translation\Extractor\Annotation\Ignore;
 
-class ExplicitLabelFalseType extends AbstractType
+class ExplicitLabelFalseType implements FormTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
