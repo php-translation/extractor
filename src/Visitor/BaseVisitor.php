@@ -64,7 +64,7 @@ abstract class BaseVisitor implements Visitor
                 new TokenIterator($this->lexer->tokenize($docComment->getText()))
             );
             foreach ($phpDocNode->getTags() as $tag) {
-                if ($tag->name === '@Ignore') {
+                if ('@Ignore' === $tag->name) {
                     return;
                 }
             }
@@ -90,9 +90,9 @@ abstract class BaseVisitor implements Visitor
                 new TokenIterator($this->lexer->tokenize($docComment->getText()))
             );
             foreach ($phpDocNode->getTags() as $tag) {
-                if ($tag->name === '@Ignore') {
+                if ('@Ignore' === $tag->name) {
                     return null;
-                } elseif ($tag->name === '@Desc' && $tag->value instanceof DoctrineTagValueNode) {
+                } elseif ('@Desc' === $tag->name && $tag->value instanceof DoctrineTagValueNode) {
                     if ([] !== $tag->value->annotation->arguments) {
                         $context['desc'] = DoctrineConstExprStringNode::unescape($tag->value->annotation->arguments[0]->value);
                     }

@@ -142,6 +142,6 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
         );
         $ignoreTags = $phpDocNode->getTagsByName('@Ignore');
 
-        return count($ignoreTags) > 0;
+        return \count($ignoreTags) > 0;
     }
 }

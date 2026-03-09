@@ -16,7 +16,6 @@ use PhpParser\Node;
 use PhpParser\NodeVisitor;
 use PHPStan\PhpDocParser\Ast\ConstExpr\DoctrineConstExprStringNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\Doctrine\DoctrineTagValueNode;
-use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use Translation\Extractor\Annotation\Translate;
 
