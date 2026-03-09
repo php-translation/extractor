@@ -11,11 +11,16 @@
 
 namespace Translation\Extractor\Visitor;
 
-use Doctrine\Common\Annotations\DocParser;
 use PhpParser\Node;
+use PHPStan\PhpDocParser\Ast\ConstExpr\DoctrineConstExprStringNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\Doctrine\DoctrineTagValueNode;
+use PHPStan\PhpDocParser\Lexer\Lexer;
+use PHPStan\PhpDocParser\Parser\ConstExprParser;
+use PHPStan\PhpDocParser\Parser\PhpDocParser;
+use PHPStan\PhpDocParser\Parser\TokenIterator;
+use PHPStan\PhpDocParser\Parser\TypeParser;
+use PHPStan\PhpDocParser\ParserConfig;
 use Symfony\Component\Finder\SplFileInfo;
-use Translation\Extractor\Annotation\Desc;
-use Translation\Extractor\Annotation\Ignore;
 use Translation\Extractor\Model\Error;
 use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Model\SourceLocation;
@@ -27,7 +32,8 @@ use Translation\Extractor\Model\SourceLocation;
  */
 abstract class BaseVisitor implements Visitor
 {
-    private ?DocParser $docParser = null;
+    protected ?Lexer $lexer = null;
+    protected ?PhpDocParser $phpDocParser = null;
 
     protected ?SourceCollection $collection = null;
     protected SplFileInfo $file;
@@ -54,9 +60,11 @@ abstract class BaseVisitor implements Visitor
             $line = $node->getAttribute('startLine');
         }
         if (null !== $docComment) {
-            $context = 'file '.$file.' near line '.$line;
-            foreach ($this->getDocParser()->parse($docComment->getText(), $context) as $annotation) {
-                if ($annotation instanceof Ignore) {
+            $phpDocNode = $this->getPhpDocParser()->parse(
+                new TokenIterator($this->lexer->tokenize($docComment->getText()))
+            );
+            foreach ($phpDocNode->getTags() as $tag) {
+                if ($tag->name === '@Ignore') {
                     return;
                 }
             }
@@ -78,12 +86,16 @@ abstract class BaseVisitor implements Visitor
     {
         $file = $this->getAbsoluteFilePath();
         if (null !== $node && null !== $docComment = $node->getDocComment()) {
-            $parserContext = 'file '.$file.' near line '.$line;
-            foreach ($this->getDocParser()->parse($docComment->getText(), $parserContext) as $annotation) {
-                if ($annotation instanceof Ignore) {
+            $phpDocNode = $this->getPhpDocParser()->parse(
+                new TokenIterator($this->lexer->tokenize($docComment->getText()))
+            );
+            foreach ($phpDocNode->getTags() as $tag) {
+                if ($tag->name === '@Ignore') {
                     return null;
-                } elseif ($annotation instanceof Desc) {
-                    $context['desc'] = $annotation->text;
+                } elseif ($tag->name === '@Desc' && $tag->value instanceof DoctrineTagValueNode) {
+                    if ([] !== $tag->value->annotation->arguments) {
+                        $context['desc'] = DoctrineConstExprStringNode::unescape($tag->value->annotation->arguments[0]->value);
+                    }
                 }
             }
         }
@@ -91,23 +103,21 @@ abstract class BaseVisitor implements Visitor
         return new SourceLocation($text, $file, $line, $context);
     }
 
-    private function getDocParser(): DocParser
+    protected function getPhpDocParser(): PhpDocParser
     {
-        if (null === $this->docParser) {
-            $this->docParser = new DocParser();
-
-            $this->docParser->setImports([
-                'ignore' => Ignore::class,
-                'desc' => Desc::class,
-            ]);
-            $this->docParser->setIgnoreNotImportedAnnotations(true);
+        if (null === $this->phpDocParser) {
+            $config = new ParserConfig(usedAttributes: []);
+            $this->lexer = new Lexer($config);
+            $constExprParser = new ConstExprParser($config);
+            $typeParser = new TypeParser($config, $constExprParser);
+            $this->phpDocParser = new PhpDocParser($config, $typeParser, $constExprParser);
         }
 
-        return $this->docParser;
+        return $this->phpDocParser;
     }
 
-    public function setDocParser(DocParser $docParser): void
+    public function setPhpDocParser(PhpDocParser $phpDocParser): void
     {
-        $this->docParser = $docParser;
+        $this->phpDocParser = $phpDocParser;
     }
 }

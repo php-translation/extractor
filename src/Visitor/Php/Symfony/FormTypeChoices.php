@@ -11,10 +11,9 @@
 
 namespace Translation\Extractor\Visitor\Php\Symfony;
 
-use Doctrine\Common\Annotations\DocParser;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
-use Translation\Extractor\Annotation\Ignore;
+use PHPStan\PhpDocParser\Parser\TokenIterator;
 use Translation\Extractor\Model\SourceLocation;
 
 /**
@@ -134,20 +133,15 @@ final class FormTypeChoices extends AbstractFormType implements NodeVisitor
 
     protected function isIgnored(Node $node): bool
     {
-        // because of getDocParser method is private, we have to create a new custom instance
-        $docParser = new DocParser();
-        $docParser->setImports([
-            'ignore' => Ignore::class,
-        ]);
-        $docParser->setIgnoreNotImportedAnnotations(true);
-        if (null !== $docComment = $node->getDocComment()) {
-            foreach ($docParser->parse($docComment->getText()) as $annotation) {
-                if ($annotation instanceof Ignore) {
-                    return true;
-                }
-            }
+        if (null === $node->getDocComment()) {
+            return false;
         }
 
-        return false;
+        $phpDocNode = $this->getPhpDocParser()->parse(
+            new TokenIterator($this->lexer->tokenize($node->getDocComment()->getText()))
+        );
+        $ignoreTags = $phpDocNode->getTagsByName('@Ignore');
+
+        return count($ignoreTags) > 0;
     }
 }

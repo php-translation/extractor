@@ -11,10 +11,13 @@
 
 namespace Translation\Extractor\Visitor\Php;
 
-use Doctrine\Common\Annotations\DocParser;
 use PhpParser\Comment;
 use PhpParser\Node;
 use PhpParser\NodeVisitor;
+use PHPStan\PhpDocParser\Ast\ConstExpr\DoctrineConstExprStringNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\Doctrine\DoctrineTagValueNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
+use PHPStan\PhpDocParser\Parser\TokenIterator;
 use Translation\Extractor\Annotation\Translate;
 
 /**
@@ -24,22 +27,6 @@ use Translation\Extractor\Annotation\Translate;
  */
 class TranslateAnnotationVisitor extends BasePHPVisitor implements NodeVisitor
 {
-    protected ?DocParser $translateDocParser = null;
-
-    private function getTranslateDocParser(): DocParser
-    {
-        if (null === $this->translateDocParser) {
-            $this->translateDocParser = new DocParser();
-
-            $this->translateDocParser->setImports([
-                'translate' => Translate::class,
-            ]);
-            $this->translateDocParser->setIgnoreNotImportedAnnotations(true);
-        }
-
-        return $this->translateDocParser;
-    }
-
     public function enterNode(Node $node): ?Node
     {
         // look for strings
@@ -58,10 +45,21 @@ class TranslateAnnotationVisitor extends BasePHPVisitor implements NodeVisitor
                 return null;
             }
 
-            foreach ($this->getTranslateDocParser()->parse($comment->getText()) as $annotation) {
-                // add phrase to dictionary
-                $this->addLocation($node->value, $node->getAttribute('startLine'), $node, ['domain' => $annotation->getDomain()]);
+            $phpDocNode = $this->getPhpDocParser()->parse(
+                new TokenIterator($this->lexer->tokenize($comment->getText()))
+            );
 
+            $translateTags = $phpDocNode->getTagsByName('@Translate');
+            if ([] !== $translateTags) {
+                $domain = 'messages';
+                if ($translateTags[0]->value instanceof DoctrineTagValueNode) {
+                    foreach ($translateTags[0]->value->annotation->arguments as $argument) {
+                        if ('domain' === $argument->key->name) {
+                            $domain = DoctrineConstExprStringNode::unescape($argument->value);
+                        }
+                    }
+                }
+                $this->addLocation($node->value, $node->getAttribute('startLine'), $node, ['domain' => $domain]);
                 break;
             }
         }
