@@ -12,6 +12,8 @@
 namespace Translation\Extractor\Annotation;
 
 /**
+ * @deprecated since 2.3, this class is not used anymore. @Translate is now considered as a PHPDoc tag.
+ *
  * @Annotation
  */
 class Translate

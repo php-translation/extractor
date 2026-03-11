@@ -12,6 +12,8 @@
 namespace Translation\Extractor\Annotation;
 
 /**
+ * @deprecated since 2.3, this class is not used anymore. @Ignore is now considered as a PHPDoc tag.
+ *
  * @Annotation
  */
 final class Ignore
