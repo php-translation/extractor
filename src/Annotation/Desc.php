@@ -11,7 +11,7 @@
 
 namespace Translation\Extractor\Annotation;
 
-trigger_deprecation('php-translation/extractor', '2.3', 'The "%s" class is deprecated with no replacement, it is now considered as a PHPDoc tag.', Desc::class);
+trigger_deprecation('php-translation/extractor', '2.3', 'The "%s" class is deprecated and will be removed soon. It is now considered as a PHPDoc tag.', Desc::class);
 /**
  * @deprecated since 2.3, this class is not used anymore. @Desc is now considered as a PHPDoc tag.
  *
