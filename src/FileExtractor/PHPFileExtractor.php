@@ -15,7 +15,6 @@ use PhpParser\Error;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor;
 use PhpParser\ParserFactory;
-use PhpParser\PhpVersion;
 use Symfony\Component\Finder\SplFileInfo;
 use Translation\Extractor\Model\SourceCollection;
 use Translation\Extractor\Visitor\Visitor;
@@ -33,8 +32,7 @@ final class PHPFileExtractor implements FileExtractor
     public function getSourceLocations(SplFileInfo $file, SourceCollection $collection): void
     {
         $path = $file->getRelativePath();
-        /** @phpstan-ignore-next-line */
-        $parser = (new ParserFactory())->createForVersion(PhpVersion::fromString('8.1'));
+        $parser = (new ParserFactory())->createForHostVersion();
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new NodeVisitor\NameResolver());
         foreach ($this->visitors as $v) {

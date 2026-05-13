@@ -16,7 +16,6 @@ use PhpParser\Node\Stmt\Class_;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;
-use PhpParser\PhpVersion;
 
 trait FormTrait
 {
@@ -80,7 +79,7 @@ trait FormTrait
             }
 
             /** @phpstan-ignore-next-line */
-            $parser = (new ParserFactory())->createForVersion(PhpVersion::fromString('8.1'));
+            $parser = (new ParserFactory())->createForHostVersion();
             $code = file_get_contents($filePath);
             $stmts = $parser->parse($code);
 
