@@ -16,7 +16,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
 
 final class DescriptionTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new FormTypeLabelExplicit(), DescriptionType::class);
 

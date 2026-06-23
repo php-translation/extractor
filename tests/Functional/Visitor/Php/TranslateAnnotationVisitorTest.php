@@ -16,7 +16,7 @@ use Translation\Extractor\Visitor\Php\TranslateAnnotationVisitor;
 
 final class TranslateAnnotationVisitorTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new TranslateAnnotationVisitor(),
             TestTranslateAnnotationFile::class);

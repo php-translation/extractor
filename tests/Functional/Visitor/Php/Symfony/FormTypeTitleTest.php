@@ -21,7 +21,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeTitle;
  */
 final class FormTypeTitleTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new FormTypeTitle(),
             Resources\Php\Symfony\TitleFormType::class);
@@ -30,7 +30,7 @@ final class FormTypeTitleTest extends BasePHPVisitorTest
         $this->assertEquals('form.title.text', $collection->get(0)->getMessage());
     }
 
-    public function testExtractError()
+    public function testExtractError(): void
     {
         $collection = $this->getSourceLocations(new FormTypeTitle(),
             Resources\Php\Symfony\TitleFormErrorType::class);
@@ -39,7 +39,7 @@ final class FormTypeTitleTest extends BasePHPVisitorTest
         $this->assertCount(1, $errors);
     }
 
-    public function testChildVisitationNotBlocked()
+    public function testChildVisitationNotBlocked(): void
     {
         $collection = $this->getSourceLocations(
             [

@@ -43,7 +43,7 @@ use Translation\Extractor\Visitor\Twig\TwigVisitor;
  */
 class AllExtractorsTest extends TestCase
 {
-    public function testNoException()
+    public function testNoException(): void
     {
         $extractor = new Extractor();
         $extractor->addFileExtractor($this->getPHPFileExtractor());

@@ -18,7 +18,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeHelp;
 
 final class FormTypeHelpTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new FormTypeHelp(),
             Resources\Php\Symfony\HelpFormType::class);
@@ -28,7 +28,7 @@ final class FormTypeHelpTest extends BasePHPVisitorTest
         $this->assertEquals('form.help.text.but.no.label', $collection->get(1)->getMessage());
     }
 
-    public function testExtractError()
+    public function testExtractError(): void
     {
         $collection = $this->getSourceLocations(new FormTypeHelp(),
             Resources\Php\Symfony\HelpFormErrorType::class);
@@ -37,7 +37,7 @@ final class FormTypeHelpTest extends BasePHPVisitorTest
         $this->assertCount(2, $errors);
     }
 
-    public function testChildVisitationNotBlocked()
+    public function testChildVisitationNotBlocked(): void
     {
         $collection = $this->getSourceLocations(
             [

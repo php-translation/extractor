@@ -18,7 +18,7 @@ use Translation\Extractor\Visitor\Twig\TwigVisitor;
  */
 final class TranslationFilterTest extends BaseTwigVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new TwigVisitor(), 'Twig/TranslationFilter/trans.html.twig');
 
@@ -27,7 +27,7 @@ final class TranslationFilterTest extends BaseTwigVisitorTest
         $this->assertEquals('foobar', $source->getMessage());
     }
 
-    public function testDescExtract()
+    public function testDescExtract(): void
     {
         $collection = $this->getSourceLocations(new TwigVisitor(), 'Twig/TranslationFilter/desc.html.twig');
 
@@ -37,7 +37,7 @@ final class TranslationFilterTest extends BaseTwigVisitorTest
         $this->assertEquals('baz', $source->getContext()['desc']);
     }
 
-    public function testDescExtractError()
+    public function testDescExtractError(): void
     {
         $collection = $this->getSourceLocations(new TwigVisitor(), 'Twig/TranslationFilter/desc-error.html.twig');
 

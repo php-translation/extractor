@@ -20,7 +20,7 @@ use Translation\Extractor\Visitor\Php\Symfony\ContainerAwareTransChoice;
  */
 final class ContainerAwareTransChoiceTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new ContainerAwareTransChoice(), Resources\Php\Symfony\ContainerAwareTransChoice::class);
 

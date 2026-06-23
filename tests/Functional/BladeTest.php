@@ -38,7 +38,7 @@ final class BladeTest extends TestCase
         return $collection;
     }
 
-    public function testExtractLang()
+    public function testExtractLang(): void
     {
         $collection = $this->getSourceLocations('Blade/lang.blade.php');
 
@@ -47,7 +47,7 @@ final class BladeTest extends TestCase
         $this->assertEquals('foo.bar', $source->getMessage());
     }
 
-    public function testExtractTrans()
+    public function testExtractTrans(): void
     {
         $collection = $this->getSourceLocations('Blade/trans.blade.php');
 
@@ -56,7 +56,7 @@ final class BladeTest extends TestCase
         $this->assertEquals('foo.bar', $source->getMessage());
     }
 
-    public function testExtractTransChoice()
+    public function testExtractTransChoice(): void
     {
         $collection = $this->getSourceLocations('Blade/trans_choice.blade.php');
 

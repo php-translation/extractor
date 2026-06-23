@@ -19,7 +19,7 @@ use Translation\Extractor\Visitor\Php\SourceLocationContainerVisitor;
  */
 final class SourceLocationContainerExtractorTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new SourceLocationContainerVisitor(), Resources\Php\SourceLocationContainer::class);
 

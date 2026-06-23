@@ -21,7 +21,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypePlaceholder;
  */
 final class FormTypePlaceholderTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new FormTypePlaceholder(),
             Resources\Php\Symfony\PlaceholderFormType::class);
@@ -35,7 +35,7 @@ final class FormTypePlaceholderTest extends BasePHPVisitorTest
         $this->assertEquals('form.date_placeholder.day', $collection->get(5)->getMessage());
     }
 
-    public function testExtractError()
+    public function testExtractError(): void
     {
         $collection = $this->getSourceLocations(new FormTypePlaceholder(),
             Resources\Php\Symfony\PlaceholderFormErrorType::class);
@@ -44,7 +44,7 @@ final class FormTypePlaceholderTest extends BasePHPVisitorTest
         $this->assertCount(3, $errors);
     }
 
-    public function testChildVisitationNotBlocked()
+    public function testChildVisitationNotBlocked(): void
     {
         $collection = $this->getSourceLocations(
             [

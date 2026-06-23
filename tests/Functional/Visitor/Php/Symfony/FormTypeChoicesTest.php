@@ -19,7 +19,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeChoices;
  */
 class FormTypeChoicesTest extends BasePHPVisitorTest
 {
-    public function testSimpleSymfony3x()
+    public function testSimpleSymfony3x(): void
     {
         $collection = $this->getSourceLocations(new FormTypeChoices(), SimpleChoiceSymfony3xType::class);
 
@@ -28,7 +28,7 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
         $this->assertEquals(10, $collection->get(0)->getLine());
     }
 
-    public function testSimpleSymfony27()
+    public function testSimpleSymfony27(): void
     {
         $visitor = new FormTypeChoices();
         $visitor->setSymfonyMajorVersion(2);
@@ -42,7 +42,7 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
         $this->assertEquals(12, $collection->get(0)->getLine());
     }
 
-    public function testChainedChoice()
+    public function testChainedChoice(): void
     {
         $visitor = new FormTypeChoices();
         $visitor->setSymfonyMajorVersion(3);
@@ -53,7 +53,7 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
         $this->assertEquals('label2', $collection->get(1)->getMessage());
     }
 
-    public function testExtractError()
+    public function testExtractError(): void
     {
         $collection = $this->getSourceLocations(new FormTypeChoices(), SimpleChoiceSymfony3xErrorType::class);
 
@@ -61,7 +61,7 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
         $this->assertCount(1, $errors);
     }
 
-    public function testPassedChoices()
+    public function testPassedChoices(): void
     {
         $collection = $this->getSourceLocations(new FormTypeChoices(), SimpleChoicePassArrayType::class);
 
@@ -70,7 +70,7 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
         $this->assertEquals(9, $collection->get(0)->getLine());
     }
 
-    public function testChoiceTranslationDomain()
+    public function testChoiceTranslationDomain(): void
     {
         $collection = $this->getSourceLocations(new FormTypeChoices(), FormDomainChoiceType::class);
 
