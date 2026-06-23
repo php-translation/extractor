@@ -12,15 +12,15 @@
         "php": "^8.1",
         "nikic/php-parser": "^5.0",
         "symfony/deprecation-contracts": "^2.5 || ^3.0",
-        "symfony/finder": "^5.4 || ^6.4 || ^7.0",
+        "symfony/finder": "^5.4 || ^6.4 || ^7.0 || ^8.0",
         "twig/twig": "^2.0 || ^3.0",
         "phpstan/phpdoc-parser": "^2.3"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^5.4 || ^6.4 || ^7.0",
-        "symfony/translation": "^5.4 || ^6.4 || ^7.0",
-        "symfony/validator": "^5.4 || ^6.4 || ^7.0",
-        "symfony/twig-bridge": "^5.4 || ^6.4 || ^7.0",
+        "symfony/phpunit-bridge": "^5.4 || ^6.4 || ^7.0 || ^8.0",
+        "symfony/translation": "^5.4 || ^6.4 || ^7.0 || ^8.0",
+        "symfony/validator": "^5.4 || ^6.4 || ^7.0 || ^8.0",
+        "symfony/twig-bridge": "^5.4 || ^6.4 || ^7.0 || ^8.0",
         "knplabs/knp-menu": "^3.1"
     },
     "autoload": {
