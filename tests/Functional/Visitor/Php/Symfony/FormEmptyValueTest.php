@@ -20,7 +20,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeEmptyValue;
  */
 class FormEmptyValueTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new FormTypeEmptyValue(), Resources\Php\Symfony\EmptyValueType::class);
 

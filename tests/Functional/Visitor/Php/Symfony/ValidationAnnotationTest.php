@@ -22,7 +22,7 @@ use Translation\Extractor\Visitor\Php\Symfony\ValidationAnnotation;
  */
 final class ValidationAnnotationTest extends BasePHPVisitorTest
 {
-    public function testExtractAnnotation()
+    public function testExtractAnnotation(): void
     {
         $factory = new LazyLoadingMetadataFactory(new AttributeLoader());
         $extractor = new ValidationAnnotation($factory);

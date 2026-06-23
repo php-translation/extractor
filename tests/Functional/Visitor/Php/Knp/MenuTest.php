@@ -18,7 +18,7 @@ use Translation\Extractor\Visitor\Php\Knp\Menu\LinkTitle;
 
 final class MenuTest extends BasePHPVisitorTest
 {
-    public function testExtractOne()
+    public function testExtractOne(): void
     {
         $collection = $this->getSourceLocations(new ItemLabel(),
             Resources\Php\Knp\Menu::class);
@@ -30,7 +30,7 @@ final class MenuTest extends BasePHPVisitorTest
         $this->assertEquals('foo.second.label', $collection->get(3)->getMessage());
     }
 
-    public function testExtractTwo()
+    public function testExtractTwo(): void
     {
         $collection = $this->getSourceLocations(new LinkTitle(),
             Resources\Php\Knp\Menu::class);

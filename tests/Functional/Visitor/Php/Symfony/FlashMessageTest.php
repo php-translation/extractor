@@ -20,7 +20,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FlashMessage;
  */
 final class FlashMessageTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new FlashMessage(), Resources\Php\Symfony\FlashMessage::class);
 

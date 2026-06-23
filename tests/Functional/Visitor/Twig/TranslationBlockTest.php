@@ -19,7 +19,7 @@ use Translation\Extractor\Visitor\Twig\TwigVisitor;
  */
 final class TranslationBlockTest extends BaseTwigVisitorTest
 {
-    public function testTrans()
+    public function testTrans(): void
     {
         $collection = $this->getSourceLocations(new TwigVisitor(), 'Twig/TranslationBlock/trans.html.twig');
 
@@ -37,7 +37,7 @@ final class TranslationBlockTest extends BaseTwigVisitorTest
         $this->assertEquals('messages', $source->getContext()['domain']);
     }
 
-    public function testTranschoice()
+    public function testTranschoice(): void
     {
         if (!class_exists(TransChoiceTokenParser::class)) {
             $this->markTestSkipped('Transchoice is not available anymore.');

@@ -19,7 +19,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelImplicit;
  */
 class FormTypeLabelImplicitTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new FormTypeLabelImplicit(), ImplicitLabelType::class);
 

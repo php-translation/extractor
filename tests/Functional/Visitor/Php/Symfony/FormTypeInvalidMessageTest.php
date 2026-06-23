@@ -20,7 +20,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeInvalidMessage;
  */
 class FormTypeInvalidMessageTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new FormTypeInvalidMessage(), Resources\Php\Symfony\FormInvalidMessage::class);
 

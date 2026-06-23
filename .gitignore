@@ -5,3 +5,4 @@
 /phpspec.yml
 /phpunit.xml
 /vendor/
+/.php-cs-fixer.cache

@@ -20,7 +20,7 @@ use Translation\Extractor\Visitor\Php\Symfony\FormTypeLabelExplicit;
  */
 class FormTypeLabelExplicitTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new FormTypeLabelExplicit(), Resources\Php\Symfony\ExplicitLabelType::class);
 
@@ -35,13 +35,13 @@ class FormTypeLabelExplicitTest extends BasePHPVisitorTest
         $this->assertCount(4, $collection->getErrors());
     }
 
-    public function testWillNotExtractTypeless()
+    public function testWillNotExtractTypeless(): void
     {
         $collection = $this->getSourceLocations(new FormTypeLabelExplicit(), Resources\Php\Symfony\ExplicitLabelTypeless::class);
         $this->assertCount(0, $collection);
     }
 
-    public function testWithLabelFalse()
+    public function testWithLabelFalse(): void
     {
         $collection = $this->getSourceLocations(new FormTypeLabelExplicit(), Resources\Php\Symfony\ExplicitLabelFalseType::class);
         $this->assertEmpty($collection);

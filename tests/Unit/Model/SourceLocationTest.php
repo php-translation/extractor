@@ -16,7 +16,7 @@ use Translation\Extractor\Model\SourceLocation;
 
 class SourceLocationTest extends TestCase
 {
-    public function testCreateHere()
+    public function testCreateHere(): void
     {
         $location = SourceLocation::createHere('foobar', ['foo' => 'bar']);
 
@@ -27,7 +27,7 @@ class SourceLocationTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $location->getContext());
     }
 
-    public function testCreateHereViaCallback()
+    public function testCreateHereViaCallback(): void
     {
         $location = array_map('\Translation\Extractor\Model\SourceLocation::createHere', ['baz'])[0];
 

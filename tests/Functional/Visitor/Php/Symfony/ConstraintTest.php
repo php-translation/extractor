@@ -20,7 +20,7 @@ use Translation\Extractor\Visitor\Php\Symfony\Constraint;
  */
 final class ConstraintTest extends BasePHPVisitorTest
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         $collection = $this->getSourceLocations(new Constraint(), Resources\Php\Symfony\Constraint::class);
 

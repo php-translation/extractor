@@ -43,7 +43,7 @@ class FormTypeLabelTest extends BasePHPVisitorTest
         parent::__construct();
     }
 
-    public function testTranslationDomain()
+    public function testTranslationDomain(): void
     {
         $collection = $this->getSourceLocations($this->allFormVisitors, Resources\Php\Symfony\FormDomainType::class);
 
