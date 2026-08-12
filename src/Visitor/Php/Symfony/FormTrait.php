@@ -21,7 +21,7 @@ trait FormTrait
 {
     private bool $isFormType = false;
     private array $classMap = [];
-    private string $symfonyInterface = 'FormTypeInterface';
+    private array $symfonyInterfaces = ['FormTypeInterface', 'FormTypeExtensionInterface'];
 
     protected function isFormType(Node $node): bool
     {
@@ -32,9 +32,11 @@ trait FormTrait
         $allInterfaces = $this->getAllInterfacesFromNode($node);
 
         foreach ($allInterfaces as $interface) {
-            if ($interface === $this->symfonyInterface
-                || str_ends_with($interface, '\\'.$this->symfonyInterface)) {
-                $this->isFormType = true;
+            foreach ($this->symfonyInterfaces as $symfonyInterface) {
+                if ($interface === $symfonyInterface || str_ends_with($interface, '\\'.$symfonyInterface)) {
+                    $this->isFormType = true;
+                    break;
+                }
             }
         }
 
