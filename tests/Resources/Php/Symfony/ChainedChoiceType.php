@@ -2,9 +2,12 @@
 
 namespace Translation\Extractor\Tests\Resources\Php\Symfony;
 
-class ChainedChoiceType implements FormTypeInterface
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+class ChainedChoiceType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name')

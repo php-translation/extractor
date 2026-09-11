@@ -53,6 +53,17 @@ class FormTypeChoicesTest extends BasePHPVisitorTest
         $this->assertEquals('label2', $collection->get(1)->getMessage());
     }
 
+    public function testChainedChoiceExtension(): void
+    {
+        $visitor = new FormTypeChoices();
+        $visitor->setSymfonyMajorVersion(3);
+        $collection = $this->getSourceLocations($visitor, ChainedChoicedTypeExtension::class);
+
+        $this->assertCount(2, $collection, print_r($collection, true));
+        $this->assertEquals('label1', $collection->get(0)->getMessage());
+        $this->assertEquals('label2', $collection->get(1)->getMessage());
+    }
+
     public function testExtractError(): void
     {
         $collection = $this->getSourceLocations(new FormTypeChoices(), SimpleChoiceSymfony3xErrorType::class);
