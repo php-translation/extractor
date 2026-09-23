@@ -34,7 +34,7 @@ final class FormTypeLabelImplicit extends AbstractFormType implements NodeVisito
         if ($node instanceof Node\Expr\MethodCall
             && (!\is_object($node->name) || method_exists($node->name, '__toString'))
             && ('add' === (string) $node->name || 'create' === (string) $node->name)
-            && $node->args[0]->value instanceof Node\Scalar\String_) {
+            && \count($node->args) > 0 && $node->args[0]->value instanceof Node\Scalar\String_) {
             $skipLabel = false;
             // Check if the form type is "hidden"
             if (\count($node->args) >= 2) {
