@@ -41,4 +41,32 @@ class IsFormTypeTest extends BasePHPVisitorTest
 
         $this->assertCount(0, $collection);
     }
+
+    /**
+     * @see https://github.com/php-translation/extractor/issues/197
+     */
+    public function testFormTypeDetectionDoesNotLeakToNextFile(): void
+    {
+        $visitor = new FormTypeLabelExplicit();
+
+        $collection = $this->getSourceLocations($visitor, Resources\Php\Symfony\ParentType::class);
+        $this->assertCount(1, $collection);
+
+        $collection = $this->getSourceLocations($visitor, Resources\Php\Symfony\NotAFormType::class);
+        $this->assertCount(0, $collection);
+    }
+
+    /**
+     * @see https://github.com/php-translation/extractor/issues/197
+     */
+    public function testFormTypeDetectionDoesNotLeakToNextClass(): void
+    {
+        $collection = $this->getSourceLocations(
+            new FormTypeLabelExplicit(),
+            Resources\Php\Symfony\FormTypeFollowedByClass::class
+        );
+
+        $this->assertCount(1, $collection);
+        $this->assertEquals('form.field.label', $collection->first()->getMessage());
+    }
 }

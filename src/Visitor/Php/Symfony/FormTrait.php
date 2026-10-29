@@ -16,6 +16,8 @@ use PhpParser\Node\Stmt\Class_;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;
+use Symfony\Component\Finder\SplFileInfo;
+use Translation\Extractor\Model\SourceCollection;
 
 trait FormTrait
 {
@@ -23,11 +25,25 @@ trait FormTrait
     private array $classMap = [];
     private array $symfonyInterfaces = ['FormTypeInterface', 'FormTypeExtensionInterface'];
 
+    /**
+     * The visitor is reused for every file: the form type detection of the
+     * previous file must not leak to the next one.
+     */
+    public function init(SourceCollection $collection, SplFileInfo $file): void
+    {
+        $this->isFormType = false;
+
+        parent::init($collection, $file);
+    }
+
     protected function isFormType(Node $node): bool
     {
         if (!$node instanceof Class_) {
             return $this->isFormType;
         }
+
+        // Each class must be checked on its own
+        $this->isFormType = false;
 
         $allInterfaces = $this->getAllInterfacesFromNode($node);
 
