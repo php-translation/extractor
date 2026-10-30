@@ -21,7 +21,12 @@ use Translation\Extractor\Model\SourceCollection;
 
 trait FormTrait
 {
-    private bool $isFormType = false;
+    /**
+     * Classes being traversed, innermost last: [end position in file, is form type].
+     *
+     * @var list<array{int, bool}>
+     */
+    private array $classStack = [];
     private array $classMap = [];
     private array $symfonyInterfaces = ['FormTypeInterface', 'FormTypeExtensionInterface'];
 
@@ -31,32 +36,40 @@ trait FormTrait
      */
     public function init(SourceCollection $collection, SplFileInfo $file): void
     {
-        $this->isFormType = false;
+        $this->classStack = [];
 
         parent::init($collection, $file);
     }
 
+    /**
+     * Must be called for every node, in traversal order. The enclosing classes
+     * are tracked by position because the visitors define their own leaveNode().
+     */
     protected function isFormType(Node $node): bool
     {
-        if (!$node instanceof Class_) {
-            return $this->isFormType;
+        // Leave the classes (named or anonymous) that end before this node
+        while ($this->classStack && end($this->classStack)[0] < $node->getStartFilePos()) {
+            array_pop($this->classStack);
         }
 
-        // Each class must be checked on its own
-        $this->isFormType = false;
+        if ($node instanceof Class_) {
+            $this->classStack[] = [$node->getEndFilePos(), $this->implementsFormInterface($node)];
+        }
 
-        $allInterfaces = $this->getAllInterfacesFromNode($node);
+        return $this->classStack ? end($this->classStack)[1] : false;
+    }
 
-        foreach ($allInterfaces as $interface) {
+    private function implementsFormInterface(Class_ $node): bool
+    {
+        foreach ($this->getAllInterfacesFromNode($node) as $interface) {
             foreach ($this->symfonyInterfaces as $symfonyInterface) {
                 if ($interface === $symfonyInterface || str_ends_with($interface, '\\'.$symfonyInterface)) {
-                    $this->isFormType = true;
-                    break;
+                    return true;
                 }
             }
         }
 
-        return $this->isFormType;
+        return false;
     }
 
     protected function getAllInterfacesFromNode(Class_ $node): array

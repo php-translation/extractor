@@ -69,4 +69,26 @@ class IsFormTypeTest extends BasePHPVisitorTest
         $this->assertCount(1, $collection);
         $this->assertEquals('form.field.label', $collection->first()->getMessage());
     }
+
+    /**
+     * The form type detection is restored once an anonymous class ends, in both directions.
+     */
+    public function testAnonymousClasses(): void
+    {
+        $collection = $this->getSourceLocations(
+            new FormTypeLabelExplicit(),
+            Resources\Php\Symfony\AnonymousClasses::class
+        );
+
+        $messages = [];
+        foreach ($collection as $source) {
+            $messages[] = $source->getMessage();
+        }
+
+        $this->assertEquals([
+            'before.anonymous.class',
+            'after.anonymous.class',
+            'inside.anonymous.form.type',
+        ], $messages);
+    }
 }
