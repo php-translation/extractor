@@ -16,31 +16,60 @@ use PhpParser\Node\Stmt\Class_;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\ParserFactory;
+use Symfony\Component\Finder\SplFileInfo;
+use Translation\Extractor\Model\SourceCollection;
 
 trait FormTrait
 {
-    private bool $isFormType = false;
+    /**
+     * Classes being traversed, innermost last: [end position in file, is form type].
+     *
+     * @var list<array{int, bool}>
+     */
+    private array $classStack = [];
     private array $classMap = [];
     private array $symfonyInterfaces = ['FormTypeInterface', 'FormTypeExtensionInterface'];
 
+    /**
+     * The visitor is reused for every file: the form type detection of the
+     * previous file must not leak to the next one.
+     */
+    public function init(SourceCollection $collection, SplFileInfo $file): void
+    {
+        $this->classStack = [];
+
+        parent::init($collection, $file);
+    }
+
+    /**
+     * Must be called for every node, in traversal order. The enclosing classes
+     * are tracked by position because the visitors define their own leaveNode().
+     */
     protected function isFormType(Node $node): bool
     {
-        if (!$node instanceof Class_) {
-            return $this->isFormType;
+        // Leave the classes (named or anonymous) that end before this node
+        while ($this->classStack && end($this->classStack)[0] < $node->getStartFilePos()) {
+            array_pop($this->classStack);
         }
 
-        $allInterfaces = $this->getAllInterfacesFromNode($node);
+        if ($node instanceof Class_) {
+            $this->classStack[] = [$node->getEndFilePos(), $this->implementsFormInterface($node)];
+        }
 
-        foreach ($allInterfaces as $interface) {
+        return $this->classStack ? end($this->classStack)[1] : false;
+    }
+
+    private function implementsFormInterface(Class_ $node): bool
+    {
+        foreach ($this->getAllInterfacesFromNode($node) as $interface) {
             foreach ($this->symfonyInterfaces as $symfonyInterface) {
                 if ($interface === $symfonyInterface || str_ends_with($interface, '\\'.$symfonyInterface)) {
-                    $this->isFormType = true;
-                    break;
+                    return true;
                 }
             }
         }
 
-        return $this->isFormType;
+        return false;
     }
 
     protected function getAllInterfacesFromNode(Class_ $node): array

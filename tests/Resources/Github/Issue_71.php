@@ -11,10 +11,10 @@ class TestController extends Controller
     public function foo()
     {
         $foo = [
-            ['label' => $this->get('translator')->trans('this.should.be.translated.without.errors')], //ERROR: Form label is not a scalar string
+            ['label' => $this->get('translator')->trans('this.should.be.translated.without.errors')],
             [/** @Ignore */'label' => $this->get('translator')->trans('this.should.be.translated.without.errors.and.now.it.works')],
             ['label_' => $this->get('translator')->trans('this.works.correctly')],
-            ['label' => $this->shouldBeIgnored()], //ERROR: Form label is not a scalar string
+            ['label' => $this->shouldBeIgnored()],
             [/** @Ignore */'label' => $this->shouldBeIgnoredAndGoesWithoutError()],
         ];
     }

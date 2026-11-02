@@ -54,7 +54,8 @@ abstract class BaseVisitor implements Visitor
         $docComment = $node->getDocComment();
         $file = $this->getAbsoluteFilePath();
 
-        if (property_exists($node, 'value')) {
+        // Scalar nodes also have a "value" property, holding the raw value
+        if (property_exists($node, 'value') && $node->value instanceof Node) {
             $line = $node->value->getAttribute('startLine');
         } else {
             $line = $node->getAttribute('startLine');
